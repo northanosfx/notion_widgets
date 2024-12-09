@@ -1,0 +1,45 @@
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "description": "XAU to USD",
+      "proName": "OANDA:XAUUSD"
+    },
+    {
+      "description": "GBP to JPY",
+      "proName": "OANDA:GBPJPY"
+    },
+    {
+      "description": "EUR to USD",
+      "proName": "OANDA:EURUSD"
+    },
+    {
+      "description": "S&P 500 Index",
+      "proName": "FOREXCOM:SPX500"
+    },
+    {
+      "description": "US 100 Cash CFD",
+      "proName": "FOREXCOM:NAS100"
+    },
+    {
+      "description": "Bitcoin",
+      "proName": "BITSTAMP:BTCUSD"
+    },
+    {
+      "description": "Ethereum",
+      "proName": "BITSTAMP:ETHUSD"
+    }
+  ],
+  "showSymbolLogo": true,
+  "isTransparent": true,
+  "displayMode": "compact",
+  "colorTheme": "dark",
+  "locale": "en"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
