@@ -1,171 +1,123 @@
-import React, { useState, useEffect } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
 
-const PositionCalculator = () => {
-  const [values, setValues] = useState({
-    accountCurrency: 'USD',
-    accountBalance: 100,
-    percentageRisk: 5,
-    stopLossPips: 5,
-    currencyPair: 'EURUSD',
-    cashRisk: 5,
-    positionSize: 10000,
-    standardLots: 0.10
-  });
+        .widget-container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
 
-  const handleChange = (field, value) => {
-    setValues(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
+        .widget-container h2 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
 
-  const calculate = () => {
-    // Add calculation logic here
-    console.log('Calculating...');
-  };
+        .widget-container label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #555;
+        }
 
-  return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-xl font-bold text-gray-700 mb-6">POSITION CALCULATOR</h2>
+        .widget-container input, .widget-container select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
 
-      <div className="space-y-4">
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">ACCOUNT CURRENCY</label>
-          <select 
-            value={values.accountCurrency}
-            onChange={(e) => handleChange('accountCurrency', e.target.value)}
-            className="p-2 border rounded-md bg-white text-gray-700"
-          >
+        .widget-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .widget-container button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            font-size: 14px;
+            color: #333;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <h2>POSITION CALCULATOR</h2>
+        <label for="account-currency">Account Currency</label>
+        <select id="account-currency">
             <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-          </select>
-        </div>
+        </select>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">ACCOUNT BALANCE</label>
-          <input
-            type="number"
-            value={values.accountBalance}
-            onChange={(e) => handleChange('accountBalance', e.target.value)}
-            className="p-2 border rounded-md"
-          />
-        </div>
+        <label for="account-balance">Account Balance</label>
+        <input type="number" id="account-balance" placeholder="100">
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">PERCENTAGE RISK</label>
-          <input
-            type="number"
-            value={values.percentageRisk}
-            onChange={(e) => handleChange('percentageRisk', e.target.value)}
-            className="p-2 border rounded-md"
-          />
-        </div>
+        <label for="percentage-risk">Percentage Risk</label>
+        <input type="number" id="percentage-risk" placeholder="5">
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">STOP LOSS IN PIPS</label>
-          <input
-            type="number"
-            value={values.stopLossPips}
-            onChange={(e) => handleChange('stopLossPips', e.target.value)}
-            className="p-2 border rounded-md"
-          />
-        </div>
+        <label for="stop-loss">Stop Loss in Pips</label>
+        <input type="number" id="stop-loss" placeholder="5">
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">CURRENCY PAIR</label>
-          <select
-            value={values.currencyPair}
-            onChange={(e) => handleChange('currencyPair', e.target.value)}
-            className="p-2 border rounded-md bg-white text-gray-700"
-          >
-            <optgroup label="Forex Majors">
-              <option value="EURUSD">EUR/USD</option>
-              <option value="GBPUSD">GBP/USD</option>
-              <option value="USDJPY">USD/JPY</option>
-              <option value="USDCHF">USD/CHF</option>
-              <option value="AUDUSD">AUD/USD</option>
-              <option value="NZDUSD">NZD/USD</option>
-              <option value="USDCAD">USD/CAD</option>
-            </optgroup>
-            <optgroup label="Forex Minors">
-              <option value="EURJPY">EUR/JPY</option>
-              <option value="GBPJPY">GBP/JPY</option>
-              <option value="EURGBP">EUR/GBP</option>
-              <option value="AUDNZD">AUD/NZD</option>
-              <option value="EURCHF">EUR/CHF</option>
-              <option value="GBPCHF">GBP/CHF</option>
-            </optgroup>
-            <optgroup label="Metals">
-              <option value="XAUUSD">GOLD (XAU/USD)</option>
-              <option value="XAGUSD">SILVER (XAG/USD)</option>
-              <option value="XPTUSD">PLATINUM (XPT/USD)</option>
-              <option value="XPDUSD">PALLADIUM (XPD/USD)</option>
-            </optgroup>
-            <optgroup label="Indices">
-              <option value="US30">Dow Jones (US30)</option>
-              <option value="US500">S&P 500 (US500)</option>
-              <option value="USTEC">Nasdaq (USTEC)</option>
-              <option value="GER40">DAX (GER40)</option>
-              <option value="UK100">FTSE 100 (UK100)</option>
-              <option value="JPN225">Nikkei 225 (JPN225)</option>
-            </optgroup>
-            <optgroup label="Cryptocurrencies">
-              <option value="BTCUSD">Bitcoin (BTC/USD)</option>
-              <option value="ETHUSD">Ethereum (ETH/USD)</option>
-              <option value="XRPUSD">Ripple (XRP/USD)</option>
-              <option value="LTCUSD">Litecoin (LTC/USD)</option>
-            </optgroup>
-            <optgroup label="Commodities">
-              <option value="USOIL">US Oil (WTI)</option>
-              <option value="UKOIL">Brent Oil (BRENT)</option>
-              <option value="NGAS">Natural Gas (NGAS)</option>
-            </optgroup>
-          </select>
-        </div>
+        <label for="currency-pair">Currency Pair</label>
+        <select id="currency-pair">
+            <option value="EURUSD">EURUSD</option>
+        </select>
 
-        <button
-          onClick={calculate}
-          className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-        >
-          CALCULATE
-        </button>
+        <button onclick="calculatePosition()">CALCULATE</button>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">CASH RISK</label>
-          <input
-            type="number"
-            value={values.cashRisk}
-            onChange={(e) => handleChange('cashRisk', e.target.value)}
-            className="p-2 border rounded-md"
-            readOnly
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">POSITION SIZE</label>
-          <input
-            type="number"
-            value={values.positionSize}
-            onChange={(e) => handleChange('positionSize', e.target.value)}
-            className="p-2 border rounded-md"
-            readOnly
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">STANDARD LOTS</label>
-          <input
-            type="number"
-            value={values.standardLots}
-            onChange={(e) => handleChange('standardLots', e.target.value)}
-            className="p-2 border rounded-md"
-            readOnly
-          />
-        </div>
-      </div>
+        <div class="result" id="result"></div>
     </div>
-  );
-};
 
-export default PositionCalculator;
+    <script>
+        function calculatePosition() {
+            const accountBalance = parseFloat(document.getElementById('account-balance').value);
+            const percentageRisk = parseFloat(document.getElementById('percentage-risk').value);
+            const stopLoss = parseFloat(document.getElementById('stop-loss').value);
+
+            if (isNaN(accountBalance) || isNaN(percentageRisk) || isNaN(stopLoss)) {
+                document.getElementById('result').innerText = 'Please fill in all fields correctly.';
+                return;
+            }
+
+            const cashRisk = (accountBalance * (percentageRisk / 100)).toFixed(2);
+            const positionSize = ((cashRisk / stopLoss) * 10000).toFixed(0);
+            const standardLots = (positionSize / 100000).toFixed(2);
+
+            document.getElementById('result').innerHTML = `
+                <strong>Results:</strong><br>
+                Cash Risk: $${cashRisk}<br>
+                Position Size: ${positionSize}<br>
+                Standard Lots: ${standardLots}
+            `;
+        }
+    </script>
+</body>
+</html>
