@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -56,30 +55,6 @@ int main() {
     }
 
     calculatePosition(accountBalance, percentageRisk, stopLoss);
-
-    // Create a window with SFML
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Position Calculator", sf::Style::None);
-    window.setFramerateLimit(60);
-
-    // Set background color (transparent)
-    window.clear(sf::Color(0, 0, 0, 0));
-
-    // Create a rectangle for the inner frame
-    sf::RectangleShape innerFrame(sf::Vector2f(600, 400));
-    innerFrame.setFillColor(sf::Color(25, 25, 25));
-    innerFrame.setPosition(100, 100);
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear(sf::Color(0, 0, 0, 0)); // Transparent background
-        window.draw(innerFrame);
-        window.display();
-    }
 
     return 0;
 }
