@@ -32,7 +32,7 @@
             HighlightColor: "rgba(0,0,0,1.0)",
             
             // การตั้งค่าการแสดงผล
-            IsDisplayTitle: true,
+            IsDisplayTitle: false,
             IsShowChartLinks: false,
             IsShowEmbedButton: false,
             Lang: "th",
@@ -40,5 +40,14 @@
             Calculator: "position-size-calculator",
             ContainerId: "position-size-calculator-411788"
         });
+// รอให้สคริปต์โหลดและซ่อนปุ่ม
+        window.onload = function() {
+            setTimeout(function() {
+                var button = document.querySelector('#position-size-calculator-411788 .remote-widget-button');
+                if (button) {
+                    button.style.display = 'none'; // ซ่อนปุ่ม
+                }
+            }, 1000); // 1 วินาทีหลังจากโหลดเสร็จ
+        }
     </script>
 </div>
