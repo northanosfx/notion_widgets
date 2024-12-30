@@ -1,0 +1,142 @@
+<div class="tw-card tw-bg-white tw-border-radius-10">
+    <div class="background-header tw-card_header tw-border-bottom-1-blue tw-px-40 tw-py-15 tw-d-flex tw-align-items-center tw-justify-center">                
+        <h2 class="tw-f-16 tw-ml-10 tw-font-weight-semibold text-uppercase">Position Calculator</h2>
+    </div>
+    <div class="tw-card_body widget3">
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 mt-4">
+            <label for="account_currency" class="tw-d-inline-block tw-text-purple ">ACCOUNT CURRENCY</label>
+            <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+               <select name="account_currency" id="account_currency" class="tw-select_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+                   
+                                      <option value="USD">USD</option>
+                                      <option value="EUR">EUR</option>
+                                      <option value="GBP">GBP</option>
+                                      <option value="AUD">AUD</option>
+                                      <option value="CAD">CAD</option>
+                                      <option value="CHF">CHF</option>
+                                      <option value="JPY">JPY</option>
+                                      <option value="NZD">NZD</option>
+                                      
+               </select>
+            </div>
+        </div>
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 tw-pt-0">
+            <label for="account_balance" class="tw-d-inline-block tw-text-purple ">ACCOUNT BALANCE</label>
+            <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+               <input type="text" name="account_balance" id="account_balance" value="100" class="tw-input_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+            </div>
+        </div>
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 tw-pt-0">
+            <label for="percentage_risk" class="tw-d-inline-block tw-text-purple ">PERCENTAGE RISK</label>
+            <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+                <input type="text" name="percentage_risk" id="percentage_risk" value="5" class="tw-input_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+             </div>
+        </div>
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 tw-pt-0">
+            <label for="stop_loss_in_pips" class="tw-d-inline-block tw-text-purple ">STOP LOSS IN PIPS</label>
+            <div class="tw-d-flex tw-text-red tw-ml-auto tw-align-items-center">
+                <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+                    <input type="text" name="stop_loss_in_pips" id="stop_loss_in_pips" value="5" class="tw-input_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+                </div>                    
+            </div>
+        </div>
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 tw-pt-0 tw-pb-4">
+            <label for="currency_pair" class="tw-d-inline-block tw-text-purple ">CURRENCY PAIR</label>
+            <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+                <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+                    <select name="currency_pair" id="currency_pair" class="tw-select_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+                                           		<option value="EURUSD">EURUSD</option>
+                   		                   		<option value="GBPUSD">GBPUSD</option>
+                   		                   		<option value="USDJPY">USDJPY</option>
+                   		                   		<option value="USDCAD">USDCAD</option>
+                   		                   		<option value="AUDUSD">AUDUSD</option>
+                   		                   		<option value="USDCHF">USDCHF</option>
+                   		                   		<option value="EURJPY">EURJPY</option>
+                   		                   		<option value="GBPJPY">GBPJPY</option>
+                   		                   		<option value="AUDCAD">AUDCAD</option>
+                   		                   		<option value="AUDCHF">AUDCHF</option>
+                   		                   		<option value="AUDJPY">AUDJPY</option>
+                   		                   		<option value="AUDNZD">AUDNZD</option>
+                   		                   		<option value="CADCHF">CADCHF</option>
+                   		                   		<option value="CADJPY">CADJPY</option>
+                   		                   		<option value="CHFJPY">CHFJPY</option>
+                   		                   		<option value="CHFSGD">CHFSGD</option>
+                   		                   		<option value="EURAUD">EURAUD</option>
+                   		                   		<option value="EURCAD">EURCAD</option>
+                   		                   		<option value="EURCHF">EURCHF</option>
+                   		                   		<option value="EURDKK">EURDKK</option>
+                   		                   		<option value="EURGBP">EURGBP</option>
+                   		                   		<option value="EURHKD">EURHKD</option>
+                   		                   		<option value="EURNOK">EURNOK</option>
+                   		                   		<option value="EURNZD">EURNZD</option>
+                   		                   		<option value="EURPLN">EURPLN</option>
+                   		                   		<option value="EURSEK">EURSEK</option>
+                   		                   		<option value="EURSGD">EURSGD</option>
+                   		                   		<option value="EURTRY">EURTRY</option>
+                   		                   		<option value="EURZAR">EURZAR</option>
+                   		                   		<option value="GBPAUD">GBPAUD</option>
+                   		                   		<option value="GBPCAD">GBPCAD</option>
+                   		                   		<option value="GBPCHF">GBPCHF</option>
+                   		                   		<option value="GBPDKK">GBPDKK</option>
+                   		                   		<option value="GBPNOK">GBPNOK</option>
+                   		                   		<option value="GBPNZD">GBPNZD</option>
+                   		                   		<option value="GBPSEK">GBPSEK</option>
+                   		                   		<option value="GBPSGD">GBPSGD</option>
+                   		                   		<option value="NZDCAD">NZDCAD</option>
+                   		                   		<option value="NZDCHF">NZDCHF</option>
+                   		                   		<option value="NZDJPY">NZDJPY</option>
+                   		                   		<option value="NZDUSD">NZDUSD</option>
+                   		                   		<option value="SGDJPY">SGDJPY</option>
+                   		                   		<option value="USDCNH">USDCNH</option>
+                   		                   		<option value="USDDKK">USDDKK</option>
+                   		                   		<option value="USDHKD">USDHKD</option>
+                   		                   		<option value="USDHUF">USDHUF</option>
+                   		                   		<option value="USDMXN">USDMXN</option>
+                   		                   		<option value="USDNOK">USDNOK</option>
+                   		                   		<option value="USDPLN">USDPLN</option>
+                   		                   		<option value="USDRUB">USDRUB</option>
+                   		                   		<option value="USDSEK">USDSEK</option>
+                   		                   		<option value="USDSGD">USDSGD</option>
+                   		                   		<option value="USDTRY">USDTRY</option>
+                   		                   		<option value="USDZAR">USDZAR</option>
+                   		                    </select>
+                 </div>
+            </div>
+        </div>
+
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8">
+            <a href="javascript:tw_recalc();" class="tw-ml-auto tw-bg-blue tw-text-white tw-border-radius-10 tw-p-5 tw-f-11 tw-btn_primary tw-pointer">CALCULATE</a>
+        </div>
+
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 tw-pt-4">
+            <label for="cash_risk" class="tw-d-inline-block tw-text-purple ">CASH RISK</label>
+            <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+               <input disabled="" type="text" name="cash_risk" id="cash_risk" value="100" class="tw-input_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+            </div>
+        </div>
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 tw-pt-0">
+            <label for="position_size" class="tw-d-inline-block tw-text-purple ">POSITION SIZE</label>
+            <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+                <input disabled="" type="text" name="position_size" id="position_size" value="5" class="tw-input_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+             </div>
+        </div>
+        <div class="tw-d-flex tw-align-items-center tw-px-20 tw-py-8 tw-f-11 tw-pt-0">
+            <label for="standard_lots" class="tw-d-inline-block tw-text-purple ">STANDARD LOTS</label>
+            <div class="tw-d-flex tw-text-red tw-ml-auto tw-align-items-center">
+                <div class="tw-d-flex tw-text-green tw-ml-auto tw-align-items-center">
+                    <input disabled="" type="text" name="standard_lots" id="standard_lots" value="5" class="tw-input_primary tw-bg-white tw-text-purple tw-border-radius-10 tw-f-11">
+                </div>                    
+            </div>
+        </div>
+    
+    </div>
+	<div class="tw-card_footer tw-text-light-blue tw-text-center tw-f-12 border-top-1-blue tw-pt-10 tw-font-weight-bold">
+		<div class="tw-d-flex tw-align-items-center justify-content-between">
+			<a class="tw-text-light-blue tw-font-weight-semibold" href="https://fxmerge.com" target="_blank">FXMERGE</a>
+			<div class="tw-h-100-percent tw-mt-5 text-center d-inline-block">
+				<textarea class="code" style="height: 174px;">&lt;script src="https://fxmerge.com/widget/js/widget.js"&gt;&lt;/script&gt;&lt;div id="fx-tw-3" class="tw" data-type="3" data-script="/widget/js/w3.js"&gt;&lt;/div&gt;</textarea>
+				<span class="show_prev tw-font-weight-bold tw-text-purple btn--tools tw-mt-5 tw-px-5 tw-py-5">CODE <img src="/assets/img/code.svg" class="align-middle ml-3"></span>
+			</div>
+		</div>	
+	</div>
+</div>
