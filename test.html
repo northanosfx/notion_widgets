@@ -1,1 +1,171 @@
-<script src="https://fxmerge.com/widget/js/widget.js"></script><div id="fx-tw-3" class="tw" data-type="3" data-script="/widget/js/w3.js"></div>
+import React, { useState, useEffect } from 'react';
+
+const PositionCalculator = () => {
+  const [values, setValues] = useState({
+    accountCurrency: 'USD',
+    accountBalance: 100,
+    percentageRisk: 5,
+    stopLossPips: 5,
+    currencyPair: 'EURUSD',
+    cashRisk: 5,
+    positionSize: 10000,
+    standardLots: 0.10
+  });
+
+  const handleChange = (field, value) => {
+    setValues(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const calculate = () => {
+    // Add calculation logic here
+    console.log('Calculating...');
+  };
+
+  return (
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-xl font-bold text-gray-700 mb-6">POSITION CALCULATOR</h2>
+
+      <div className="space-y-4">
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">ACCOUNT CURRENCY</label>
+          <select 
+            value={values.accountCurrency}
+            onChange={(e) => handleChange('accountCurrency', e.target.value)}
+            className="p-2 border rounded-md bg-white text-gray-700"
+          >
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">ACCOUNT BALANCE</label>
+          <input
+            type="number"
+            value={values.accountBalance}
+            onChange={(e) => handleChange('accountBalance', e.target.value)}
+            className="p-2 border rounded-md"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">PERCENTAGE RISK</label>
+          <input
+            type="number"
+            value={values.percentageRisk}
+            onChange={(e) => handleChange('percentageRisk', e.target.value)}
+            className="p-2 border rounded-md"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">STOP LOSS IN PIPS</label>
+          <input
+            type="number"
+            value={values.stopLossPips}
+            onChange={(e) => handleChange('stopLossPips', e.target.value)}
+            className="p-2 border rounded-md"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">CURRENCY PAIR</label>
+          <select
+            value={values.currencyPair}
+            onChange={(e) => handleChange('currencyPair', e.target.value)}
+            className="p-2 border rounded-md bg-white text-gray-700"
+          >
+            <optgroup label="Forex Majors">
+              <option value="EURUSD">EUR/USD</option>
+              <option value="GBPUSD">GBP/USD</option>
+              <option value="USDJPY">USD/JPY</option>
+              <option value="USDCHF">USD/CHF</option>
+              <option value="AUDUSD">AUD/USD</option>
+              <option value="NZDUSD">NZD/USD</option>
+              <option value="USDCAD">USD/CAD</option>
+            </optgroup>
+            <optgroup label="Forex Minors">
+              <option value="EURJPY">EUR/JPY</option>
+              <option value="GBPJPY">GBP/JPY</option>
+              <option value="EURGBP">EUR/GBP</option>
+              <option value="AUDNZD">AUD/NZD</option>
+              <option value="EURCHF">EUR/CHF</option>
+              <option value="GBPCHF">GBP/CHF</option>
+            </optgroup>
+            <optgroup label="Metals">
+              <option value="XAUUSD">GOLD (XAU/USD)</option>
+              <option value="XAGUSD">SILVER (XAG/USD)</option>
+              <option value="XPTUSD">PLATINUM (XPT/USD)</option>
+              <option value="XPDUSD">PALLADIUM (XPD/USD)</option>
+            </optgroup>
+            <optgroup label="Indices">
+              <option value="US30">Dow Jones (US30)</option>
+              <option value="US500">S&P 500 (US500)</option>
+              <option value="USTEC">Nasdaq (USTEC)</option>
+              <option value="GER40">DAX (GER40)</option>
+              <option value="UK100">FTSE 100 (UK100)</option>
+              <option value="JPN225">Nikkei 225 (JPN225)</option>
+            </optgroup>
+            <optgroup label="Cryptocurrencies">
+              <option value="BTCUSD">Bitcoin (BTC/USD)</option>
+              <option value="ETHUSD">Ethereum (ETH/USD)</option>
+              <option value="XRPUSD">Ripple (XRP/USD)</option>
+              <option value="LTCUSD">Litecoin (LTC/USD)</option>
+            </optgroup>
+            <optgroup label="Commodities">
+              <option value="USOIL">US Oil (WTI)</option>
+              <option value="UKOIL">Brent Oil (BRENT)</option>
+              <option value="NGAS">Natural Gas (NGAS)</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <button
+          onClick={calculate}
+          className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+        >
+          CALCULATE
+        </button>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">CASH RISK</label>
+          <input
+            type="number"
+            value={values.cashRisk}
+            onChange={(e) => handleChange('cashRisk', e.target.value)}
+            className="p-2 border rounded-md"
+            readOnly
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">POSITION SIZE</label>
+          <input
+            type="number"
+            value={values.positionSize}
+            onChange={(e) => handleChange('positionSize', e.target.value)}
+            className="p-2 border rounded-md"
+            readOnly
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-gray-600">STANDARD LOTS</label>
+          <input
+            type="number"
+            value={values.standardLots}
+            onChange={(e) => handleChange('standardLots', e.target.value)}
+            className="p-2 border rounded-md"
+            readOnly
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PositionCalculator;
