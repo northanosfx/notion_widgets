@@ -1,60 +1,123 @@
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #191919;
+        }
 
-using namespace std;
+        .widget-container {
+            background: #191919;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
 
-void calculatePosition(double accountBalance, double percentageRisk, double stopLoss) {
-    if (accountBalance <= 0 || percentageRisk <= 0 || stopLoss <= 0) {
-        cout << "Please fill in all fields correctly." << endl;
-        return;
-    }
+        .widget-container h2 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
 
-    double cashRisk = accountBalance * (percentageRisk / 100);
-    double positionSize = (cashRisk / stopLoss) * 10000;
-    double standardLots = positionSize / 100000;
+        .widget-container label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #555;
+        }
 
-    cout << fixed << setprecision(2);
-    cout << "Results:" << endl;
-    cout << "Cash Risk: $" << cashRisk << endl;
-    cout << "Position Size: " << positionSize << endl;
-    cout << "Standard Lots: " << standardLots << endl;
-}
+        .widget-container input, .widget-container select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
 
-int main() {
-    double accountBalance, percentageRisk, stopLoss;
-    string accountCurrency, currencyPair;
+        .widget-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-    vector<string> availablePairs = {"EURUSD", "USDJPY", "GBPUSD", "AUDUSD", "USDCAD", "USDCHF", "NZDUSD", "XAUUSD", "XAGUSD"};
+        .widget-container button:hover {
+            background-color: #45a049;
+        }
 
-    cout << "Enter Account Currency (e.g., USD): ";
-    cin >> accountCurrency;
+        .result {
+            font-size: 14px;
+            color: #333;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <h2>POSITION CALCULATOR</h2>
+        <label for="account-currency">Account Currency</label>
+        <select id="account-currency">
+            <option value="USD">USD</option>
+        </select>
 
-    cout << "Enter Account Balance: ";
-    cin >> accountBalance;
+        <label for="account-balance">Account Balance</label>
+        <input type="number" id="account-balance" placeholder="100">
 
-    cout << "Enter Percentage Risk: ";
-    cin >> percentageRisk;
+        <label for="percentage-risk">Percentage Risk</label>
+        <input type="number" id="percentage-risk" placeholder="5">
 
-    cout << "Enter Stop Loss in Pips: ";
-    cin >> stopLoss;
+        <label for="stop-loss">Stop Loss in Pips</label>
+        <input type="number" id="stop-loss" placeholder="5">
 
-    cout << "Available Currency Pairs: " << endl;
-    for (const auto& pair : availablePairs) {
-        cout << pair << " ";
-    }
-    cout << endl;
+        <label for="currency-pair">Currency Pair</label>
+        <select id="currency-pair">
+            <option value="EURUSD">EURUSD</option>
+        </select>
 
-    cout << "Enter Currency Pair: ";
-    cin >> currencyPair;
+        <button onclick="calculatePosition()">CALCULATE</button>
 
-    if (find(availablePairs.begin(), availablePairs.end(), currencyPair) == availablePairs.end()) {
-        cout << "Invalid currency pair entered." << endl;
-        return 0;
-    }
+        <div class="result" id="result"></div>
+    </div>
 
-    calculatePosition(accountBalance, percentageRisk, stopLoss);
+    <script>
+        function calculatePosition() {
+            const accountBalance = parseFloat(document.getElementById('account-balance').value);
+            const percentageRisk = parseFloat(document.getElementById('percentage-risk').value);
+            const stopLoss = parseFloat(document.getElementById('stop-loss').value);
 
-    return 0;
-}
+            if (isNaN(accountBalance) || isNaN(percentageRisk) || isNaN(stopLoss)) {
+                document.getElementById('result').innerText = 'Please fill in all fields correctly.';
+                return;
+            }
+
+            const cashRisk = (accountBalance * (percentageRisk / 100)).toFixed(2);
+            const positionSize = ((cashRisk / stopLoss) * 10000).toFixed(0);
+            const standardLots = (positionSize / 100000).toFixed(2);
+
+            document.getElementById('result').innerHTML = `
+                <strong>Results:</strong><br>
+                Cash Risk: $${cashRisk}<br>
+                Position Size: ${positionSize}<br>
+                Standard Lots: ${standardLots}
+            `;
+        }
+    </script>
+</body>
+</html>
