@@ -1,123 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Position Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f9f9f9;
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+void calculatePosition(double accountBalance, double percentageRisk, double stopLoss) {
+    if (accountBalance <= 0 || percentageRisk <= 0 || stopLoss <= 0) {
+        cout << "Please fill in all fields correctly." << endl;
+        return;
+    }
+
+    double cashRisk = accountBalance * (percentageRisk / 100);
+    double positionSize = (cashRisk / stopLoss) * 10000;
+    double standardLots = positionSize / 100000;
+
+    cout << fixed << setprecision(2);
+    cout << "Results:" << endl;
+    cout << "Cash Risk: $" << cashRisk << endl;
+    cout << "Position Size: " << positionSize << endl;
+    cout << "Standard Lots: " << standardLots << endl;
+}
+
+int main() {
+    double accountBalance, percentageRisk, stopLoss;
+    string accountCurrency, currencyPair;
+
+    vector<string> availablePairs = {"EURUSD", "USDJPY", "GBPUSD", "AUDUSD", "USDCAD", "USDCHF", "NZDUSD", "XAUUSD", "XAGUSD"};
+
+    cout << "Enter Account Currency (e.g., USD): ";
+    cin >> accountCurrency;
+
+    cout << "Enter Account Balance: ";
+    cin >> accountBalance;
+
+    cout << "Enter Percentage Risk: ";
+    cin >> percentageRisk;
+
+    cout << "Enter Stop Loss in Pips: ";
+    cin >> stopLoss;
+
+    cout << "Available Currency Pairs: " << endl;
+    for (const auto& pair : availablePairs) {
+        cout << pair << " ";
+    }
+    cout << endl;
+
+    cout << "Enter Currency Pair: ";
+    cin >> currencyPair;
+
+    if (find(availablePairs.begin(), availablePairs.end(), currencyPair) == availablePairs.end()) {
+        cout << "Invalid currency pair entered." << endl;
+        return 0;
+    }
+
+    calculatePosition(accountBalance, percentageRisk, stopLoss);
+
+    // Create a window with SFML
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Position Calculator", sf::Style::None);
+    window.setFramerateLimit(60);
+
+    // Set background color (transparent)
+    window.clear(sf::Color(0, 0, 0, 0));
+
+    // Create a rectangle for the inner frame
+    sf::RectangleShape innerFrame(sf::Vector2f(600, 400));
+    innerFrame.setFillColor(sf::Color(25, 25, 25));
+    innerFrame.setPosition(100, 100);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
         }
 
-        .widget-container {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 300px;
-        }
+        window.clear(sf::Color(0, 0, 0, 0)); // Transparent background
+        window.draw(innerFrame);
+        window.display();
+    }
 
-        .widget-container h2 {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .widget-container label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        .widget-container input, .widget-container select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .widget-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .widget-container button:hover {
-            background-color: #45a049;
-        }
-
-        .result {
-            font-size: 14px;
-            color: #333;
-            margin-top: 15px;
-        }
-    </style>
-</head>
-<body>
-    <div class="widget-container">
-        <h2>POSITION CALCULATOR</h2>
-        <label for="account-currency">Account Currency</label>
-        <select id="account-currency">
-            <option value="USD">USD</option>
-        </select>
-
-        <label for="account-balance">Account Balance</label>
-        <input type="number" id="account-balance" placeholder="100">
-
-        <label for="percentage-risk">Percentage Risk</label>
-        <input type="number" id="percentage-risk" placeholder="5">
-
-        <label for="stop-loss">Stop Loss in Pips</label>
-        <input type="number" id="stop-loss" placeholder="5">
-
-        <label for="currency-pair">Currency Pair</label>
-        <select id="currency-pair">
-            <option value="EURUSD">EURUSD</option>
-        </select>
-
-        <button onclick="calculatePosition()">CALCULATE</button>
-
-        <div class="result" id="result"></div>
-    </div>
-
-    <script>
-        function calculatePosition() {
-            const accountBalance = parseFloat(document.getElementById('account-balance').value);
-            const percentageRisk = parseFloat(document.getElementById('percentage-risk').value);
-            const stopLoss = parseFloat(document.getElementById('stop-loss').value);
-
-            if (isNaN(accountBalance) || isNaN(percentageRisk) || isNaN(stopLoss)) {
-                document.getElementById('result').innerText = 'Please fill in all fields correctly.';
-                return;
-            }
-
-            const cashRisk = (accountBalance * (percentageRisk / 100)).toFixed(2);
-            const positionSize = ((cashRisk / stopLoss) * 10000).toFixed(0);
-            const standardLots = (positionSize / 100000).toFixed(2);
-
-            document.getElementById('result').innerHTML = `
-                <strong>Results:</strong><br>
-                Cash Risk: $${cashRisk}<br>
-                Position Size: ${positionSize}<br>
-                Standard Lots: ${standardLots}
-            `;
-        }
-    </script>
-</body>
-</html>
+    return 0;
+}
