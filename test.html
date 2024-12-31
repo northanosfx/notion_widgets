@@ -44,11 +44,15 @@
       padding: 8px;
       border: none;
       border-radius: 8px; /* เพิ่มความโค้งมน */
-      background: #3c3c3c url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23fff' d='M5 6L0 0h10z'/%3E%3C/svg%3E") no-repeat calc(100% - 10px) center;
+      background: #3c3c3c;
       color: #fff;
       box-sizing: border-box;
-      appearance: none; /* ปิดสไตล์เบราว์เซอร์ */
-      background-size: 10px;
+      appearance: none; /* ปิดสไตล์เริ่มต้น */
+      background-image: linear-gradient(45deg, transparent 50%, #fff 50%),
+                        linear-gradient(-45deg, transparent 50%, #fff 50%);
+      background-size: 6px 6px; /* ขนาดลูกศร */
+      background-repeat: no-repeat;
+      background-position: calc(100% - 20px) center, calc(100% - 14px) center;
     }
 
     .form-group input {
