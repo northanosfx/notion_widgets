@@ -14,7 +14,17 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      position: relative;
+    }
+
+    .settings-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 30px;
+      height: 30px;
+      background: url('https://cdn-icons-png.flaticon.com/512/2099/2099058.png') no-repeat center center;
+      background-size: contain;
+      cursor: pointer;
     }
 
     .calculator {
@@ -23,12 +33,13 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       width: 300px;
-      text-align: center;
+      position: relative;
     }
 
     .calculator h1 {
       font-size: 20px;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     .form-group {
@@ -73,40 +84,14 @@
 
     .result {
       margin-top: 20px;
-    }
-
-    .settings-icon {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      cursor: pointer;
-      fill: #00aaff;
-      width: 30px;
-      height: 30px;
-    }
-
-    .alternate-interface {
-      display: none;
       text-align: center;
-    }
-
-    .alternate-interface.active {
-      display: block;
-    }
-
-    .calculator.active {
-      display: none;
     }
   </style>
 </head>
 <body>
-  <!-- Settings Icon -->
-  <svg class="settings-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" onclick="toggleInterface()">
-    <path d="M51.22,21h-5.052c-0.812,0-1.481-0.447-1.792-1.197s-0.153-1.54,0.42-2.114l3.572-3.571 c0.525-0.525,0.814-1.224,0.814-1.966c0-0.743-0.289-1.441-0.814-1.967l-4.553-4.553c-1.05-1.05-2.881-1.052-3.933,0l-3.571,3.571 c-0.574,0.573-1.366,0.733-2.114,0.421C33.447,9.313,33,8.644,33,7.832V2.78C33,1.247,31.753,0,30.22,0H23.78 C22.247,0,21,1.247,21,2.78v5.052c0,0.812-0.447,1.481-1.197,1.792c-0.748,0.313-1.54,0.152-2.114-0.421l-3.571-3.571 c-1.052-1.052-2.883-1.05-3.933,0l-4.553,4.553c-0.525,0.525-0.814,1.224-0.814,1.967c0,0.742,0.289,1.44,0.814,1.966l3.572,3.571 c0.573,0.574,0.73,1.364,0.42,2.114S8.644,21,7.832,21H2.78C1.247,21,0,22.247,0,23.78v6.439C0,31.753,1.247,33,2.78,33h5.052 c0.812,0,1.481,0.447,1.792,1.197s0.153,1.54-0.42,2.114l-3.572,3.571c-0.525,0.525-0.814,1.224-0.814,1.966 c0,0.743,0.289,1.441,0.814,1.967l4.553,4.553c1.051,1.051,2.881,1.053,3.933,0l3.571-3.572c0.574-0.573,1.363-0.731,2.114-0.42 c0.75,0.311,1.197,0.98,1.197,1.792v5.052c0,1.533,1.247,2.78,2.78,2.78h6.439c1.533,0,2.78-1.247,2.78-2.78v-5.052 c0-0.812,0.447-1.481,1.197-1.792c0.751-0.312,1.54-0.153,2.114,0.42l3.571,3.572c1.052,1.052,2.883,1.05,3.933,0l4.553-4.553 c0.525-0.525,0.814-1.224,0.814-1.967c0-0.742-0.289-1.44-0.814-1.966l-3.572-3.571c-0.573-0.574-0.73-1.364-0.42-2.114 S45.356,33,46.168,33h5.052c1.533,0,2.78-1.247,2.78-2.78V23.78C54,22.247,52.753,21,51.22,21z"></path>
-  </svg>
+  <div class="settings-icon" onclick="openSettings()"></div>
 
-  <!-- Calculator Interface -->
-  <div class="calculator" id="calculatorInterface">
+  <div class="calculator">
     <h1>Position Calculator</h1>
     <div class="form-group">
       <label for="currency">Account Currency</label>
@@ -147,18 +132,9 @@
     </div>
   </div>
 
-  <!-- Alternate Interface -->
-  <div class="alternate-interface" id="alternateInterface">
-    <h1>Settings Interface</h1>
-    <p>This is an alternate interface for the settings.</p>
-  </div>
-
   <script>
-    function toggleInterface() {
-      const calculator = document.getElementById('calculatorInterface');
-      const alternate = document.getElementById('alternateInterface');
-      calculator.classList.toggle('active');
-      alternate.classList.toggle('active');
+    function openSettings() {
+      alert('Settings menu will be implemented soon!');
     }
 
     async function fetchExchangeRates() {
