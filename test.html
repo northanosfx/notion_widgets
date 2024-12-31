@@ -23,6 +23,7 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       width: 300px;
+      height: 500px; /* ตั้งความสูงคงที่ */
       position: relative;
       overflow: hidden;
     }
@@ -42,11 +43,18 @@
     }
 
     .content {
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
     .hidden {
-      display: none;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
 
     h1 {
@@ -95,6 +103,11 @@
     .btn:hover {
       background: #0088cc;
     }
+
+    .result {
+      margin-top: 20px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -116,7 +129,30 @@
         <label for="balance">Account Balance</label>
         <input type="number" id="balance" placeholder="Enter balance" />
       </div>
+      <div class="form-group">
+        <label for="risk">Percentage Risk (%)</label>
+        <input type="number" id="risk" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
+      <div class="form-group">
+        <label for="pair">Instrument</label>
+        <select id="pair">
+          <option value="XAUUSD" selected>XAU/USD</option>
+          <option value="EURUSD">EUR/USD</option>
+          <option value="GBPUSD">GBP/USD</option>
+          <option value="USDJPY">USD/JPY</option>
+          <option value="AUDUSD">AUD/USD</option>
+        </select>
+      </div>
       <button class="btn">Calculate</button>
+      <div class="result">
+        <p>Cash Risk: <span id="cashRisk">-</span></p>
+        <p>Position Size: <span id="positionSize">-</span></p>
+        <p>Standard Lots: <span id="standardLots">-</span></p>
+      </div>
     </div>
 
     <!-- หน้า Settings -->
@@ -148,19 +184,17 @@
       const settingsContent = document.getElementById('settingsContent');
 
       if (view === 'settings') {
-        // เก็บค่าจาก Position Calculator ก่อนเปลี่ยนหน้า
-        const currency = document.getElementById('currency').value;
-        document.getElementById('accountCurrency').value = currency;
+        // เก็บค่าจาก Position Calculator
+        document.getElementById('accountCurrency').value = document.getElementById('currency').value;
 
         calculatorContent.classList.add('hidden');
         settingsContent.classList.remove('hidden');
       } else if (view === 'calculator') {
-        // เก็บค่าจาก Settings ก่อนกลับไปหน้า Calculator
-        const accountCurrency = document.getElementById('accountCurrency').value;
-        document.getElementById('currency').value = accountCurrency;
+        // เก็บค่าจาก Settings
+        document.getElementById('currency').value = document.getElementById('accountCurrency').value;
 
-        settingsContent.classList.add('hidden');
         calculatorContent.classList.remove('hidden');
+        settingsContent.classList.add('hidden');
       }
     }
   </script>
