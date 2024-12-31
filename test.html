@@ -180,8 +180,20 @@
         <select id="pair">
           <option value="XAUUSD" selected>XAU/USD</option>
           <option value="EURUSD">EUR/USD</option>
+          <option value="GBPUSD">GBP/USD</option>
+          <option value="USDJPY">USD/JPY</option>
+          <option value="AUDUSD">AUD/USD</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="risk">Percentage Risk (%)</label>
+        <input type="number" id="risk" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
+      <button class="btn">Calculate</button>
     </div>
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
@@ -191,6 +203,26 @@
         <div class="toggle-group">
           <button id="dayMode" onclick="toggleTheme('day')">Day</button>
           <button id="nightMode" class="active" onclick="toggleTheme('night')">Night</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Risk</label>
+        <div class="toggle-group">
+          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label>Account Currency</label>
+        <div class="currency-select">
+          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="USD">
+          <select id="accountCurrency" onchange="changeCurrency()">
+            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+          </select>
         </div>
       </div>
     </div>
@@ -210,6 +242,26 @@
         dayButton.classList.remove('active');
         nightButton.classList.add('active');
       }
+    }
+
+    function toggleRisk(type) {
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+      }
+    }
+
+    function changeCurrency() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
     }
 
     function toggleView(view) {
