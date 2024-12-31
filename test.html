@@ -38,38 +38,6 @@
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .slide-left {
-      transform: translateX(-100%);
-    }
-
-    .slide-right {
-      transform: translateX(100%);
-    }
-
-    .content.active {
-      transform: translateX(0);
-    }
-
-    .icon-settings, .icon-back {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-size: 20px;
-      color: #757575;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-
-    .icon-settings:hover, .icon-back:hover {
-      color: #00aaff;
-    }
-
-    h1 {
-      font-size: 18px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
     .form-group {
       margin-bottom: 15px;
     }
@@ -81,18 +49,19 @@
     }
 
     .form-group input, .form-group select {
-      width: 100%;
+      width: calc(100% - 16px); /* แก้ไขตรงนี้ให้ margin ทั้งซ้ายและขวาเท่ากัน */
       padding: 8px;
       border: none;
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
       font-size: 14px;
+      box-sizing: border-box;
     }
 
     .btn {
       display: block;
-      width: 100%;
+      width: calc(100% - 16px); /* แก้ไข margin ให้เท่ากัน */
       padding: 10px;
       background: #00aaff;
       border: none;
@@ -101,59 +70,11 @@
       font-size: 16px;
       cursor: pointer;
       margin-top: 20px;
+      margin-left: 8px; /* ให้ตรงกลาง */
     }
 
     .btn:hover {
       background: #0088cc;
-    }
-
-    .toggle-group {
-      display: flex;
-      background: #3c3c3c;
-      border-radius: 5px;
-      overflow: hidden;
-      height: 30px;
-      width: 120px;
-    }
-
-    .toggle-group button {
-      flex: 1;
-      border: none;
-      background: #3c3c3c;
-      color: #aaa;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .toggle-group button.active {
-      background: #00aaff;
-      color: #fff;
-    }
-
-    .currency-select {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      background: #3c3c3c;
-      padding: 8px;
-      border-radius: 5px;
-      width: 150px;
-    }
-
-    .currency-select img {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-    }
-
-    .currency-select select {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 13px;
-      outline: none;
-      cursor: pointer;
     }
   </style>
 </head>
@@ -187,76 +108,6 @@
       </div>
       <button class="btn">Calculate</button>
     </div>
-
-    <!-- หน้า Settings -->
-    <div class="content slide-right" id="settingsContent">
-      <i class="fas fa-arrow-left icon-back" title="Back" onclick="toggleView('calculator')"></i>
-      <h1>Settings</h1>
-      <div class="form-group">
-        <label>Risk</label>
-        <div class="toggle-group">
-          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
-          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="form-group">
-        <label>Account Currency</label>
-        <div class="currency-select">
-          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="USD">
-          <select id="accountCurrency" onchange="changeCurrency()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
-          </select>
-        </div>
-      </div>
-    </div>
   </div>
-
-  <script>
-    // Toggle Risk Buttons
-    function toggleRisk(type) {
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
-
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
-      } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
-      }
-    }
-
-    // Change Currency Flag
-    function changeCurrency() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      document.getElementById('currencyFlag').src = flagUrl;
-    }
-
-    // Toggle Views
-    function toggleView(view) {
-      const calculatorContent = document.getElementById('calculatorContent');
-      const settingsContent = document.getElementById('settingsContent');
-
-      if (view === 'settings') {
-        calculatorContent.classList.add('slide-left');
-        calculatorContent.classList.remove('active');
-        settingsContent.classList.add('active');
-        settingsContent.classList.remove('slide-right');
-      } else if (view === 'calculator') {
-        settingsContent.classList.add('slide-right');
-        settingsContent.classList.remove('active');
-        calculatorContent.classList.add('active');
-        calculatorContent.classList.remove('slide-left');
-      }
-    }
-  </script>
 </body>
 </html>
