@@ -39,22 +39,26 @@
       margin-bottom: 5px;
     }
 
-    .form-group input, .form-group select {
+    .form-group select {
       width: 100%;
       padding: 8px;
       border: none;
-      border-radius: 8px; /* เพิ่มความโค้งทุกมุม */
+      border-radius: 8px; /* เพิ่มความโค้งมน */
+      background: #3c3c3c url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23fff' d='M5 6L0 0h10z'/%3E%3C/svg%3E") no-repeat calc(100% - 10px) center;
+      color: #fff;
+      box-sizing: border-box;
+      appearance: none; /* ปิดสไตล์เบราว์เซอร์ */
+      background-size: 10px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 8px; /* เพิ่มความโค้งมน */
       background: #3c3c3c;
       color: #fff;
       box-sizing: border-box;
-    }
-
-    .form-group select {
-      -webkit-appearance: none; /* ปิดสไตล์เริ่มต้นของเบราว์เซอร์ */
-      -moz-appearance: none;
-      appearance: none;
-      background-color: #3c3c3c;
-      color: #fff;
     }
 
     .form-group input:focus, .form-group select:focus {
