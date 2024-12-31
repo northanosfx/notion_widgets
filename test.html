@@ -134,40 +134,40 @@
       color: #fff;
     }
 
-    .currency-select {
-      display: flex;
-      align-items: center;
-      background: #3c3c3c;
-      padding: 8px;
-      border-radius: 5px;
-      margin-top: 10px;
+    .day-mode {
+      background-color: #f9f9f9;
+      color: #333;
     }
 
-    .currency-select img {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
+    .day-mode .container {
+      background-color: #fff;
     }
 
-    .currency-select select {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 13px;
-      width: 100%;
-      outline: none;
-      cursor: pointer;
+    .day-mode .form-group input,
+    .day-mode .form-group select {
+      background: #f0f0f0;
+      color: #333;
     }
 
-    .divider {
-      border-bottom: 1px solid #444;
-      margin: 10px 0;
+    .day-mode .btn {
+      background: #007bff;
+    }
+
+    .day-mode .btn:hover {
+      background: #0056b3;
+    }
+
+    .day-mode .icon-settings {
+      color: #333;
+    }
+
+    .day-mode .icon-settings:hover {
+      color: #007bff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- หน้า Position Calculator -->
     <div class="content active" id="calculatorContent">
       <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
       <h1>Position Calculator</h1>
@@ -180,78 +180,38 @@
         <select id="pair">
           <option value="XAUUSD" selected>XAU/USD</option>
           <option value="EURUSD">EUR/USD</option>
-          <option value="GBPUSD">GBP/USD</option>
-          <option value="USDJPY">USD/JPY</option>
-          <option value="AUDUSD">AUD/USD</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="risk">Percentage Risk (%)</label>
-        <input type="number" id="risk" placeholder="Enter risk percentage" />
-      </div>
-      <div class="form-group">
-        <label for="stopLoss">Stop Loss (pips)</label>
-        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
-      </div>
-      <button class="btn">Calculate</button>
     </div>
-
-    <!-- หน้า Settings -->
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
-
-      <!-- Risk -->
       <div class="form-group">
-        <label>Risk</label>
+        <label>Theme</label>
         <div class="toggle-group">
-          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
-          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Account Currency -->
-      <div class="form-group">
-        <label>Account Currency</label>
-        <div class="currency-select">
-          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="USD">
-          <select id="accountCurrency" onchange="changeCurrency()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
-          </select>
+          <button id="dayMode" onclick="toggleTheme('day')">Day</button>
+          <button id="nightMode" class="active" onclick="toggleTheme('night')">Night</button>
         </div>
       </div>
     </div>
   </div>
-
   <script>
-    // Toggle Risk Buttons
-    function toggleRisk(type) {
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
+    function toggleTheme(mode) {
+      const body = document.body;
+      const dayButton = document.getElementById('dayMode');
+      const nightButton = document.getElementById('nightMode');
 
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
+      if (mode === 'day') {
+        body.classList.add('day-mode');
+        dayButton.classList.add('active');
+        nightButton.classList.remove('active');
       } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
+        body.classList.remove('day-mode');
+        dayButton.classList.remove('active');
+        nightButton.classList.add('active');
       }
     }
 
-    // Change Currency Flag
-    function changeCurrency() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      document.getElementById('currencyFlag').src = flagUrl;
-    }
-
-    // Toggle Views
     function toggleView(view) {
       const calculatorContent = document.getElementById('calculatorContent');
       const settingsContent = document.getElementById('settingsContent');
@@ -261,7 +221,7 @@
         calculatorContent.classList.remove('active');
         settingsContent.classList.add('active');
         settingsContent.classList.remove('slide-right');
-      } else if (view === 'calculator') {
+      } else {
         settingsContent.classList.add('slide-right');
         settingsContent.classList.remove('active');
         calculatorContent.classList.add('active');
