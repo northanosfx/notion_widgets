@@ -15,18 +15,46 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      overflow: hidden;
     }
 
-    .calculator {
+    .container {
+      position: relative;
+      width: 300px;
+    }
+
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: #2b2b2b;
-      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      width: 300px;
-      position: relative;
+      transform: translateX(0);
+      transition: transform 0.5s ease-in-out;
     }
 
-    .calculator h1 {
+    .hidden {
+      transform: translateX(100%);
+    }
+
+    .icon-settings {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 20px;
+      color: #757575;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .icon-settings:hover {
+      color: #00aaff;
+    }
+
+    .calculator h1, .settings h1 {
       font-size: 20px;
       margin-bottom: 20px;
       text-align: center;
@@ -34,6 +62,7 @@
 
     .form-group {
       margin-bottom: 15px;
+      padding: 0 20px;
     }
 
     .form-group label {
@@ -42,14 +71,13 @@
     }
 
     .form-group input, .form-group select {
-      width: 100%; /* ให้ช่องกรอกเต็มความกว้างของกล่อง */
+      width: 100%;
       padding: 8px;
       border: none;
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
-      box-sizing: border-box; /* จัดการ padding ให้ไม่เกินกรอบ */
-      min-width: 250px; /* เพิ่มความกว้างขั้นต่ำเพื่อไม่ให้ช่องเล็กจนเกินไป */
+      box-sizing: border-box;
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -67,72 +95,66 @@
       color: #fff;
       font-size: 16px;
       cursor: pointer;
+      margin-top: 20px;
     }
 
     .btn:hover {
       background: #0088cc;
     }
-
-    .result {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .icon-settings {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-size: 20px;
-      color: #757575;
-      cursor: pointer;
-    }
-
-    .icon-settings:hover {
-      color: #00aaff;
-    }
   </style>
 </head>
 <body>
-  <div class="calculator">
-    <i class="fas fa-cog icon-settings" title="Settings"></i> <!-- ไอคอนฟันเฟือง -->
-    <h1>Position Calculator</h1>
-    <div class="form-group">
-      <label for="currency">Account Currency</label>
-      <select id="currency">
-        <option value="USD">USD</option>
-        <option value="GBP">GBP</option>
-        <option value="EUR">EUR</option>
-        <option value="THB">THB</option>
-      </select>
+  <div class="container">
+    <!-- หน้า Position Calculator -->
+    <div class="page calculator" id="calculatorPage">
+      <i class="fas fa-cog icon-settings" title="Settings" onclick="togglePage()"></i>
+      <h1>Position Calculator</h1>
+      <div class="form-group">
+        <label for="currency">Account Currency</label>
+        <select id="currency">
+          <option value="USD">USD</option>
+          <option value="GBP">GBP</option>
+          <option value="EUR">EUR</option>
+          <option value="THB">THB</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="balance">Account Balance</label>
+        <input type="number" id="balance" placeholder="Enter balance" />
+      </div>
+      <button class="btn">Calculate</button>
     </div>
-    <div class="form-group">
-      <label for="balance">Account Balance</label>
-      <input type="number" id="balance" placeholder="Enter balance" />
-    </div>
-    <div class="form-group">
-      <label for="risk">Percentage Risk (%)</label>
-      <input type="number" id="risk" placeholder="Enter risk percentage" />
-    </div>
-    <div class="form-group">
-      <label for="stopLoss">Stop Loss (pips)</label>
-      <input type="number" id="stopLoss" placeholder="Enter stop loss" />
-    </div>
-    <div class="form-group">
-      <label for="pair">Instrument</label>
-      <select id="pair">
-        <option value="XAUUSD" selected>XAU/USD</option>
-        <option value="EURUSD">EUR/USD</option>
-        <option value="GBPUSD">GBP/USD</option>
-        <option value="USDJPY">USD/JPY</option>
-        <option value="AUDUSD">AUD/USD</option>
-      </select>
-    </div>
-    <button class="btn" onclick="calculatePosition()">Calculate</button>
-    <div class="result">
-      <p>Cash Risk: <span id="cashRisk">-</span></p>
-      <p>Position Size: <span id="positionSize">-</span></p>
-      <p>Standard Lots: <span id="standardLots">-</span></p>
+
+    <!-- หน้า Settings -->
+    <div class="page settings hidden" id="settingsPage">
+      <i class="fas fa-arrow-left icon-settings" title="Back" onclick="togglePage()"></i>
+      <h1>Settings</h1>
+      <div class="form-group">
+        <label for="accountCurrency">Account Currency</label>
+        <select id="accountCurrency">
+          <option value="USD">USD</option>
+          <option value="GBP">GBP</option>
+          <option value="EUR">EUR</option>
+          <option value="THB">THB</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="riskMode">Risk Mode</label>
+        <select id="riskMode">
+          <option value="percentage">Risk (%)</option>
+          <option value="amount">Risk Amount</option>
+        </select>
+      </div>
     </div>
   </div>
+
+  <script>
+    function togglePage() {
+      const calculatorPage = document.getElementById('calculatorPage');
+      const settingsPage = document.getElementById('settingsPage');
+      calculatorPage.classList.toggle('hidden');
+      settingsPage.classList.toggle('hidden');
+    }
+  </script>
 </body>
 </html>
