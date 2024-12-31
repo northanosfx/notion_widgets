@@ -93,55 +93,6 @@
       font-size: 13px;
     }
 
-    .toggle-group {
-      display: flex;
-      background: #3c3c3c;
-      border-radius: 5px;
-      overflow: hidden;
-      width: 120px;
-    }
-
-    .toggle-group button {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      background: #3c3c3c;
-      color: #aaa;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .toggle-group button.active {
-      background: #00aaff;
-      color: #fff;
-    }
-
-    .currency-select {
-      display: flex;
-      align-items: center;
-      background: #3c3c3c;
-      padding: 8px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .currency-select img {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-    }
-
-    .currency-select select {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 13px;
-      width: 100%;
-      outline: none;
-      cursor: pointer;
-    }
-
     .btn {
       display: block;
       width: 100%;
@@ -157,6 +108,12 @@
 
     .btn:hover {
       background: #0088cc;
+    }
+
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -180,7 +137,20 @@
           <option value="AUDUSD">AUD/USD</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="risk">Percentage Risk (%)</label>
+        <input type="number" id="risk" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
       <button class="btn">Calculate</button>
+      <div class="result">
+        <p>Cash Risk: <span id="cashRisk">-</span></p>
+        <p>Position Size: <span id="positionSize">-</span></p>
+        <p>Standard Lots: <span id="standardLots">-</span></p>
+      </div>
     </div>
 
     <!-- หน้า Settings -->
