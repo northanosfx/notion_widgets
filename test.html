@@ -39,10 +39,6 @@
       transition: transform 0.5s ease-in-out;
     }
 
-    .content.hidden {
-      pointer-events: none;
-    }
-
     .slide-left {
       transform: translateX(-100%);
     }
@@ -168,7 +164,7 @@
     </div>
 
     <!-- หน้า Settings -->
-    <div class="content slide-right hidden" id="settingsContent">
+    <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
       <div class="form-group">
