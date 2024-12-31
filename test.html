@@ -164,6 +164,26 @@
     .day-mode .icon-settings:hover {
       color: #007bff;
     }
+
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      margin-right: 8px;
+    }
+
+    .currency-select {
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-select select {
+      background: #3c3c3c;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 8px;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -216,7 +236,7 @@
       <div class="form-group">
         <label>Account Currency</label>
         <div class="currency-select">
-          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="USD">
+          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="USD">
           <select id="accountCurrency" onchange="changeCurrency()">
             <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
             <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
