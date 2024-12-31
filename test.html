@@ -46,7 +46,16 @@
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
-      box-sizing: border-box; /* ป้องกัน margin/padding ที่ทำให้ความกว้างไม่เท่ากัน */
+      box-sizing: border-box;
+    }
+
+    .form-group select {
+      padding-right: 20px; /* เพิ่ม padding ด้านขวา */
+      appearance: none; /* ปิดการแสดงผล dropdown เริ่มต้น */
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23fff' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: calc(100% - 10px) center; /* กำหนดตำแหน่งลูกศร */
+      background-size: 10px;
     }
 
     .form-group input:focus, .form-group select:focus {
