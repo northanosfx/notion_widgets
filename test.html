@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      font-size: 14px; /* ลดขนาดตัวอักษร */
+      font-size: 14px;
       background-color: #191919;
       color: #fff;
       display: flex;
@@ -67,7 +67,7 @@
     }
 
     h1 {
-      font-size: 18px; /* ลดขนาดตัวอักษรของหัวข้อ */
+      font-size: 18px;
       margin-bottom: 20px;
       text-align: center;
     }
@@ -79,18 +79,18 @@
     .form-group label {
       display: block;
       margin-bottom: 5px;
-      font-size: 13px; /* ลดขนาดตัวอักษรของ Label */
+      font-size: 13px;
     }
 
     .form-group input, .form-group select {
       width: 100%;
-      padding: 6px 8px; /* ลด padding */
+      padding: 6px 8px;
       border: none;
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
       box-sizing: border-box;
-      font-size: 13px; /* ลดขนาดตัวอักษรในช่องกรอก */
+      font-size: 13px;
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -101,12 +101,12 @@
     .btn {
       display: block;
       width: 100%;
-      padding: 8px; /* ลด padding */
+      padding: 8px;
       background: #00aaff;
       border: none;
       border-radius: 5px;
       color: #fff;
-      font-size: 14px; /* ลดขนาดตัวอักษรของปุ่ม */
+      font-size: 14px;
       cursor: pointer;
       margin-top: 20px;
     }
@@ -118,7 +118,7 @@
     .result {
       margin-top: 20px;
       text-align: center;
-      font-size: 13px; /* ลดขนาดตัวอักษรของผลลัพธ์ */
+      font-size: 13px;
     }
   </style>
 </head>
@@ -133,14 +133,6 @@
         <input type="number" id="balance" placeholder="Enter balance" />
       </div>
       <div class="form-group">
-        <label for="risk">Percentage Risk (%)</label>
-        <input type="number" id="risk" placeholder="Enter risk percentage" />
-      </div>
-      <div class="form-group">
-        <label for="stopLoss">Stop Loss (pips)</label>
-        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
-      </div>
-      <div class="form-group">
         <label for="pair">Instrument</label>
         <select id="pair">
           <option value="XAUUSD" selected>XAU/USD</option>
@@ -149,6 +141,14 @@
           <option value="USDJPY">USD/JPY</option>
           <option value="AUDUSD">AUD/USD</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label for="risk">Percentage Risk (%)</label>
+        <input type="number" id="risk" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
       </div>
       <button class="btn">Calculate</button>
       <div class="result">
