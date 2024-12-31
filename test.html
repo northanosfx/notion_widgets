@@ -8,7 +8,6 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      font-size: 14px;
       background-color: #191919;
       color: #fff;
       display: flex;
@@ -16,15 +15,14 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      overflow: hidden;
     }
 
     .container {
       background: #2b2b2b;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      width: 300px;
-      height: 500px;
+      width: 320px;
+      height: 550px;
       overflow: hidden;
       position: relative;
     }
@@ -67,21 +65,46 @@
     }
 
     h1 {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 20px;
       text-align: center;
     }
 
     .form-group {
       margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
     .form-group label {
-      font-size: 13px;
-      flex: 1;
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #00aaff;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background: #0088cc;
     }
 
     .toggle-group {
@@ -97,7 +120,7 @@
       border: none;
       background: #3c3c3c;
       color: #aaa;
-      font-size: 13px;
+      font-size: 14px;
       cursor: pointer;
       transition: background 0.3s, color 0.3s;
     }
@@ -114,7 +137,7 @@
       padding: 8px;
       border-radius: 5px;
       justify-content: space-between;
-      width: 120px;
+      width: 150px;
     }
 
     .currency-select img {
@@ -127,26 +150,9 @@
       background: transparent;
       border: none;
       color: #fff;
-      font-size: 13px;
+      font-size: 14px;
       outline: none;
       cursor: pointer;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 8px;
-      background: #00aaff;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .btn:hover {
-      background: #0088cc;
     }
   </style>
 </head>
@@ -185,8 +191,6 @@
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-back" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
-
-      <!-- Risk -->
       <div class="form-group">
         <label>Risk</label>
         <div class="toggle-group">
@@ -194,8 +198,6 @@
           <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
         </div>
       </div>
-
-      <!-- Account Currency -->
       <div class="form-group">
         <label>Account Currency</label>
         <div class="currency-select">
