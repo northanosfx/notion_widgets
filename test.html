@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Position Calculator</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,6 +23,7 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       width: 300px;
+      position: relative;
     }
 
     .calculator h1 {
@@ -46,7 +48,7 @@
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
-      box-sizing: border-box; /* ป้องกัน margin/padding ที่ทำให้ความกว้างไม่เท่ากัน */
+      box-sizing: border-box;
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -74,10 +76,24 @@
       margin-top: 20px;
       text-align: center;
     }
+
+    .icon-settings {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 20px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .icon-settings:hover {
+      color: #00aaff;
+    }
   </style>
 </head>
 <body>
   <div class="calculator">
+    <i class="fas fa-cog icon-settings" title="Settings"></i> <!-- ไอคอนฟันเฟือง -->
     <h1>Position Calculator</h1>
     <div class="form-group">
       <label for="currency">Account Currency</label>
