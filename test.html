@@ -15,29 +15,16 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      overflow: hidden;
     }
 
     .container {
-      position: relative;
-      width: 300px;
-    }
-
-    .page {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       background: #2b2b2b;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      transform: translateX(0);
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .hidden {
-      transform: translateX(100%);
+      width: 300px;
+      position: relative;
+      overflow: hidden;
     }
 
     .icon-settings {
@@ -54,7 +41,17 @@
       color: #00aaff;
     }
 
-    .calculator h1, .settings h1 {
+    .content {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .hidden {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+    }
+
+    h1 {
       font-size: 20px;
       margin-bottom: 20px;
       text-align: center;
@@ -62,7 +59,6 @@
 
     .form-group {
       margin-bottom: 15px;
-      padding: 0 20px;
     }
 
     .form-group label {
@@ -106,8 +102,8 @@
 <body>
   <div class="container">
     <!-- หน้า Position Calculator -->
-    <div class="page calculator" id="calculatorPage">
-      <i class="fas fa-cog icon-settings" title="Settings" onclick="togglePage()"></i>
+    <div class="content" id="calculatorContent">
+      <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
       <h1>Position Calculator</h1>
       <div class="form-group">
         <label for="currency">Account Currency</label>
@@ -126,8 +122,8 @@
     </div>
 
     <!-- หน้า Settings -->
-    <div class="page settings hidden" id="settingsPage">
-      <i class="fas fa-arrow-left icon-settings" title="Back" onclick="togglePage()"></i>
+    <div class="content hidden" id="settingsContent">
+      <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
       <div class="form-group">
         <label for="accountCurrency">Account Currency</label>
@@ -149,11 +145,17 @@
   </div>
 
   <script>
-    function togglePage() {
-      const calculatorPage = document.getElementById('calculatorPage');
-      const settingsPage = document.getElementById('settingsPage');
-      calculatorPage.classList.toggle('hidden');
-      settingsPage.classList.toggle('hidden');
+    function toggleView(view) {
+      const calculatorContent = document.getElementById('calculatorContent');
+      const settingsContent = document.getElementById('settingsContent');
+
+      if (view === 'settings') {
+        calculatorContent.classList.add('hidden');
+        settingsContent.classList.remove('hidden');
+      } else if (view === 'calculator') {
+        settingsContent.classList.add('hidden');
+        calculatorContent.classList.remove('hidden');
+      }
     }
   </script>
 </body>
