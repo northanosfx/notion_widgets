@@ -15,6 +15,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      overflow: hidden;
     }
 
     .container {
@@ -23,10 +24,36 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       width: 300px;
-      height: 500px; /* ความสูงคงที่ */
-      position: relative;
+      height: 500px;
       overflow: hidden;
+      position: relative;
+    }
+
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
       box-sizing: border-box;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .content.hidden {
+      pointer-events: none;
+    }
+
+    .slide-left {
+      transform: translateX(-100%);
+    }
+
+    .slide-right {
+      transform: translateX(100%);
+    }
+
+    .content.active {
+      transform: translateX(0);
     }
 
     .icon-settings {
@@ -41,23 +68,6 @@
 
     .icon-settings:hover {
       color: #00aaff;
-    }
-
-    .content {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      padding: 20px; /* เพิ่ม padding ให้เนื้อหาภายใน */
-      box-sizing: border-box;
-      top: 0;
-      left: 0;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-
-    .hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
     }
 
     h1 {
@@ -116,7 +126,7 @@
 <body>
   <div class="container">
     <!-- หน้า Position Calculator -->
-    <div class="content" id="calculatorContent">
+    <div class="content active" id="calculatorContent">
       <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
       <h1>Position Calculator</h1>
       <div class="form-group">
@@ -159,7 +169,7 @@
     </div>
 
     <!-- หน้า Settings -->
-    <div class="content hidden" id="settingsContent">
+    <div class="content slide-right hidden" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
       <div class="form-group">
@@ -187,17 +197,15 @@
       const settingsContent = document.getElementById('settingsContent');
 
       if (view === 'settings') {
-        // เก็บค่าจาก Position Calculator
-        document.getElementById('accountCurrency').value = document.getElementById('currency').value;
-
-        calculatorContent.classList.add('hidden');
-        settingsContent.classList.remove('hidden');
+        calculatorContent.classList.add('slide-left');
+        calculatorContent.classList.remove('active');
+        settingsContent.classList.add('active');
+        settingsContent.classList.remove('slide-right');
       } else if (view === 'calculator') {
-        // เก็บค่าจาก Settings
-        document.getElementById('currency').value = document.getElementById('accountCurrency').value;
-
-        calculatorContent.classList.remove('hidden');
-        settingsContent.classList.add('hidden');
+        settingsContent.classList.add('slide-right');
+        settingsContent.classList.remove('active');
+        calculatorContent.classList.add('active');
+        calculatorContent.classList.remove('slide-left');
       }
     }
   </script>
