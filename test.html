@@ -42,13 +42,14 @@
     }
 
     .form-group input, .form-group select {
-      width: 100%;
+      width: 100%; /* ให้ช่องกรอกเต็มความกว้างของกล่อง */
       padding: 8px;
       border: none;
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
-      box-sizing: border-box;
+      box-sizing: border-box; /* จัดการ padding ให้ไม่เกินกรอบ */
+      min-width: 250px; /* เพิ่มความกว้างขั้นต่ำเพื่อไม่ให้ช่องเล็กจนเกินไป */
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -82,12 +83,12 @@
       top: 15px;
       left: 15px;
       font-size: 20px;
-      color: #757575; /* สีไอคอนที่อ่อนลง */
+      color: #757575;
       cursor: pointer;
     }
 
     .icon-settings:hover {
-      color: #00aaff; /* สีเมื่อ hover */
+      color: #00aaff;
     }
   </style>
 </head>
@@ -133,48 +134,5 @@
       <p>Standard Lots: <span id="standardLots">-</span></p>
     </div>
   </div>
-
-  <script>
-    async function fetchExchangeRates() {
-      try {
-        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-        const data = await response.json();
-        return data.rates;
-      } catch (error) {
-        alert('Error fetching exchange rates. Please try again later.');
-        return null;
-      }
-    }
-
-    async function calculatePosition() {
-      const exchangeRates = await fetchExchangeRates();
-      if (!exchangeRates) return;
-
-      const currency = document.getElementById('currency').value;
-      const balance = parseFloat(document.getElementById('balance').value);
-      const risk = parseFloat(document.getElementById('risk').value);
-      const stopLoss = parseFloat(document.getElementById('stopLoss').value);
-
-      if (isNaN(balance) || isNaN(risk) || isNaN(stopLoss) || balance <= 0 || risk <= 0 || stopLoss <= 0) {
-        alert('Please enter valid inputs.');
-        return;
-      }
-
-      const conversionRate = exchangeRates[currency];
-      if (!conversionRate) {
-        alert('Currency conversion rate not found.');
-        return;
-      }
-
-      const balanceInUSD = balance / conversionRate;
-      const cashRisk = (balanceInUSD * risk) / 100;
-      const positionSize = (cashRisk / stopLoss) * 10000;
-      const standardLots = positionSize / 100000;
-
-      document.getElementById('cashRisk').textContent = cashRisk.toFixed(2);
-      document.getElementById('positionSize').textContent = positionSize.toFixed(0);
-      document.getElementById('standardLots').textContent = standardLots.toFixed(2);
-    }
-  </script>
 </body>
 </html>
