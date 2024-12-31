@@ -82,81 +82,70 @@
       font-size: 13px;
     }
 
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 6px 8px;
-      border: none;
-      border-radius: 5px;
+    .toggle-group {
+      display: flex;
       background: #3c3c3c;
-      color: #fff;
-      box-sizing: border-box;
-      font-size: 13px;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 8px;
-      background: #00aaff;
-      border: none;
       border-radius: 5px;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 20px;
+      overflow: hidden;
+      width: 120px;
+      height: 30px;
     }
 
-    .btn:hover {
-      background: #0088cc;
-    }
-
-    .result {
-      margin-top: 20px;
-      text-align: center;
+    .toggle-group button {
+      flex: 1;
+      border: none;
+      background: #3c3c3c;
+      color: #aaa;
       font-size: 13px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .toggle-group button.active {
+      background: #00aaff;
+      color: #fff;
+    }
+
+    .currency-select {
+      display: flex;
+      align-items: center;
+      background: #3c3c3c;
+      padding: 8px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .currency-select img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    .currency-select select {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .divider {
+      border-bottom: 1px solid #444;
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- หน้า Position Calculator -->
-    <div class="content active" id="calculatorContent">
-      <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
-      <h1>Position Calculator</h1>
-      <div class="form-group">
-        <label for="balance">Account Balance</label>
-        <input type="number" id="balance" placeholder="Enter balance" />
-      </div>
-      <div class="form-group">
-        <label for="pair">Instrument</label>
-        <select id="pair">
-          <option value="XAUUSD" selected>XAU/USD</option>
-          <option value="EURUSD">EUR/USD</option>
-          <option value="GBPUSD">GBP/USD</option>
-          <option value="USDJPY">USD/JPY</option>
-          <option value="AUDUSD">AUD/USD</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="risk">Percentage Risk (%)</label>
-        <input type="number" id="risk" placeholder="Enter risk percentage" />
-      </div>
-      <div class="form-group">
-        <label for="stopLoss">Stop Loss (pips)</label>
-        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
-      </div>
-      <button class="btn">Calculate</button>
-      <div class="result">
-        <p>Cash Risk: <span id="cashRisk">-</span></p>
-        <p>Position Size: <span id="positionSize">-</span></p>
-        <p>Standard Lots: <span id="standardLots">-</span></p>
-      </div>
-    </div>
-
     <!-- หน้า Settings -->
-    <div class="content slide-right" id="settingsContent">
+    <div class="content active" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
+      <p class="options">Options in the App</p>
+
+      <!-- Risk -->
       <div class="form-group">
         <label>Risk</label>
         <div class="toggle-group">
@@ -165,6 +154,9 @@
         </div>
       </div>
 
+      <div class="divider"></div>
+
+      <!-- Account Currency -->
       <div class="form-group">
         <label>Account Currency</label>
         <div class="currency-select">
@@ -205,20 +197,7 @@
 
     // Toggle Views
     function toggleView(view) {
-      const calculatorContent = document.getElementById('calculatorContent');
-      const settingsContent = document.getElementById('settingsContent');
-
-      if (view === 'settings') {
-        calculatorContent.classList.add('slide-left');
-        calculatorContent.classList.remove('active');
-        settingsContent.classList.add('active');
-        settingsContent.classList.remove('slide-right');
-      } else if (view === 'calculator') {
-        settingsContent.classList.add('slide-right');
-        settingsContent.classList.remove('active');
-        calculatorContent.classList.add('active');
-        calculatorContent.classList.remove('slide-left');
-      }
+      alert('Go back to the Calculator page.');
     }
   </script>
 </body>
