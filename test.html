@@ -46,9 +46,7 @@
     }
 
     .hidden {
-      opacity: 0;
-      transform: translateY(-20px);
-      pointer-events: none;
+      display: none;
     }
 
     h1 {
@@ -150,9 +148,17 @@
       const settingsContent = document.getElementById('settingsContent');
 
       if (view === 'settings') {
+        // เก็บค่าจาก Position Calculator ก่อนเปลี่ยนหน้า
+        const currency = document.getElementById('currency').value;
+        document.getElementById('accountCurrency').value = currency;
+
         calculatorContent.classList.add('hidden');
         settingsContent.classList.remove('hidden');
       } else if (view === 'calculator') {
+        // เก็บค่าจาก Settings ก่อนกลับไปหน้า Calculator
+        const accountCurrency = document.getElementById('accountCurrency').value;
+        document.getElementById('currency').value = accountCurrency;
+
         settingsContent.classList.add('hidden');
         calculatorContent.classList.remove('hidden');
       }
