@@ -23,9 +23,10 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       width: 300px;
-      height: 500px; /* ตั้งความสูงคงที่ */
+      height: 500px; /* ความสูงคงที่ */
       position: relative;
       overflow: hidden;
+      box-sizing: border-box;
     }
 
     .icon-settings {
@@ -46,6 +47,8 @@
       position: absolute;
       width: 100%;
       height: 100%;
+      padding: 20px; /* เพิ่ม padding ให้เนื้อหาภายใน */
+      box-sizing: border-box;
       top: 0;
       left: 0;
       transition: opacity 0.5s ease, visibility 0.5s ease;
