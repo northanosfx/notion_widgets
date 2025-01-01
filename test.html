@@ -116,6 +116,50 @@
       background: #0088cc;
     }
 
+    .toggle-group {
+      display: flex;
+      background: #3c3c3c;
+      border-radius: 5px;
+      overflow: hidden;
+      width: 120px;
+      height: 30px;
+    }
+
+    .toggle-group button {
+      flex: 1;
+      border: none;
+      background: #3c3c3c;
+      color: #aaa;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .toggle-group button.active {
+      background: #00aaff;
+      color: #fff;
+    }
+
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      margin-right: 8px;
+    }
+
+    .currency-select {
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-select select {
+      background: #3c3c3c;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+
     .day-mode {
       background-color: #f9f9f9;
       color: #333;
@@ -194,7 +238,6 @@
           <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
         </div>
       </div>
-      <div class="divider"></div>
       <div class="form-group">
         <label>Account Currency</label>
         <div class="currency-select">
