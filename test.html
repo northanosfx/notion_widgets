@@ -91,12 +91,12 @@
       color: #fff;
       box-sizing: border-box;
       font-size: 13px;
-      outline: none; /* Remove white outline */
+      outline: none;
     }
 
     .form-group input:focus, .form-group select:focus {
       outline: none;
-      box-shadow: 0 0 5px #00aaff; /* Optional: Add a subtle glow */
+      box-shadow: 0 0 5px #00aaff;
     }
 
     .btn {
@@ -121,7 +121,7 @@
       background: #3c3c3c;
       border-radius: 5px;
       overflow: hidden;
-      width: 120px;
+      width: 180px;
       height: 30px;
     }
 
@@ -227,6 +227,9 @@
       <div class="form-group">
         <label>Theme</label>
         <div class="toggle-group">
+          <button id="systemMode" onclick="toggleTheme('system')">
+            <i class="fas fa-desktop"></i>
+          </button>
           <button id="dayMode" class="active" onclick="toggleTheme('day')">
             <i class="fas fa-lightbulb"></i>
           </button>
@@ -260,17 +263,29 @@
   <script>
     function toggleTheme(mode) {
       const body = document.body;
+      const systemModeButton = document.getElementById('systemMode');
       const dayButton = document.getElementById('dayMode');
       const nightButton = document.getElementById('nightMode');
 
-      if (mode === 'day') {
+      if (mode === 'system') {
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        body.classList.toggle('day-mode', !prefersDarkScheme);
+        body.classList.toggle('night-mode', prefersDarkScheme);
+        systemModeButton.classList.add('active');
+        dayButton.classList.remove('active');
+        nightButton.classList.remove('active');
+      } else if (mode === 'day') {
         body.classList.add('day-mode');
+        body.classList.remove('night-mode');
         dayButton.classList.add('active');
         nightButton.classList.remove('active');
-      } else {
+        systemModeButton.classList.remove('active');
+      } else if (mode === 'night') {
+        body.classList.add('night-mode');
         body.classList.remove('day-mode');
-        dayButton.classList.remove('active');
         nightButton.classList.add('active');
+        dayButton.classList.remove('active');
+        systemModeButton.classList.remove('active');
       }
     }
 
