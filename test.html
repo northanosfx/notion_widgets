@@ -3,140 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Position Calculator</title>
+  <title>System Theme Sync</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
     body {
       font-family: Arial, sans-serif;
-      font-size: 14px;
-      background-color: #191919;
-      color: #fff;
+      margin: 0;
+      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
-      overflow: hidden;
+      background-color: #191919;
+      color: #fff;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     .container {
-      background: #2b2b2b;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      width: 300px;
-      height: 500px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 20px;
-      box-sizing: border-box;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .slide-left {
-      transform: translateX(-100%);
-    }
-
-    .slide-right {
-      transform: translateX(100%);
-    }
-
-    .content.active {
-      transform: translateX(0);
-    }
-
-    .icon-settings {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-size: 20px;
-      color: #757575;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-
-    .icon-settings:hover {
-      color: #00aaff;
-    }
-
-    h1 {
-      font-size: 18px;
-      margin-bottom: 20px;
       text-align: center;
     }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 13px;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 6px 8px;
-      border: none;
-      border-radius: 5px;
-      background: #3c3c3c;
-      color: #fff;
-      box-sizing: border-box;
-      font-size: 13px;
-      outline: none;
-    }
-
-    .form-group input:focus, .form-group select:focus {
-      outline: none;
-      box-shadow: 0 0 5px #00aaff;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 8px;
-      background: #00aaff;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
+    .btn-group {
+      display: flex;
+      justify-content: center;
       margin-top: 20px;
     }
 
-    .btn:hover {
-      background: #0088cc;
-    }
-
-    .toggle-group {
-      display: flex;
-      background: #3c3c3c;
-      border-radius: 5px;
-      overflow: hidden;
-      width: 180px;
-      height: 30px;
-    }
-
-    .toggle-group button {
-      flex: 1;
+    .btn {
+      padding: 10px 20px;
+      margin: 0 5px;
       border: none;
-      background: #3c3c3c;
-      color: #aaa;
-      font-size: 16px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.3s, color 0.3s;
+      background-color: #3c3c3c;
+      color: #fff;
+      font-size: 16px;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    .toggle-group button.active {
-      background: #00aaff;
+    .btn.active {
+      background-color: #00aaff;
       color: #fff;
     }
 
@@ -145,186 +51,72 @@
       color: #333;
     }
 
-    .day-mode .container {
-      background-color: #fff;
-    }
-
-    .day-mode .form-group input,
-    .day-mode .form-group select {
-      background: #f0f0f0;
-      color: #333;
-    }
-
     .day-mode .btn {
-      background: #007bff;
-    }
-
-    .day-mode .btn:hover {
-      background: #0056b3;
-    }
-
-    .day-mode .icon-settings {
+      background-color: #ddd;
       color: #333;
     }
 
-    .day-mode .icon-settings:hover {
-      color: #007bff;
-    }
-
-    .currency-flag {
-      width: 20px;
-      height: 15px;
-      margin-right: 8px;
-    }
-
-    .currency-select {
-      display: flex;
-      align-items: center;
-    }
-
-    .currency-select select {
-      background: #3c3c3c;
+    .day-mode .btn.active {
+      background-color: #007bff;
       color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 6px 8px;
-      font-size: 13px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="content active" id="calculatorContent">
-      <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
-      <h1>Position Calculator</h1>
-      <div class="form-group">
-        <label for="balance">Account Balance</label>
-        <input type="number" id="balance" placeholder="Enter balance" />
-      </div>
-      <div class="form-group">
-        <label for="pair">Instrument</label>
-        <select id="pair">
-          <option value="XAUUSD" selected>XAU/USD</option>
-          <option value="EURUSD">EUR/USD</option>
-          <option value="GBPUSD">GBP/USD</option>
-          <option value="USDJPY">USD/JPY</option>
-          <option value="AUDUSD">AUD/USD</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="risk">Percentage Risk (%)</label>
-        <input type="number" id="risk" placeholder="Enter risk percentage" />
-      </div>
-      <div class="form-group">
-        <label for="stopLoss">Stop Loss (pips)</label>
-        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
-      </div>
-      <button class="btn">Calculate</button>
-    </div>
-    <div class="content slide-right" id="settingsContent">
-      <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
-      <h1>Settings</h1>
-      <div class="form-group">
-        <label>Theme</label>
-        <div class="toggle-group">
-          <button id="systemMode" onclick="toggleTheme('system')">
-            <i class="fas fa-desktop"></i>
-          </button>
-          <button id="dayMode" class="active" onclick="toggleTheme('day')">
-            <i class="fas fa-lightbulb"></i>
-          </button>
-          <button id="nightMode" onclick="toggleTheme('night')">
-            <i class="fas fa-moon"></i>
-          </button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Risk</label>
-        <div class="toggle-group">
-          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
-          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="form-group">
-        <label>Account Currency</label>
-        <div class="currency-select">
-          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="USD">
-          <select id="accountCurrency" onchange="changeCurrency()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
-          </select>
-        </div>
-      </div>
+    <h1>Theme Selector</h1>
+    <p>Select your theme or use the system default:</p>
+    <div class="btn-group">
+      <button id="dayMode" class="btn" onclick="setTheme('day')">Day Mode</button>
+      <button id="nightMode" class="btn" onclick="setTheme('night')">Night Mode</button>
+      <button id="systemMode" class="btn active" onclick="useSystemTheme()">Use System Setting</button>
     </div>
   </div>
+
   <script>
-    function toggleTheme(mode) {
+    function setTheme(mode) {
       const body = document.body;
-      const systemModeButton = document.getElementById('systemMode');
-      const dayButton = document.getElementById('dayMode');
-      const nightButton = document.getElementById('nightMode');
+      const dayBtn = document.getElementById('dayMode');
+      const nightBtn = document.getElementById('nightMode');
+      const systemBtn = document.getElementById('systemMode');
 
-      if (mode === 'system') {
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        body.classList.toggle('day-mode', !prefersDarkScheme);
-        body.classList.toggle('night-mode', prefersDarkScheme);
-        systemModeButton.classList.add('active');
-        dayButton.classList.remove('active');
-        nightButton.classList.remove('active');
-      } else if (mode === 'day') {
+      // Reset all buttons
+      dayBtn.classList.remove('active');
+      nightBtn.classList.remove('active');
+      systemBtn.classList.remove('active');
+
+      // Apply selected theme
+      if (mode === 'day') {
         body.classList.add('day-mode');
-        body.classList.remove('night-mode');
-        dayButton.classList.add('active');
-        nightButton.classList.remove('active');
-        systemModeButton.classList.remove('active');
+        dayBtn.classList.add('active');
       } else if (mode === 'night') {
-        body.classList.add('night-mode');
         body.classList.remove('day-mode');
-        nightButton.classList.add('active');
-        dayButton.classList.remove('active');
-        systemModeButton.classList.remove('active');
+        nightBtn.classList.add('active');
       }
     }
 
-    function toggleRisk(type) {
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
+    function useSystemTheme() {
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const systemBtn = document.getElementById('systemMode');
 
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
+      // Set theme based on system preference
+      if (prefersDarkScheme) {
+        document.body.classList.remove('day-mode'); // Dark mode
       } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
+        document.body.classList.add('day-mode'); // Light mode
       }
+
+      // Highlight system button
+      document.getElementById('dayMode').classList.remove('active');
+      document.getElementById('nightMode').classList.remove('active');
+      systemBtn.classList.add('active');
     }
 
-    function changeCurrency() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      document.getElementById('currencyFlag').src = flagUrl;
-    }
+    // Detect theme changes in real-time
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', useSystemTheme);
 
-    function toggleView(view) {
-      const calculatorContent = document.getElementById('calculatorContent');
-      const settingsContent = document.getElementById('settingsContent');
-
-      if (view === 'settings') {
-        calculatorContent.classList.add('slide-left');
-        calculatorContent.classList.remove('active');
-        settingsContent.classList.add('active');
-        settingsContent.classList.remove('slide-right');
-      } else {
-        settingsContent.classList.add('slide-right');
-        settingsContent.classList.remove('active');
-        calculatorContent.classList.add('active');
-        calculatorContent.classList.remove('slide-left');
-      }
-    }
+    // Apply system theme on page load
+    document.addEventListener('DOMContentLoaded', useSystemTheme);
   </script>
 </body>
 </html>
