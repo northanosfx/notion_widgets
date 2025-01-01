@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -160,6 +160,16 @@
       font-size: 13px;
     }
 
+    .risk-settings {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .risk-settings .toggle-group {
+      margin-left: 10px;
+    }
+
     .day-mode {
       background-color: #f9f9f9;
       color: #333;
@@ -231,7 +241,7 @@
           <option value="night">Night Mode</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group risk-settings">
         <label>Risk</label>
         <div class="toggle-group">
           <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
