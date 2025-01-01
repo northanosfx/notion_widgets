@@ -149,9 +149,15 @@
     .currency-select {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    .currency-select .currency-label {
+      flex: 1;
     }
 
     .currency-select select {
+      flex: 1;
       background: #3c3c3c;
       color: #fff;
       border: none;
@@ -236,17 +242,14 @@
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
-      <div class="form-group">
-        <label>Account Currency</label>
-        <div class="currency-select">
-          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="USD">
-          <select id="accountCurrency" onchange="changeCurrency()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
-          </select>
-        </div>
+      <div class="form-group currency-select">
+        <label class="currency-label">Account Currency</label>
+        <select id="accountCurrency" onchange="changeCurrency()">
+          <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+          <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+          <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+          <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+        </select>
       </div>
       <div class="divider"></div>
       <div class="form-group">
