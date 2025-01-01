@@ -1,4 +1,4 @@
-ฃ<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,7 +17,6 @@
       height: 100vh;
       margin: 0;
       overflow: hidden;
-      transition: background-color 0.3s, color 0.3s;
     }
 
     .container {
@@ -67,6 +66,12 @@
       color: #00aaff;
     }
 
+    h1 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
     .form-group {
       margin-bottom: 15px;
     }
@@ -74,6 +79,7 @@
     .form-group label {
       display: block;
       margin-bottom: 5px;
+      font-size: 13px;
     }
 
     .form-group input, .form-group select {
@@ -83,22 +89,14 @@
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
+      box-sizing: border-box;
       font-size: 13px;
+      outline: none; /* Remove white outline */
     }
 
-    .day-mode {
-      background-color: #f9f9f9;
-      color: #333;
-    }
-
-    .day-mode .container {
-      background-color: #fff;
-    }
-
-    .day-mode .form-group input,
-    .day-mode .form-group select {
-      background: #f0f0f0;
-      color: #333;
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      box-shadow: 0 0 5px #00aaff; /* Optional: Add a subtle glow */
     }
 
     .btn {
@@ -120,29 +118,82 @@
 
     .toggle-group {
       display: flex;
-      margin-top: 20px;
+      background: #3c3c3c;
+      border-radius: 5px;
+      overflow: hidden;
+      width: 120px;
+      height: 30px;
     }
 
     .toggle-group button {
       flex: 1;
-      margin: 0 5px;
-      padding: 10px;
       border: none;
-      border-radius: 5px;
       background: #3c3c3c;
       color: #aaa;
+      font-size: 16px;
       cursor: pointer;
+      transition: background 0.3s, color 0.3s;
     }
 
     .toggle-group button.active {
       background: #00aaff;
       color: #fff;
     }
+
+    .day-mode {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .day-mode .container {
+      background-color: #fff;
+    }
+
+    .day-mode .form-group input,
+    .day-mode .form-group select {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .day-mode .btn {
+      background: #007bff;
+    }
+
+    .day-mode .btn:hover {
+      background: #0056b3;
+    }
+
+    .day-mode .icon-settings {
+      color: #333;
+    }
+
+    .day-mode .icon-settings:hover {
+      color: #007bff;
+    }
+
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      margin-right: 8px;
+    }
+
+    .currency-select {
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-select select {
+      background: #3c3c3c;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 8px;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Calculator Content -->
     <div class="content active" id="calculatorContent">
       <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
       <h1>Position Calculator</h1>
@@ -170,23 +221,79 @@
       </div>
       <button class="btn">Calculate</button>
     </div>
-
-    <!-- Settings Content -->
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
       <div class="form-group">
         <label>Theme</label>
         <div class="toggle-group">
-          <button id="dayMode" onclick="setTheme('day')">Day Mode</button>
-          <button id="nightMode" onclick="setTheme('night')">Night Mode</button>
-          <button id="systemMode" onclick="useSystemTheme()" class="active">Use System Setting</button>
+          <button id="dayMode" class="active" onclick="toggleTheme('day')">
+            <i class="fas fa-lightbulb"></i>
+          </button>
+          <button id="nightMode" onclick="toggleTheme('night')">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Risk</label>
+        <div class="toggle-group">
+          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label>Account Currency</label>
+        <div class="currency-select">
+          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="USD">
+          <select id="accountCurrency" onchange="changeCurrency()">
+            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+          </select>
         </div>
       </div>
     </div>
   </div>
-
   <script>
+    function toggleTheme(mode) {
+      const body = document.body;
+      const dayButton = document.getElementById('dayMode');
+      const nightButton = document.getElementById('nightMode');
+
+      if (mode === 'day') {
+        body.classList.add('day-mode');
+        dayButton.classList.add('active');
+        nightButton.classList.remove('active');
+      } else {
+        body.classList.remove('day-mode');
+        dayButton.classList.remove('active');
+        nightButton.classList.add('active');
+      }
+    }
+
+    function toggleRisk(type) {
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+      }
+    }
+
+    function changeCurrency() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
+    }
+
     function toggleView(view) {
       const calculatorContent = document.getElementById('calculatorContent');
       const settingsContent = document.getElementById('settingsContent');
@@ -203,50 +310,6 @@
         calculatorContent.classList.remove('slide-left');
       }
     }
-
-    function setTheme(mode) {
-      const body = document.body;
-      const dayBtn = document.getElementById('dayMode');
-      const nightBtn = document.getElementById('nightMode');
-      const systemBtn = document.getElementById('systemMode');
-
-      // Reset all buttons
-      dayBtn.classList.remove('active');
-      nightBtn.classList.remove('active');
-      systemBtn.classList.remove('active');
-
-      // Apply selected theme
-      if (mode === 'day') {
-        body.classList.add('day-mode');
-        dayBtn.classList.add('active');
-      } else if (mode === 'night') {
-        body.classList.remove('day-mode');
-        nightBtn.classList.add('active');
-      }
-    }
-
-    function useSystemTheme() {
-      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const systemBtn = document.getElementById('systemMode');
-
-      // Set theme based on system preference
-      if (prefersDarkScheme) {
-        document.body.classList.remove('day-mode'); // Dark mode
-      } else {
-        document.body.classList.add('day-mode'); // Light mode
-      }
-
-      // Highlight system button
-      document.getElementById('dayMode').classList.remove('active');
-      document.getElementById('nightMode').classList.remove('active');
-      systemBtn.classList.add('active');
-    }
-
-    // Detect theme changes in real-time
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', useSystemTheme);
-
-    // Apply system theme on page load
-    document.addEventListener('DOMContentLoaded', useSystemTheme);
   </script>
 </body>
 </html>
