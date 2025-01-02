@@ -177,6 +177,38 @@
     .day-mode .btn:hover {
       background: #0056b3;
     }
+
+    .risk-settings {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .toggle-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .toggle-group button {
+      padding: 6px 12px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .toggle-group button.active {
+      background: #00aaff;
+      color: #fff;
+    }
+
+    .toggle-group button:hover {
+      background: #0088cc;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
