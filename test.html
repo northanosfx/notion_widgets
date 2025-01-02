@@ -116,17 +116,28 @@
       background: #0088cc;
     }
 
-    .currency-flag {
-      width: 20px;
-      height: 15px;
-      margin-right: 8px;
-      border-radius: 3px;
-    }
-
     .currency-select {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       gap: 8px;
+      flex: 1;
+    }
+
+    .currency-label {
+      margin-right: 10px;
+    }
+
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      border-radius: 3px;
     }
 
     .toggle-group {
@@ -222,7 +233,7 @@
       <h1>Settings</h1>
       <div class="form-group currency-select">
         <label class="currency-label">Account Currency</label>
-        <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="currency-container">
           <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" />
           <select id="accountCurrency" onchange="changeCurrency()">
             <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
