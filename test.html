@@ -119,31 +119,34 @@
     .currency-select {
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .currency-label {
+      margin-right: 10px;
     }
 
     .currency-flag {
       width: 20px;
       height: 15px;
-      object-fit: cover;
+      border-radius: 3px;
     }
 
-    .custom-select {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #3c3c3c;
-      padding: 6px;
-      border-radius: 5px;
-    }
-
-    .custom-select select {
-      background: transparent;
+    select#accountCurrency {
+      width: auto;
+      padding: 4px 8px;
       border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
       color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      appearance: none;
+      text-align: right;
     }
 
     .divider {
@@ -175,17 +178,42 @@
       background: #0056b3;
     }
 
-    .day-mode .icon-settings {
-      color: #333;
+    .toggle-group {
+      display: flex;
+      justify-content: space-evenly;
+      gap: 10px;
+      padding: 5px;
+      background: #2b2b2b;
+      border-radius: 8px;
+      border: 1px solid #444;
     }
 
-    .day-mode .icon-settings:hover {
-      color: #007bff;
+    .toggle-group button {
+      flex: 1;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .toggle-group button.active {
+      background: #00aaff;
+      color: #fff;
+    }
+
+    .toggle-group button:hover {
+      background: #0088cc;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Calculator Section -->
     <div class="content active" id="calculatorContent">
       <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
       <h1>Position Calculator</h1>
@@ -213,13 +241,15 @@
       </div>
       <button class="btn">Calculate</button>
     </div>
+
+    <!-- Settings Section -->
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
       <div class="form-group currency-select">
         <label class="currency-label">Account Currency</label>
-        <div class="custom-select">
-          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag">
+        <div class="currency-container">
+          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" />
           <select id="accountCurrency" onchange="changeCurrency()">
             <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
             <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
@@ -230,52 +260,24 @@
       </div>
       <div class="divider"></div>
       <div class="form-group">
-        <label for="themeSelect">Theme</label>
-        <select id="themeSelect" onchange="changeTheme()">
-          <option value="day">Day Mode</option>
-          <option value="night">Night Mode</option>
-        </select>
-      </div>
-      <div class="divider"></div>
-      <div class="form-group">
         <label>Risk</label>
         <div class="toggle-group">
           <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
           <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
         </div>
       </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label for="themeSelect">Theme</label>
+        <select id="themeSelect" onchange="changeTheme()">
+          <option value="day">Day Mode</option>
+          <option value="night">Night Mode</option>
+        </select>
+      </div>
     </div>
   </div>
+
   <script>
-    function toggleTheme(mode) {
-      const body = document.body;
-      if (mode === 'day') {
-        body.classList.add('day-mode');
-      } else {
-        body.classList.remove('day-mode');
-      }
-    }
-
-    function toggleRisk(type) {
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
-
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
-      } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
-      }
-    }
-
-    function changeCurrency() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      document.getElementById('currencyFlag').src = flagUrl;
-    }
-
     function toggleView(view) {
       const calculatorContent = document.getElementById('calculatorContent');
       const settingsContent = document.getElementById('settingsContent');
@@ -293,6 +295,13 @@
       }
     }
 
+    function changeCurrency() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
+    }
+
     function changeTheme() {
       const themeSelect = document.getElementById('themeSelect');
       const selectedTheme = themeSelect.value;
@@ -302,6 +311,19 @@
         body.classList.add('day-mode');
       } else {
         body.classList.remove('day-mode');
+      }
+    }
+
+    function toggleRisk(type) {
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
       }
     }
   </script>
