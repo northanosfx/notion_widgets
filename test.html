@@ -116,13 +116,26 @@
       background: #0088cc;
     }
 
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      margin-right: 8px;
+      border-radius: 3px;
+    }
+
+    .currency-select {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .toggle-group {
       display: flex;
       background: #3c3c3c;
       border-radius: 5px;
       overflow: hidden;
       width: 100%;
-      max-width: 150px; /* Restore original width for %/Amount */
+      max-width: 150px;
       height: 26px;
       margin-left: auto;
     }
@@ -140,47 +153,6 @@
     .toggle-group button.active {
       background: #00aaff;
       color: #fff;
-    }
-
-    .currency-flag {
-      width: 20px;
-      height: 15px;
-      margin-right: 8px;
-    }
-
-    .currency-select {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .currency-select .currency-label {
-      flex: 1;
-    }
-
-    .currency-select select {
-      flex: none;
-      background: #3c3c3c;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 6px 8px;
-      font-size: 13px;
-      width: auto; /* Adjust width to fit content */
-      min-width: 100px; /* Ensure a minimum width for consistency */
-    }
-
-    .risk-settings {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .theme-settings {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
     }
 
     .divider {
@@ -211,18 +183,11 @@
     .day-mode .btn:hover {
       background: #0056b3;
     }
-
-    .day-mode .icon-settings {
-      color: #333;
-    }
-
-    .day-mode .icon-settings:hover {
-      color: #007bff;
-    }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Calculator Section -->
     <div class="content active" id="calculatorContent">
       <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
       <h1>Position Calculator</h1>
@@ -250,20 +215,25 @@
       </div>
       <button class="btn">Calculate</button>
     </div>
+
+    <!-- Settings Section -->
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
       <div class="form-group currency-select">
         <label class="currency-label">Account Currency</label>
-        <select id="accountCurrency" onchange="changeCurrency()">
-          <option value="USD" data-flag="https://flagcdn.com/w320/us.png">🇺🇸 USD</option>
-          <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">🇬🇧 GBP</option>
-          <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">🇪🇺 EUR</option>
-          <option value="THB" data-flag="https://flagcdn.com/w320/th.png">🇹🇭 THB</option>
-        </select>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" />
+          <select id="accountCurrency" onchange="changeCurrency()">
+            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+          </select>
+        </div>
       </div>
       <div class="divider"></div>
-      <div class="form-group theme-settings">
+      <div class="form-group">
         <label for="themeSelect">Theme</label>
         <select id="themeSelect" onchange="changeTheme()">
           <option value="day">Day Mode</option>
@@ -280,43 +250,8 @@
       </div>
     </div>
   </div>
+
   <script>
-    function toggleTheme(mode) {
-      const body = document.body;
-      const dayButton = document.getElementById('dayMode');
-      const nightButton = document.getElementById('nightMode');
-
-      if (mode === 'day') {
-        body.classList.add('day-mode');
-        dayButton.classList.add('active');
-        nightButton.classList.remove('active');
-      } else {
-        body.classList.remove('day-mode');
-        dayButton.classList.remove('active');
-        nightButton.classList.add('active');
-      }
-    }
-
-    function toggleRisk(type) {
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
-
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
-      } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
-      }
-    }
-
-    function changeCurrency() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      document.getElementById('currencyFlag').src = flagUrl;
-    }
-
     function toggleView(view) {
       const calculatorContent = document.getElementById('calculatorContent');
       const settingsContent = document.getElementById('settingsContent');
@@ -334,6 +269,13 @@
       }
     }
 
+    function changeCurrency() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
+    }
+
     function changeTheme() {
       const themeSelect = document.getElementById('themeSelect');
       const selectedTheme = themeSelect.value;
@@ -343,6 +285,19 @@
         body.classList.add('day-mode');
       } else {
         body.classList.remove('day-mode');
+      }
+    }
+
+    function toggleRisk(type) {
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
       }
     }
   </script>
