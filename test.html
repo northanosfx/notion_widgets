@@ -166,8 +166,8 @@
       border-radius: 5px;
       padding: 6px 8px;
       font-size: 13px;
-      appearance: none; /* Hide default dropdown arrow */
-      background-image: none; /* Remove additional default styles */
+      width: auto; /* Adjust width to fit content */
+      min-width: 100px; /* Ensure a minimum width for consistency */
     }
 
     .risk-settings {
@@ -256,10 +256,10 @@
       <div class="form-group currency-select">
         <label class="currency-label">Account Currency</label>
         <select id="accountCurrency" onchange="changeCurrency()">
-          <option value="USD" data-flag="https://flagcdn.com/w320/us.png"><img src="https://flagcdn.com/w320/us.png" alt="US"> USD</option>
-          <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png"><img src="https://flagcdn.com/w320/gb.png" alt="GB"> GBP</option>
-          <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png"><img src="https://flagcdn.com/w320/eu.png" alt="EU"> EUR</option>
-          <option value="THB" data-flag="https://flagcdn.com/w320/th.png"><img src="https://flagcdn.com/w320/th.png" alt="TH"> THB</option>
+          <option value="USD" data-flag="https://flagcdn.com/w320/us.png">🇺🇸 USD</option>
+          <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">🇬🇧 GBP</option>
+          <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">🇪🇺 EUR</option>
+          <option value="THB" data-flag="https://flagcdn.com/w320/th.png">🇹🇭 THB</option>
         </select>
       </div>
       <div class="divider"></div>
