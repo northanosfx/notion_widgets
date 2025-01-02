@@ -84,13 +84,13 @@
 
     .form-group input, .form-group select {
       width: 100%;
-      padding: 8px 12px;
+      padding: 6px 8px;
       border: none;
       border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
-      font-size: 13px;
       box-sizing: border-box;
+      font-size: 13px;
       outline: none;
     }
 
@@ -116,10 +116,66 @@
       background: #0088cc;
     }
 
+    .currency-select {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .currency-label {
+      margin-right: 10px;
+    }
+
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      border-radius: 3px;
+    }
+
+    select#accountCurrency {
+      width: auto;
+      padding: 4px 8px;
+      border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      text-align: right;
+    }
+
     .divider {
       height: 1px;
       background: #444;
       margin: 15px 0;
+    }
+
+    .day-mode {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .day-mode .container {
+      background-color: #fff;
+    }
+
+    .day-mode .form-group input,
+    .day-mode .form-group select {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .day-mode .btn {
+      background: #007bff;
+    }
+
+    .day-mode .btn:hover {
+      background: #0056b3;
     }
   </style>
 </head>
@@ -161,28 +217,30 @@
       <div class="form-group currency-select">
         <label class="currency-label">Account Currency</label>
         <div class="currency-container">
-          <div class="custom-dropdown">
-            <button id="currencyButton" class="dropdown-button">
-              <img id="dropdownFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" />
-              <span id="dropdownText">USD</span>
-              <i class="fas fa-caret-down"></i>
-            </button>
-            <ul id="dropdownMenu" class="dropdown-menu">
-              <li data-value="USD" data-flag="https://flagcdn.com/w320/us.png">
-                <img class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" /> USD
-              </li>
-              <li data-value="GBP" data-flag="https://flagcdn.com/w320/gb.png">
-                <img class="currency-flag" src="https://flagcdn.com/w320/gb.png" alt="Flag" /> GBP
-              </li>
-              <li data-value="EUR" data-flag="https://flagcdn.com/w320/eu.png">
-                <img class="currency-flag" src="https://flagcdn.com/w320/eu.png" alt="Flag" /> EUR
-              </li>
-              <li data-value="THB" data-flag="https://flagcdn.com/w320/th.png">
-                <img class="currency-flag" src="https://flagcdn.com/w320/th.png" alt="Flag" /> THB
-              </li>
-            </ul>
-          </div>
+          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" />
+          <select id="accountCurrency" onchange="changeCurrency()">
+            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+          </select>
         </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group risk-settings">
+        <label>Risk</label>
+        <div class="toggle-group">
+          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label for="themeSelect">Theme</label>
+        <select id="themeSelect" onchange="changeTheme()">
+          <option value="day">Day Mode</option>
+          <option value="night">Night Mode</option>
+        </select>
       </div>
     </div>
   </div>
@@ -205,31 +263,37 @@
       }
     }
 
-    document.getElementById("currencyButton").addEventListener("click", function () {
-      const menu = document.getElementById("dropdownMenu");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    });
+    function changeCurrency() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
+    }
 
-    document.querySelectorAll("#dropdownMenu li").forEach((item) => {
-      item.addEventListener("click", function () {
-        const flagUrl = this.getAttribute("data-flag");
-        const value = this.getAttribute("data-value");
+    function changeTheme() {
+      const themeSelect = document.getElementById('themeSelect');
+      const selectedTheme = themeSelect.value;
+      const body = document.body;
 
-        document.getElementById("dropdownFlag").src = flagUrl;
-        document.getElementById("dropdownText").textContent = value;
-
-        document.getElementById("dropdownMenu").style.display = "none";
-      });
-    });
-
-    document.addEventListener("click", function (event) {
-      const menu = document.getElementById("dropdownMenu");
-      const button = document.getElementById("currencyButton");
-
-      if (!button.contains(event.target) && !menu.contains(event.target)) {
-        menu.style.display = "none";
+      if (selectedTheme === 'day') {
+        body.classList.add('day-mode');
+      } else {
+        body.classList.remove('day-mode');
       }
-    });
+    }
+
+    function toggleRisk(type) {
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+      }
+    }
   </script>
 </body>
 </html>
