@@ -81,6 +81,7 @@
 
     .form-group label {
       font-size: 13px;
+      margin-right: 10px;
     }
 
     .form-group input, .form-group select {
@@ -185,8 +186,6 @@
       border: 1px solid #444;
       border-radius: 5px;
       overflow: hidden;
-      flex: 1;
-      margin-left: 10px;
     }
 
     .toggle-group button {
@@ -208,6 +207,16 @@
     .toggle-group button:hover {
       background: #0088cc;
       color: #fff;
+    }
+
+    .risk-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .risk-container .toggle-group {
+      margin-left: auto;
     }
   </style>
 </head>
@@ -259,7 +268,7 @@
         </div>
       </div>
       <div class="divider"></div>
-      <div class="form-group">
+      <div class="form-group risk-container">
         <label>Risk</label>
         <div class="toggle-group">
           <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
