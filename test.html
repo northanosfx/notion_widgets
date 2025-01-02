@@ -82,102 +82,109 @@
       font-size: 13px;
     }
 
-    .risk-container {
-      position: relative;
-      border: 1px solid #444;
-      border-radius: 10px;
-      padding: 10px;
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 6px 8px;
+      border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 13px;
+      outline: none;
     }
 
-    .risk-switch {
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #2b2b2b;
-      border: 1px solid #444;
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      box-shadow: 0 0 5px #00aaff;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background: #00aaff;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background: #0088cc;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      background: #444;
       border-radius: 20px;
-      width: 120px;
-      height: 30px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 5px;
-      cursor: pointer;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .risk-switch .slider {
+    .toggle-switch .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 50%;
       height: 100%;
       background: #00aaff;
       border-radius: 20px;
-      position: absolute;
-      transition: all 0.3s ease;
+      transition: all 0.3s;
     }
 
-    .risk-switch span {
+    .toggle-switch .option {
+      position: relative;
       flex: 1;
       text-align: center;
       color: #fff;
+      cursor: pointer;
       z-index: 1;
-      font-size: 12px;
+      transition: color 0.3s;
     }
 
-    .risk-fields {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-    }
-
-    .risk-fields input {
-      width: 45%;
-      padding: 6px;
-      border-radius: 5px;
-      border: none;
-      background: #3c3c3c;
-      color: #fff;
-      box-sizing: border-box;
+    .toggle-switch .option.active {
+      color: #000;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="content active" id="settingsContent">
+    <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
+      <div class="divider"></div>
       <div class="form-group">
         <label>Risk</label>
-        <div class="risk-container">
-          <div class="risk-switch" onclick="toggleRisk()">
-            <div class="slider" id="riskSlider"></div>
-            <span id="riskPercentageText">%</span>
-            <span id="riskAmountText">Amount</span>
-          </div>
-          <div class="risk-fields">
-            <input type="number" id="percentageInput" placeholder="Enter %" />
-            <input type="number" id="amountInput" placeholder="Enter Amount" disabled />
-          </div>
+        <div class="toggle-switch">
+          <div class="slider" id="riskSlider"></div>
+          <div class="option" id="optionPercentage" onclick="switchRisk('percentage')">%</div>
+          <div class="option" id="optionAmount" onclick="switchRisk('amount')">Amount</div>
         </div>
       </div>
     </div>
   </div>
+
   <script>
-    let isPercentage = true;
-
-    function toggleRisk() {
+    function switchRisk(type) {
       const slider = document.getElementById('riskSlider');
-      const percentageInput = document.getElementById('percentageInput');
-      const amountInput = document.getElementById('amountInput');
+      const optionPercentage = document.getElementById('optionPercentage');
+      const optionAmount = document.getElementById('optionAmount');
 
-      isPercentage = !isPercentage;
-      slider.style.transform = isPercentage ? 'translateX(0)' : 'translateX(100%)';
-
-      if (isPercentage) {
-        percentageInput.disabled = false;
-        amountInput.disabled = true;
+      if (type === 'percentage') {
+        slider.style.left = '0';
+        optionPercentage.classList.add('active');
+        optionAmount.classList.remove('active');
       } else {
-        percentageInput.disabled = true;
-        amountInput.disabled = false;
+        slider.style.left = '50%';
+        optionPercentage.classList.remove('active');
+        optionAmount.classList.add('active');
       }
     }
   </script>
