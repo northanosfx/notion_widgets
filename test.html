@@ -82,6 +82,23 @@
       font-size: 13px;
     }
 
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      font-size: 13px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      box-shadow: 0 0 5px #00aaff;
+    }
+
     .btn {
       display: block;
       width: 100%;
@@ -97,74 +114,6 @@
 
     .btn:hover {
       background: #0088cc;
-    }
-
-    .currency-select {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .currency-container {
-      position: relative;
-    }
-
-    .custom-dropdown {
-      position: relative;
-      width: 100%;
-    }
-
-    .dropdown-button {
-      width: 100%;
-      padding: 8px 12px;
-      background: #3c3c3c;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-    }
-
-    .dropdown-button .currency-flag {
-      width: 20px;
-      height: 15px;
-      margin-right: 8px;
-    }
-
-    .dropdown-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background: #3c3c3c;
-      border-radius: 5px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      list-style: none;
-      margin: 8px 0 0 0;
-      padding: 0;
-      display: none;
-      z-index: 10;
-    }
-
-    .dropdown-menu li {
-      padding: 8px 12px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .dropdown-menu li:hover {
-      background: #555;
-    }
-
-    .dropdown-menu li .currency-flag {
-      width: 20px;
-      height: 15px;
-      margin-right: 8px;
     }
 
     .divider {
@@ -235,22 +184,6 @@
           </div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="form-group risk-settings">
-        <label>Risk</label>
-        <div class="toggle-group">
-          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
-          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="form-group">
-        <label for="themeSelect">Theme</label>
-        <select id="themeSelect" onchange="changeTheme()">
-          <option value="day">Day Mode</option>
-          <option value="night">Night Mode</option>
-        </select>
-      </div>
     </div>
   </div>
 
@@ -297,31 +230,6 @@
         menu.style.display = "none";
       }
     });
-
-    function changeTheme() {
-      const themeSelect = document.getElementById("themeSelect");
-      const selectedTheme = themeSelect.value;
-      const body = document.body;
-
-      if (selectedTheme === "day") {
-        body.classList.add("day-mode");
-      } else {
-        body.classList.remove("day-mode");
-      }
-    }
-
-    function toggleRisk(type) {
-      const percentageButton = document.getElementById("riskPercentage");
-      const amountButton = document.getElementById("riskAmount");
-
-      if (type === "percentage") {
-        percentageButton.classList.add("active");
-        amountButton.classList.remove("active");
-      } else {
-        percentageButton.classList.remove("active");
-        amountButton.classList.add("active");
-      }
-    }
   </script>
 </body>
 </html>
