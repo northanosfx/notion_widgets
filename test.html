@@ -116,50 +116,118 @@
       background: #0088cc;
     }
 
+    .currency-select {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .currency-label {
+      margin-right: 10px;
+    }
+
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      border-radius: 3px;
+    }
+
+    select#accountCurrency {
+      width: auto;
+      padding: 4px 8px;
+      border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      text-align: left;
+    }
+
     .divider {
       height: 1px;
       background: #444;
       margin: 15px 0;
     }
 
-    .risk-switch {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-      margin-bottom: 20px;
-      background: #3c3c3c;
-      border-radius: 5px;
-      overflow: hidden;
+    .day-mode {
+      background-color: #f9f9f9;
+      color: #333;
     }
 
-    .risk-switch .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
+    .day-mode .container {
+      background-color: #fff;
+    }
+
+    .day-mode .form-group input,
+    .day-mode .form-group select {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .day-mode .btn {
+      background: #007bff;
+    }
+
+    .day-mode .btn:hover {
+      background: #0056b3;
+    }
+
+.toggle-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px;
+  background: #2b2b2b;
+  border-radius: 8px;
+  border: 1px solid #444;
+  width: auto; /* ปรับขนาดให้พอดีกับกล่องของสกุลเงิน */
+  box-sizing: border-box;
+}
+
+.toggle-group button {
+  flex: 1;
+  padding: 6px 0; /* ลด padding เพื่อให้มีขนาดที่เล็กลง */
+  border: none;
+  border-radius: 5px;
+  background: #3c3c3c;
+  color: #fff;
+  font-size: 12px; /* ลดขนาดตัวอักษรให้เล็กลงเล็กน้อย */
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  text-align: center;
+}
+/* Specific to Risk Section in Settings */
+.settings-content .form-group.risk-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.settings-content .form-group.risk-group label {
+  flex: 1;
+  margin-right: 10px;
+  font-size: 13px;
+}
+
+.settings-content .form-group.risk-group .toggle-group {
+  flex: 1;
+  max-width: 50%; /* จำกัดความกว้างของกล่อง % / Amount */
+}
+    .toggle-group button.active {
       background: #00aaff;
-      transition: left 0.3s ease-in-out;
-    }
-
-    .risk-switch button {
-      flex: 1;
-      padding: 10px 0;
-      border: none;
-      background: none;
       color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      position: relative;
-      z-index: 1;
     }
 
-    .form-group .risk-input {
-      display: none;
-    }
-
-    .form-group .risk-input.active {
-      display: block;
+    .toggle-group button:hover {
+      background: #0088cc;
+      color: #fff;
     }
   </style>
 </head>
@@ -183,6 +251,14 @@
           <option value="AUDUSD">AUD/USD</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="risk">Percentage Risk (%)</label>
+        <input type="number" id="risk" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
       <button class="btn">Calculate</button>
     </div>
 
@@ -190,16 +266,25 @@
     <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
+      <div class="form-group currency-select">
+        <label class="currency-label">Account Currency</label>
+        <div class="currency-container">
+          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" />
+          <select id="accountCurrency" onchange="changeCurrency()">
+            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+          </select>
+        </div>
+      </div>
       <div class="divider"></div>
       <div class="form-group">
         <label>Risk</label>
-        <div class="risk-switch">
-          <div class="slider" id="slider"></div>
-          <button onclick="switchRisk('percentage')">%</button>
-          <button onclick="switchRisk('amount')">Amount</button>
+        <div class="toggle-group">
+          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
         </div>
-        <input type="number" id="percentageInput" class="risk-input active" placeholder="Enter risk percentage" />
-        <input type="number" id="amountInput" class="risk-input" placeholder="Enter risk amount" />
       </div>
       <div class="divider"></div>
       <div class="form-group">
@@ -230,20 +315,11 @@
       }
     }
 
-    function switchRisk(type) {
-      const slider = document.getElementById('slider');
-      const percentageInput = document.getElementById('percentageInput');
-      const amountInput = document.getElementById('amountInput');
-
-      if (type === 'percentage') {
-        slider.style.left = '0';
-        percentageInput.classList.add('active');
-        amountInput.classList.remove('active');
-      } else {
-        slider.style.left = '50%';
-        percentageInput.classList.remove('active');
-        amountInput.classList.add('active');
-      }
+    function changeCurrency() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
     }
 
     function changeTheme() {
@@ -255,6 +331,19 @@
         body.classList.add('day-mode');
       } else {
         body.classList.remove('day-mode');
+      }
+    }
+
+    function toggleRisk(type) {
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
       }
     }
   </script>
