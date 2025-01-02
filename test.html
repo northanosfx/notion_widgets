@@ -82,102 +82,268 @@
       font-size: 13px;
     }
 
-    .risk-container {
-      position: relative;
-      border: 1px solid #444;
-      border-radius: 10px;
-      padding: 10px;
-    }
-
-    .risk-switch {
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #2b2b2b;
-      border: 1px solid #444;
-      border-radius: 20px;
-      width: 120px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5px;
-      cursor: pointer;
-    }
-
-    .risk-switch .slider {
-      width: 50%;
-      height: 100%;
-      background: #00aaff;
-      border-radius: 20px;
-      position: absolute;
-      transition: all 0.3s ease;
-    }
-
-    .risk-switch span {
-      flex: 1;
-      text-align: center;
-      color: #fff;
-      z-index: 1;
-      font-size: 12px;
-    }
-
-    .risk-fields {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-    }
-
-    .risk-fields input {
-      width: 45%;
-      padding: 6px;
-      border-radius: 5px;
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 6px 8px;
       border: none;
+      border-radius: 5px;
       background: #3c3c3c;
       color: #fff;
       box-sizing: border-box;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      box-shadow: 0 0 5px #00aaff;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background: #00aaff;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background: #0088cc;
+    }
+
+    .currency-select {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .currency-label {
+      margin-right: 10px;
+    }
+
+    .currency-flag {
+      width: 20px;
+      height: 15px;
+      border-radius: 3px;
+    }
+
+    select#accountCurrency {
+      width: auto;
+      padding: 4px 8px;
+      border: none;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: #fff;
+      text-align: left;
+    }
+
+    .divider {
+      height: 1px;
+      background: #444;
+      margin: 15px 0;
+    }
+
+    .day-mode {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .day-mode .container {
+      background-color: #fff;
+    }
+
+    .day-mode .form-group input,
+    .day-mode .form-group select {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .day-mode .btn {
+      background: #007bff;
+    }
+
+    .day-mode .btn:hover {
+      background: #0056b3;
+    }
+
+.toggle-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px;
+  background: #2b2b2b;
+  border-radius: 8px;
+  border: 1px solid #444;
+  width: auto; /* ปรับขนาดให้พอดีกับกล่องของสกุลเงิน */
+  box-sizing: border-box;
+}
+
+.toggle-group button {
+  flex: 1;
+  padding: 6px 0; /* ลด padding เพื่อให้มีขนาดที่เล็กลง */
+  border: none;
+  border-radius: 5px;
+  background: #3c3c3c;
+  color: #fff;
+  font-size: 12px; /* ลดขนาดตัวอักษรให้เล็กลงเล็กน้อย */
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  text-align: center;
+}
+/* Specific to Risk Section in Settings */
+.settings-content .form-group.risk-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.settings-content .form-group.risk-group label {
+  flex: 1;
+  margin-right: 10px;
+  font-size: 13px;
+}
+
+.settings-content .form-group.risk-group .toggle-group {
+  flex: 1;
+  max-width: 50%; /* จำกัดความกว้างของกล่อง % / Amount */
+}
+    .toggle-group button.active {
+      background: #00aaff;
+      color: #fff;
+    }
+
+    .toggle-group button:hover {
+      background: #0088cc;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="content active" id="settingsContent">
+    <!-- Calculator Section -->
+    <div class="content active" id="calculatorContent">
+      <i class="fas fa-cog icon-settings" title="Settings" onclick="toggleView('settings')"></i>
+      <h1>Position Calculator</h1>
+      <div class="form-group">
+        <label for="balance">Account Balance</label>
+        <input type="number" id="balance" placeholder="Enter balance" />
+      </div>
+      <div class="form-group">
+        <label for="pair">Instrument</label>
+        <select id="pair">
+          <option value="XAUUSD" selected>XAU/USD</option>
+          <option value="EURUSD">EUR/USD</option>
+          <option value="GBPUSD">GBP/USD</option>
+          <option value="USDJPY">USD/JPY</option>
+          <option value="AUDUSD">AUD/USD</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="risk">Percentage Risk (%)</label>
+        <input type="number" id="risk" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
+      <button class="btn">Calculate</button>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="content slide-right" id="settingsContent">
       <i class="fas fa-arrow-left icon-settings" title="Back" onclick="toggleView('calculator')"></i>
       <h1>Settings</h1>
+      <div class="form-group currency-select">
+        <label class="currency-label">Account Currency</label>
+        <div class="currency-container">
+          <img id="currencyFlag" class="currency-flag" src="https://flagcdn.com/w320/us.png" alt="Flag" />
+          <select id="accountCurrency" onchange="changeCurrency()">
+            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+          </select>
+        </div>
+      </div>
+      <div class="divider"></div>
       <div class="form-group">
         <label>Risk</label>
-        <div class="risk-container">
-          <div class="risk-switch" onclick="toggleRisk()">
-            <div class="slider" id="riskSlider"></div>
-            <span id="riskPercentageText">%</span>
-            <span id="riskAmountText">Amount</span>
-          </div>
-          <div class="risk-fields">
-            <input type="number" id="percentageInput" placeholder="Enter %" />
-            <input type="number" id="amountInput" placeholder="Enter Amount" disabled />
-          </div>
+        <div class="toggle-group">
+          <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
         </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label for="themeSelect">Theme</label>
+        <select id="themeSelect" onchange="changeTheme()">
+          <option value="day">Day Mode</option>
+          <option value="night">Night Mode</option>
+        </select>
       </div>
     </div>
   </div>
+
   <script>
-    let isPercentage = true;
+    function toggleView(view) {
+      const calculatorContent = document.getElementById('calculatorContent');
+      const settingsContent = document.getElementById('settingsContent');
 
-    function toggleRisk() {
-      const slider = document.getElementById('riskSlider');
-      const percentageInput = document.getElementById('percentageInput');
-      const amountInput = document.getElementById('amountInput');
-
-      isPercentage = !isPercentage;
-      slider.style.transform = isPercentage ? 'translateX(0)' : 'translateX(100%)';
-
-      if (isPercentage) {
-        percentageInput.disabled = false;
-        amountInput.disabled = true;
+      if (view === 'settings') {
+        calculatorContent.classList.add('slide-left');
+        calculatorContent.classList.remove('active');
+        settingsContent.classList.add('active');
+        settingsContent.classList.remove('slide-right');
       } else {
-        percentageInput.disabled = true;
-        amountInput.disabled = false;
+        settingsContent.classList.add('slide-right');
+        settingsContent.classList.remove('active');
+        calculatorContent.classList.add('active');
+        calculatorContent.classList.remove('slide-left');
+      }
+    }
+
+    function changeCurrency() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
+    }
+
+    function changeTheme() {
+      const themeSelect = document.getElementById('themeSelect');
+      const selectedTheme = themeSelect.value;
+      const body = document.body;
+
+      if (selectedTheme === 'day') {
+        body.classList.add('day-mode');
+      } else {
+        body.classList.remove('day-mode');
+      }
+    }
+
+    function toggleRisk(type) {
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
       }
     }
   </script>
