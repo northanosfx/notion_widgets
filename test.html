@@ -126,8 +126,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 8px;
-      flex: 1;
+      gap: 5px;
     }
 
     .currency-label {
@@ -140,30 +139,14 @@
       border-radius: 3px;
     }
 
-    .toggle-group {
-      display: flex;
-      background: #3c3c3c;
-      border-radius: 5px;
-      overflow: hidden;
-      width: 100%;
-      max-width: 150px;
-      height: 26px;
-      margin-left: auto;
-    }
-
-    .toggle-group button {
-      flex: 1;
+    select#accountCurrency {
+      width: auto;
+      padding: 4px 8px;
       border: none;
+      border-radius: 5px;
       background: #3c3c3c;
-      color: #aaa;
-      font-size: 12px;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .toggle-group button.active {
-      background: #00aaff;
       color: #fff;
+      text-align: right;
     }
 
     .divider {
