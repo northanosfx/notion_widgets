@@ -178,27 +178,30 @@
       background: #0056b3;
     }
 
-    .toggle-group {
-      display: flex;
-      justify-content: space-evenly;
-      gap: 10px;
-      padding: 5px;
-      background: #2b2b2b;
-      border-radius: 8px;
-      border: 1px solid #444;
-    }
+.toggle-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px;
+  background: #2b2b2b;
+  border-radius: 8px;
+  border: 1px solid #444;
+  width: 100%; /* ให้กล่อง %/Amount ขยายเต็มพื้นที่เหมือนกับกล่องสกุลเงิน */
+  box-sizing: border-box; /* รวม padding และ border ในความกว้าง */
+}
 
-    .toggle-group button {
-      flex: 1;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 5px;
-      background: #3c3c3c;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-    }
+.toggle-group button {
+  flex: 1; /* ปรับขนาดให้ปุ่มมีความกว้างเท่ากัน */
+  padding: 10px 0; /* ตั้งค่าความสูงและระยะรอบปุ่ม */
+  border: none;
+  border-radius: 5px;
+  background: #3c3c3c;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  text-align: center;
+}
 
     .toggle-group button.active {
       background: #00aaff;
