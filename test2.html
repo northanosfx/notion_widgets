@@ -107,43 +107,40 @@
     }
 
     .toggle-group {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      background: #444;
-      padding: 8px;
-      border-radius: 8px;
       position: relative;
+      display: flex;
+      background: #444;
+      border-radius: 8px;
       overflow: hidden;
     }
 
-    .toggle-button {
-      width: 200%;
-      display: flex;
-      transform: translateX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .toggle-button span {
+    .toggle-group button {
       flex: 1;
-      text-align: center;
       padding: 10px;
-      border-radius: 5px;
-      font-size: 14px;
-      cursor: pointer;
+      background: transparent;
+      border: none;
       color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      z-index: 2;
+      position: relative;
     }
 
-    .toggle-button span.percentage {
+    .toggle-group .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
       background: #00aaff;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      z-index: 1;
     }
 
-    .toggle-button span.amount {
-      background: #555;
-    }
-
-    .toggle-group.active .toggle-button {
-      transform: translateX(-50%);
+    .toggle-group button.active {
+      color: #000;
+      font-weight: bold;
     }
 
     @media (max-width: 768px) {
@@ -214,11 +211,10 @@
 
       <div class="form-group">
         <label>Risk Type</label>
-        <div class="toggle-group" onclick="toggleRiskType()">
-          <div class="toggle-button">
-            <span class="percentage">Percentage</span>
-            <span class="amount">Amount</span>
-          </div>
+        <div class="toggle-group">
+          <div class="slider"></div>
+          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">Percentage</button>
+          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
         </div>
       </div>
 
@@ -240,9 +236,20 @@
       calculator.style.display = settings.classList.contains('active') ? 'none' : 'block';
     }
 
-    function toggleRiskType() {
-      const toggleGroup = document.querySelector('.toggle-group');
-      toggleGroup.classList.toggle('active');
+    function toggleRiskType(type) {
+      const slider = document.querySelector('.slider');
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+        slider.style.transform = 'translateX(0%)';
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+        slider.style.transform = 'translateX(100%)';
+      }
     }
 
     function toggleTheme() {
