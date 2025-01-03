@@ -97,21 +97,34 @@
     }
 
     .settings-container {
-      display: none;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      display: flex;
       flex-direction: column;
       gap: 15px;
+      transition: transform 0.4s ease;
     }
 
     .settings-container.active {
-      display: flex;
+      transform: translateX(-100%);
     }
 
     .calculator-container {
-      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s ease;
     }
 
     .calculator-container.hidden {
-      display: none;
+      transform: translateX(-100%);
     }
 
     .toggle-group {
@@ -241,19 +254,20 @@
       const toggleIcon = document.getElementById('toggleIcon');
       const pageTitle = document.getElementById('pageTitle');
 
-      settings.classList.toggle('active');
-      calculator.classList.toggle('hidden');
-
       if (settings.classList.contains('active')) {
-        toggleIcon.classList.remove('fa-cog');
-        toggleIcon.classList.add('fa-arrow-left');
-        toggleIcon.title = "Back to Calculator";
-        pageTitle.textContent = "Settings";
-      } else {
+        settings.classList.remove('active');
+        calculator.classList.remove('hidden');
         toggleIcon.classList.remove('fa-arrow-left');
         toggleIcon.classList.add('fa-cog');
         toggleIcon.title = "Settings";
         pageTitle.textContent = "Position Calculator";
+      } else {
+        settings.classList.add('active');
+        calculator.classList.add('hidden');
+        toggleIcon.classList.remove('fa-cog');
+        toggleIcon.classList.add('fa-arrow-left');
+        toggleIcon.title = "Back to Calculator";
+        pageTitle.textContent = "Settings";
       }
     }
 
