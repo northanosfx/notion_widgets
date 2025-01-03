@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modern Position Calculator</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', Arial, sans-serif;
@@ -112,27 +113,37 @@
       background: #444;
       padding: 8px;
       border-radius: 8px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .toggle-group button {
+    .toggle-button {
+      width: 200%;
+      display: flex;
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-button span {
       flex: 1;
+      text-align: center;
       padding: 10px;
-      border: none;
       border-radius: 5px;
-      background: #555;
-      color: #fff;
       font-size: 14px;
       cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .toggle-group button.active {
-      background: #00aaff;
       color: #fff;
     }
 
-    .toggle-group button:hover {
-      background: #007bff;
+    .toggle-button span.percentage {
+      background: #00aaff;
+    }
+
+    .toggle-button span.amount {
+      background: #555;
+    }
+
+    .toggle-group.active .toggle-button {
+      transform: translateX(-50%);
     }
 
     @media (max-width: 768px) {
@@ -203,9 +214,11 @@
 
       <div class="form-group">
         <label>Risk Type</label>
-        <div class="toggle-group">
-          <button class="active" onclick="toggleRiskType('percentage')">Percentage</button>
-          <button onclick="toggleRiskType('amount')">Amount</button>
+        <div class="toggle-group" onclick="toggleRiskType()">
+          <div class="toggle-button">
+            <span class="percentage">Percentage</span>
+            <span class="amount">Amount</span>
+          </div>
         </div>
       </div>
 
@@ -227,10 +240,9 @@
       calculator.style.display = settings.classList.contains('active') ? 'none' : 'block';
     }
 
-    function toggleRiskType(type) {
-      const buttons = document.querySelectorAll('.toggle-group button');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      document.querySelector(`.toggle-group button[onclick*="${type}"]`).classList.add('active');
+    function toggleRiskType() {
+      const toggleGroup = document.querySelector('.toggle-group');
+      toggleGroup.classList.toggle('active');
     }
 
     function toggleTheme() {
