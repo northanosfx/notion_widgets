@@ -174,7 +174,7 @@
 <body>
   <div class="container">
     <i class="fas fa-cog icon-toggle" id="toggleIcon" title="Settings" onclick="toggleView()"></i>
-    <h1>Position Calculator</h1>
+    <h1 id="pageTitle">Position Calculator</h1>
 
     <!-- Calculator Section -->
     <div class="calculator-container" id="calculatorContainer">
@@ -240,6 +240,7 @@
       const settings = document.getElementById('settingsContainer');
       const calculator = document.getElementById('calculatorContainer');
       const toggleIcon = document.getElementById('toggleIcon');
+      const pageTitle = document.getElementById('pageTitle');
 
       settings.classList.toggle('active');
       calculator.classList.toggle('hidden');
@@ -248,10 +249,12 @@
         toggleIcon.classList.remove('fa-cog');
         toggleIcon.classList.add('fa-arrow-left');
         toggleIcon.title = "Back to Calculator";
+        pageTitle.textContent = "Settings";
       } else {
         toggleIcon.classList.remove('fa-arrow-left');
         toggleIcon.classList.add('fa-cog');
         toggleIcon.title = "Settings";
+        pageTitle.textContent = "Position Calculator";
       }
     }
 
