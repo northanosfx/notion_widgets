@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Position Calculator</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Poppins', Arial, sans-serif;
+      font-family: Arial, sans-serif;
       font-size: 14px;
       background-color: #191919;
       color: #fff;
@@ -179,56 +178,45 @@
       background: #0056b3;
     }
 
-.toggle-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 5px;
-  background: #2b2b2b;
-  border-radius: 8px;
-  border: 1px solid #444;
-  width: auto; /* ปรับขนาดให้พอดีกับกล่องของสกุลเงิน */
-  box-sizing: border-box;
-}
-
-.toggle-group button {
-  flex: 1;
-  padding: 6px 0; /* ลด padding เพื่อให้มีขนาดที่เล็กลง */
-  border: none;
-  border-radius: 5px;
-  background: #3c3c3c;
-  color: #fff;
-  font-size: 12px; /* ลดขนาดตัวอักษรให้เล็กลงเล็กน้อย */
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
-  text-align: center;
-}
-/* Specific to Risk Section in Settings */
-.settings-content .form-group.risk-group {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.settings-content .form-group.risk-group label {
-  flex: 1;
-  margin-right: 10px;
-  font-size: 13px;
-}
-
-.settings-content .form-group.risk-group .toggle-group {
-  flex: 1;
-  max-width: 50%; /* จำกัดความกว้างของกล่อง % / Amount */
-}
-    .toggle-group button.active {
-      background: #00aaff;
-      color: #fff;
+    .slider-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px;
+      background: #2b2b2b;
+      border-radius: 8px;
+      border: 1px solid #444;
+      overflow: hidden;
     }
 
-    .toggle-group button:hover {
-      background: #0088cc;
+    .slider-group button {
+      flex: 1;
+      padding: 6px 0;
+      border: none;
+      border-radius: 5px;
+      background: transparent;
       color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: #00aaff;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+
+    .slider-group button.active {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -282,9 +270,10 @@
       <div class="divider"></div>
       <div class="form-group">
         <label>Risk</label>
-        <div class="toggle-group">
+        <div class="toggle-group slider-group">
           <button id="riskPercentage" class="active" onclick="toggleRisk('percentage')">%</button>
           <button id="riskAmount" onclick="toggleRisk('amount')">Amount</button>
+          <div class="slider"></div>
         </div>
       </div>
       <div class="divider"></div>
@@ -336,15 +325,18 @@
     }
 
     function toggleRisk(type) {
+      const slider = document.querySelector('.slider');
       const percentageButton = document.getElementById('riskPercentage');
       const amountButton = document.getElementById('riskAmount');
 
       if (type === 'percentage') {
         percentageButton.classList.add('active');
         amountButton.classList.remove('active');
+        slider.style.transform = 'translateX(0%)';
       } else {
         percentageButton.classList.remove('active');
         amountButton.classList.add('active');
+        slider.style.transform = 'translateX(100%)';
       }
     }
   </script>
