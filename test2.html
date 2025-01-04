@@ -26,10 +26,12 @@
       backdrop-filter: blur(10px);
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      width: 95%;
+      width: 100%;
       max-width: 400px;
+      padding: 20px;
       overflow: hidden;
       position: relative;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -122,29 +124,11 @@
       transform: translateX(0);
     }
 
-    @keyframes slideInFromRight {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes slideOutToLeft {
-      from {
-        transform: translateX(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-    }
-
     @media (max-width: 768px) {
+      .container {
+        width: 90%;
+      }
+
       h1 {
         font-size: 18px;
       }
