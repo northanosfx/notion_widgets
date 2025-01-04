@@ -29,7 +29,7 @@
       max-width: 400px;
       overflow: hidden;
       position: relative;
-      height: 650px;
+      height: 700px;
       box-sizing: border-box;
     }
 
@@ -121,6 +121,37 @@
       background: linear-gradient(45deg, #0056b3, #0088cc);
     }
 
+    .currency-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-flag {
+      width: 30px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #accountCurrency {
+      width: calc(100% - 40px);
+      padding: 10px;
+      border-radius: 8px;
+      background: #444;
+      color: #fff;
+      border: none;
+      font-size: 14px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    #accountCurrency:focus {
+      box-shadow: 0 0 8px rgba(0, 170, 255, 0.8);
+    }
+
     .toggle-group {
       position: relative;
       display: flex;
@@ -202,6 +233,19 @@
     <div class="section settings-container hidden-right" id="settingsContainer">
       <h1>Settings</h1>
       <div class="form-group">
+        <label for="accountCurrency">Account Currency</label>
+        <div class="currency-container">
+          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="Flag" class="currency-flag">
+          <select id="accountCurrency" onchange="updateCurrencyFlag()">
+            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD - United States Dollar</option>
+            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR - Euro</option>
+            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP - British Pound</option>
+            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB - Thai Baht</option>
+            <option value="JPY" data-flag="https://flagcdn.com/w320/jp.png">JPY - Japanese Yen</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
         <label>Risk</label>
         <div class="toggle-group">
           <div class="slider"></div>
@@ -254,6 +298,15 @@
         slider.style.transform = 'translateX(100%)';
         currentRiskType = 'amount';
       }
+    }
+
+    function updateCurrencyFlag() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      const currencyFlag = document.getElementById('currencyFlag');
+
+      currencyFlag.src = flagUrl;
     }
 
     function updateRiskInput() {
