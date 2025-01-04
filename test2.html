@@ -188,14 +188,6 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Risk</label>
-        <div class="toggle-group">
-          <div class="slider"></div>
-          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
-          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
-        </div>
-      </div>
-      <div class="form-group">
         <label for="stopLoss">Stop Loss (pips)</label>
         <input type="number" id="stopLoss" placeholder="Enter stop loss" />
       </div>
@@ -213,6 +205,14 @@
           <option value="GBP">GBP</option>
           <option value="THB">THB</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label>Risk</label>
+        <div class="toggle-group">
+          <div class="slider"></div>
+          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
+        </div>
       </div>
       <div class="form-group">
         <label for="themeSelect">Theme</label>
@@ -265,17 +265,14 @@
 
     function calculatePosition() {
       const balance = parseFloat(document.getElementById('balance').value);
-      const risk = parseFloat(document.getElementById('risk').value);
       const stopLoss = parseFloat(document.getElementById('stopLoss').value);
 
-      if (isNaN(balance) || isNaN(risk) || isNaN(stopLoss)) {
+      if (isNaN(balance) || isNaN(stopLoss)) {
         alert('Please fill in all fields with valid numbers.');
         return;
       }
 
-      const riskAmount = (balance * risk) / 100;
-      const positionSize = riskAmount / stopLoss;
-
+      const positionSize = balance / stopLoss;
       alert(`Position Size: ${positionSize.toFixed(2)} lots`);
     }
   </script>
