@@ -121,37 +121,6 @@
       background: linear-gradient(45deg, #0056b3, #0088cc);
     }
 
-    .currency-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .currency-flag {
-      width: 30px;
-      height: 20px;
-      border-radius: 3px;
-      object-fit: cover;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    #accountCurrency {
-      width: calc(100% - 40px);
-      padding: 10px;
-      border-radius: 8px;
-      background: #444;
-      color: #fff;
-      border: none;
-      font-size: 14px;
-      outline: none;
-      transition: box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    #accountCurrency:focus {
-      box-shadow: 0 0 8px rgba(0, 170, 255, 0.8);
-    }
-
     .toggle-group {
       position: relative;
       display: flex;
@@ -219,6 +188,10 @@
         </select>
       </div>
       <div class="form-group">
+        <label id="riskLabel">Risk (%)</label>
+        <input type="number" id="riskInput" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
         <label for="stopLoss">Stop Loss (pips)</label>
         <input type="number" id="stopLoss" placeholder="Enter stop loss" />
       </div>
@@ -228,19 +201,6 @@
     <!-- Settings Section -->
     <div class="section settings-container hidden-right" id="settingsContainer">
       <h1>Settings</h1>
-      <div class="form-group">
-        <label for="accountCurrency">Account Currency</label>
-        <div class="currency-container">
-          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="Flag" class="currency-flag">
-          <select id="accountCurrency" onchange="updateCurrencyFlag()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD - United States Dollar</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR - Euro</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP - British Pound</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB - Thai Baht</option>
-            <option value="JPY" data-flag="https://flagcdn.com/w320/jp.png">JPY - Japanese Yen</option>
-          </select>
-        </div>
-      </div>
       <div class="form-group">
         <label>Risk</label>
         <div class="toggle-group">
@@ -253,6 +213,8 @@
   </div>
 
   <script>
+    let currentRiskType = 'percentage'; // Default Risk Type
+
     function toggleView() {
       const settings = document.getElementById('settingsContainer');
       const calculator = document.getElementById('calculatorContainer');
@@ -265,6 +227,7 @@
         calculator.classList.remove('hidden-left');
         toggleIcon.classList.remove('fa-arrow-left');
         toggleIcon.classList.add('fa-cog');
+        updateRiskInput(); // Update Risk Input when returning to Calculator
       } else {
         calculator.classList.add('hidden-left');
         calculator.classList.remove('active');
@@ -275,25 +238,55 @@
       }
     }
 
-    function updateCurrencyFlag() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      const currencyFlag = document.getElementById('currencyFlag');
+    function toggleRiskType(type) {
+      const slider = document.querySelector('.slider');
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
 
-      currencyFlag.src = flagUrl;
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+        slider.style.transform = 'translateX(0%)';
+        currentRiskType = 'percentage';
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+        slider.style.transform = 'translateX(100%)';
+        currentRiskType = 'amount';
+      }
+    }
+
+    function updateRiskInput() {
+      const riskLabel = document.getElementById('riskLabel');
+      const riskInput = document.getElementById('riskInput');
+
+      if (currentRiskType === 'percentage') {
+        riskLabel.textContent = 'Risk (%)';
+        riskInput.placeholder = 'Enter risk percentage';
+      } else {
+        riskLabel.textContent = 'Risk (Amount)';
+        riskInput.placeholder = 'Enter risk amount';
+      }
     }
 
     function calculatePosition() {
       const balance = parseFloat(document.getElementById('balance').value);
+      const risk = parseFloat(document.getElementById('riskInput').value);
       const stopLoss = parseFloat(document.getElementById('stopLoss').value);
 
-      if (isNaN(balance) || isNaN(stopLoss)) {
+      if (isNaN(balance) || isNaN(risk) || isNaN(stopLoss)) {
         alert('Please fill in all fields with valid numbers.');
         return;
       }
 
-      const positionSize = balance / stopLoss;
+      let riskAmount;
+      if (currentRiskType === 'percentage') {
+        riskAmount = (balance * risk) / 100;
+      } else {
+        riskAmount = risk;
+      }
+
+      const positionSize = riskAmount / stopLoss;
       alert(`Position Size: ${positionSize.toFixed(2)} lots`);
     }
   </script>
