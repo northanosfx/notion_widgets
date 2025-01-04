@@ -39,7 +39,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      transition: transform 0.5s ease-in-out;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth Transition */
       padding: 20px;
       box-sizing: border-box;
     }
@@ -70,7 +70,7 @@
       color: #757575;
       cursor: pointer;
       transition: color 0.3s ease;
-      z-index: 10; /* เพิ่ม z-index เพื่อให้คลิกได้ */
+      z-index: 10;
     }
 
     .icon-toggle:hover {
@@ -183,7 +183,6 @@
       const toggleIcon = document.getElementById('toggleIcon');
 
       if (settings.classList.contains('active')) {
-        // กลับไปที่ Calculator
         settings.classList.add('hidden-right');
         settings.classList.remove('active');
         calculator.classList.add('active');
@@ -191,7 +190,6 @@
         toggleIcon.classList.remove('fa-arrow-left');
         toggleIcon.classList.add('fa-cog');
       } else {
-        // ไปที่ Settings
         calculator.classList.add('hidden-left');
         calculator.classList.remove('active');
         settings.classList.add('active');
