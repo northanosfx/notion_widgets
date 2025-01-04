@@ -202,7 +202,6 @@
       const toggleIcon = document.getElementById('toggleIcon');
 
       if (settings.classList.contains('active')) {
-        // กลับไปที่ Calculator
         settings.classList.add('hidden-right');
         settings.classList.remove('active');
         calculator.classList.add('active');
@@ -210,7 +209,6 @@
         toggleIcon.classList.remove('fa-arrow-left');
         toggleIcon.classList.add('fa-cog');
       } else {
-        // ไปที่ Settings
         calculator.classList.add('hidden-left');
         calculator.classList.remove('active');
         settings.classList.add('active');
