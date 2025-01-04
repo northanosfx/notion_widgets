@@ -18,7 +18,6 @@
       height: 100vh;
       margin: 0;
       padding: 0;
-      overflow: hidden;
     }
 
     .container {
@@ -26,12 +25,12 @@
       backdrop-filter: blur(10px);
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      width: 100%;
+      width: 95%;
       max-width: 400px;
-      padding: 20px;
       overflow: hidden;
       position: relative;
-      box-sizing: border-box;
+      padding: 20px;
+      height: 500px; /* กำหนดความสูงคงที่ */
     }
 
     h1 {
@@ -42,7 +41,6 @@
 
     .form-group {
       margin-bottom: 15px;
-      width: 100%;
     }
 
     .form-group label {
@@ -99,35 +97,29 @@
       color: #00aaff;
     }
 
-    .calculator-container, .settings-container {
+    .section {
       position: absolute;
-      width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform;
     }
 
-    .calculator-container {
-      transform: translateX(0);
-    }
-
-    .calculator-container.hidden {
+    .section.hidden-left {
       transform: translateX(-100%);
     }
 
-    .settings-container {
+    .section.hidden-right {
       transform: translateX(100%);
     }
 
-    .settings-container.active {
+    .section.active {
       transform: translateX(0);
     }
 
     @media (max-width: 768px) {
       .container {
-        width: 90%;
         padding: 15px;
       }
 
@@ -153,7 +145,7 @@
     <h1 id="pageTitle">Position Calculator</h1>
 
     <!-- Calculator Section -->
-    <div class="calculator-container" id="calculatorContainer">
+    <div class="section calculator-container active" id="calculatorContainer">
       <div class="form-group">
         <label for="balance">Account Balance</label>
         <input type="number" id="balance" placeholder="Enter your balance" />
@@ -180,7 +172,7 @@
     </div>
 
     <!-- Settings Section -->
-    <div class="settings-container" id="settingsContainer">
+    <div class="section settings-container hidden-right" id="settingsContainer">
       <div class="form-group">
         <label for="accountCurrency">Account Currency</label>
         <select id="accountCurrency">
@@ -190,6 +182,7 @@
           <option value="THB">THB</option>
         </select>
       </div>
+
       <div class="form-group">
         <label for="themeSelect">Theme</label>
         <select id="themeSelect" onchange="toggleTheme()">
@@ -207,20 +200,26 @@
       const toggleIcon = document.getElementById('toggleIcon');
       const pageTitle = document.getElementById('pageTitle');
 
-      if (!settings.classList.contains('active')) {
-        calculator.classList.add('hidden');
-        settings.classList.add('active');
-        toggleIcon.classList.remove('fa-cog');
-        toggleIcon.classList.add('fa-arrow-left');
-        toggleIcon.title = "Back to Calculator";
-        pageTitle.textContent = "Settings";
-      } else {
+      if (settings.classList.contains('active')) {
+        // กลับไปที่ Calculator
+        settings.classList.add('hidden-right');
         settings.classList.remove('active');
-        calculator.classList.remove('hidden');
+        calculator.classList.add('active');
+        calculator.classList.remove('hidden-left');
         toggleIcon.classList.remove('fa-arrow-left');
         toggleIcon.classList.add('fa-cog');
         toggleIcon.title = "Settings";
         pageTitle.textContent = "Position Calculator";
+      } else {
+        // ไปที่ Settings
+        calculator.classList.add('hidden-left');
+        calculator.classList.remove('active');
+        settings.classList.add('active');
+        settings.classList.remove('hidden-right');
+        toggleIcon.classList.remove('fa-cog');
+        toggleIcon.classList.add('fa-arrow-left');
+        toggleIcon.title = "Back to Calculator";
+        pageTitle.textContent = "Settings";
       }
     }
 
