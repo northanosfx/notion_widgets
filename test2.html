@@ -29,8 +29,8 @@
       max-width: 400px;
       overflow: hidden;
       position: relative;
-      height: 550px; /* เพิ่มความสูง */
-      box-sizing: border-box; /* ป้องกันเนื้อหาล้น */
+      height: 550px;
+      box-sizing: border-box;
     }
 
     .section {
@@ -40,8 +40,8 @@
       width: 100%;
       height: 100%;
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      padding: 20px; /* เพิ่ม Padding ให้ข้อมูลไม่ชิดขอบ */
-      box-sizing: border-box; /* รวม Padding และ Border */
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .section.hidden-left {
@@ -199,17 +199,24 @@
     function toggleView() {
       const settings = document.getElementById('settingsContainer');
       const calculator = document.getElementById('calculatorContainer');
+      const toggleIcon = document.getElementById('toggleIcon');
 
       if (settings.classList.contains('active')) {
+        // กลับไปที่ Calculator
         settings.classList.add('hidden-right');
         settings.classList.remove('active');
         calculator.classList.add('active');
         calculator.classList.remove('hidden-left');
+        toggleIcon.classList.remove('fa-arrow-left');
+        toggleIcon.classList.add('fa-cog');
       } else {
+        // ไปที่ Settings
         calculator.classList.add('hidden-left');
         calculator.classList.remove('active');
         settings.classList.add('active');
         settings.classList.remove('hidden-right');
+        toggleIcon.classList.remove('fa-cog');
+        toggleIcon.classList.add('fa-arrow-left');
       }
     }
 
