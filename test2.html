@@ -142,6 +142,20 @@
       background: linear-gradient(45deg, #0056b3, #0088cc);
       transform: translateY(-3px);
     }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-flag {
+      width: 30px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
   </style>
 </head>
 <body>
@@ -169,19 +183,16 @@
         <label id="riskLabel">Risk (%)</label>
         <input type="number" id="riskInput" placeholder="Enter risk percentage" />
       </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
       <button class="btn" onclick="calculatePosition()">Calculate</button>
     </div>
 
     <!-- Settings Section -->
     <div class="section settings-container hidden-right" id="settingsContainer">
       <h1>Settings</h1>
-      <div class="form-group">
-        <label for="themeToggle">Theme</label>
-        <select id="themeToggle" onchange="toggleTheme()">
-          <option value="dark" selected>Dark Mode</option>
-          <option value="light">Light Mode</option>
-        </select>
-      </div>
       <div class="form-group">
         <label for="accountCurrency">Account Currency</label>
         <div class="currency-container">
@@ -194,6 +205,21 @@
             <option value="JPY" data-flag="https://flagcdn.com/w320/jp.png">JPY - Japanese Yen</option>
           </select>
         </div>
+      </div>
+      <div class="form-group">
+        <label>Risk</label>
+        <div class="toggle-group">
+          <div class="slider"></div>
+          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="themeToggle">Theme</label>
+        <select id="themeToggle" onchange="toggleTheme()">
+          <option value="dark" selected>Dark Mode</option>
+          <option value="light">Light Mode</option>
+        </select>
       </div>
     </div>
   </div>
@@ -218,6 +244,28 @@
         settings.classList.remove('hidden-right');
         toggleIcon.classList.remove('fa-cog');
         toggleIcon.classList.add('fa-arrow-left');
+      }
+    }
+
+    function toggleRiskType(type) {
+      const slider = document.querySelector('.slider');
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+      const riskLabel = document.getElementById('riskLabel');
+      const riskInput = document.getElementById('riskInput');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+        slider.style.transform = 'translateX(0%)';
+        riskLabel.textContent = 'Risk (%)';
+        riskInput.placeholder = 'Enter risk percentage';
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+        slider.style.transform = 'translateX(100%)';
+        riskLabel.textContent = 'Risk (Amount)';
+        riskInput.placeholder = 'Enter risk amount';
       }
     }
 
@@ -252,9 +300,9 @@
 
       let riskAmount;
       if (document.body.classList.contains('light-mode')) {
-        riskAmount = (balance * risk) / 100; // Example logic
+        riskAmount = (balance * risk) / 100;
       } else {
-        riskAmount = (balance * risk) / 100; // Example logic
+        riskAmount = (balance * risk) / 100;
       }
 
       const positionSize = riskAmount / stopLoss;
