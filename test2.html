@@ -11,9 +11,8 @@
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      color: var(--text-color);
-      background: var(--background-color);
-      transition: background 0.3s ease, color 0.3s ease;
+      color: #fff;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -22,33 +21,11 @@
       padding: 0;
     }
 
-    :root {
-      /* Default Dark Mode Colors */
-      --background-color: #0f2027;
-      --gradient-color: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      --text-color: #ffffff;
-      --input-bg: rgba(255, 255, 255, 0.1);
-      --button-bg: linear-gradient(45deg, #007bff, #00aaff);
-      --toggle-bg: #333;
-      --toggle-slider: #00aaff;
-    }
-
-    body.light-mode {
-      /* Light Mode Colors */
-      --background-color: #f5f5f5;
-      --gradient-color: linear-gradient(135deg, #ffffff, #e8e8e8);
-      --text-color: #333333;
-      --input-bg: #f0f0f0;
-      --button-bg: linear-gradient(45deg, #007bff, #00aaff);
-      --toggle-bg: #ddd;
-      --toggle-slider: #007bff;
-    }
-
     .container {
-      background: var(--gradient-color);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
@@ -91,7 +68,7 @@
       top: 15px;
       left: 15px;
       font-size: 22px;
-      color: var(--text-color);
+      color: #aaa;
       cursor: pointer;
       transition: color 0.3s ease, transform 0.3s ease;
       z-index: 10;
@@ -112,46 +89,82 @@
       font-size: 13px;
     }
 
-    .toggle-container {
-      position: relative;
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 14px;
+      outline: none;
+      transition: box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      box-shadow: 0 0 10px rgba(0, 209, 255, 0.8);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, #007bff, #00aaff);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(45deg, #0056b3, #0088cc);
+      transform: translateY(-3px);
+    }
+
+    /* Risk Toggle */
+    .risk-toggle {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--toggle-bg);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       overflow: hidden;
-      height: 40px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .toggle-button {
-      flex: 1;
-      padding: 10px 0;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
       position: relative;
-      z-index: 2;
-      color: var(--text-color);
+      height: 40px;
     }
 
-    .toggle-button.active {
-      color: #fff;
-      font-weight: bold;
-    }
-
-    .toggle-slider {
+    .risk-toggle .slider {
       position: absolute;
       top: 0;
       left: 0;
       width: 50%;
       height: 100%;
-      background: var(--toggle-slider);
+      background: #00aaff;
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 20px;
       z-index: 1;
+    }
+
+    .risk-toggle button {
+      flex: 1;
+      padding: 10px 0;
+      border: none;
+      background: transparent;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .risk-toggle button.active {
+      color: #fff;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -205,18 +218,11 @@
       </div>
       <div class="form-group">
         <label>Risk</label>
-        <div class="toggle-container">
-          <div class="toggle-slider"></div>
-          <button id="riskPercentage" class="toggle-button active" onclick="toggleRiskType('percentage')">%</button>
-          <button id="riskAmount" class="toggle-button" onclick="toggleRiskType('amount')">Amount</button>
+        <div class="risk-toggle">
+          <div class="slider"></div>
+          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="themeToggle">Theme</label>
-        <select id="themeToggle" onchange="toggleTheme()">
-          <option value="dark" selected>Dark Mode</option>
-          <option value="light">Light Mode</option>
-        </select>
       </div>
     </div>
   </div>
@@ -245,7 +251,7 @@
     }
 
     function toggleRiskType(type) {
-      const slider = document.querySelector('.toggle-slider');
+      const slider = document.querySelector('.slider');
       const percentageButton = document.getElementById('riskPercentage');
       const amountButton = document.getElementById('riskAmount');
 
@@ -257,17 +263,6 @@
         slider.style.transform = 'translateX(100%)';
         percentageButton.classList.remove('active');
         amountButton.classList.add('active');
-      }
-    }
-
-    function toggleTheme() {
-      const themeSelect = document.getElementById('themeToggle');
-      const body = document.body;
-
-      if (themeSelect.value === 'light') {
-        body.classList.add('light-mode');
-      } else {
-        body.classList.remove('light-mode');
       }
     }
 
