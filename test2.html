@@ -7,12 +7,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ภายนอกกรอบใหญ่สุด (โปร่งใส) */
+    /* Default Styles */
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      background: transparent;
-      color: #fff;
+      color: #333; /* Neutral text color */
+      background: #f7f7f7; /* Light background for compatibility */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,12 +21,11 @@
       padding: 0;
     }
 
-    /* ภายในกรอบใหญ่สุด (Gradient ทันสมัย) */
     .container {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Modern Gradient */
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      background: linear-gradient(135deg, #eeeeee, #d1d1d1); /* Neutral gradient */
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
@@ -62,6 +61,7 @@
       font-size: 22px;
       text-align: center;
       margin-bottom: 20px;
+      color: #444; /* Darker text for headers */
     }
 
     .icon-toggle {
@@ -69,14 +69,14 @@
       top: 15px;
       left: 15px;
       font-size: 22px;
-      color: #aaa;
+      color: #666; /* Neutral icon color */
       cursor: pointer;
       transition: color 0.3s ease, transform 0.3s ease;
       z-index: 10;
     }
 
     .icon-toggle:hover {
-      color: #00d1ff;
+      color: #007bff; /* Slight blue highlight */
       transform: scale(1.2);
     }
 
@@ -88,15 +88,16 @@
       display: block;
       margin-bottom: 5px;
       font-size: 13px;
+      color: #555; /* Neutral label color */
     }
 
     .form-group input, .form-group select {
       width: 100%;
       padding: 12px;
-      border: none;
+      border: 1px solid #ccc; /* Neutral border */
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: #f9f9f9; /* Neutral input background */
+      color: #333; /* Dark text */
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
@@ -104,15 +105,15 @@
     }
 
     .form-group input:focus, .form-group select:focus {
-      box-shadow: 0 0 10px rgba(0, 209, 255, 0.8);
-      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Subtle blue highlight */
+      background: #ffffff; /* Lighter background on focus */
     }
 
     .btn {
       display: block;
       width: 100%;
       padding: 12px;
-      background: linear-gradient(45deg, #007bff, #00aaff);
+      background: linear-gradient(45deg, #007bff, #00aaff); /* Subtle blue gradient */
       border: none;
       border-radius: 10px;
       color: #fff;
@@ -122,7 +123,7 @@
     }
 
     .btn:hover {
-      background: linear-gradient(45deg, #0056b3, #0088cc);
+      background: linear-gradient(45deg, #0056b3, #0088cc); /* Darker blue hover effect */
       transform: translateY(-3px);
     }
 
@@ -130,7 +131,7 @@
     .toggle-group {
       position: relative;
       display: flex;
-      background: rgba(255, 255, 255, 0.1);
+      background: #e0e0e0; /* Neutral toggle background */
       border-radius: 8px;
       overflow: hidden;
       height: 40px;
@@ -144,7 +145,7 @@
       padding: 10px 0;
       border: none;
       background: transparent;
-      color: #fff;
+      color: #666; /* Neutral button text color */
       font-size: 14px;
       cursor: pointer;
       text-align: center;
@@ -155,7 +156,7 @@
     }
 
     .toggle-group button.active {
-      color: #fff;
+      color: #fff; /* White text for active button */
       font-weight: bold;
     }
 
@@ -165,7 +166,7 @@
       left: 0;
       width: 50%;
       height: 100%;
-      background: #00aaff;
+      background: #007bff; /* Blue slider for active state */
       border-radius: 8px;
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1;
