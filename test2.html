@@ -11,8 +11,8 @@
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      color: #e0e0e0; /* Slightly off-white for text */
-      background: transparent; /* Transparent outside the container */
+      color: #e0e0e0;
+      background: transparent;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -22,7 +22,7 @@
     }
 
     .container {
-      background: linear-gradient(135deg, #2e2e2e, #3c3c3c); /* Darker neutral gradient */
+      background: linear-gradient(135deg, #2e2e2e, #3c3c3c);
       backdrop-filter: blur(10px);
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
@@ -40,7 +40,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition */
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       padding: 20px;
       box-sizing: border-box;
     }
@@ -61,7 +61,7 @@
       font-size: 22px;
       text-align: center;
       margin-bottom: 20px;
-      color: #ffffff; /* Bright white for headers */
+      color: #ffffff;
     }
 
     .icon-toggle {
@@ -69,14 +69,14 @@
       top: 15px;
       left: 15px;
       font-size: 22px;
-      color: #b3b3b3; /* Neutral icon color */
+      color: #b3b3b3;
       cursor: pointer;
       transition: color 0.3s ease, transform 0.3s ease;
       z-index: 10;
     }
 
     .icon-toggle:hover {
-      color: #007bff; /* Highlighted blue on hover */
+      color: #007bff;
       transform: scale(1.2);
     }
 
@@ -88,16 +88,16 @@
       display: block;
       margin-bottom: 5px;
       font-size: 13px;
-      color: #cccccc; /* Neutral label color */
+      color: #cccccc;
     }
 
     .form-group input, .form-group select {
       width: 100%;
       padding: 12px;
-      border: 1px solid #444; /* Slightly darker border */
+      border: 1px solid #444;
       border-radius: 8px;
-      background: #383838; /* Darker input background */
-      color: #e0e0e0; /* Neutral text color */
+      background: #383838;
+      color: #e0e0e0;
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
@@ -108,7 +108,7 @@
       display: block;
       width: 100%;
       padding: 12px;
-      background: linear-gradient(45deg, #0056b3, #007bff); /* Stronger blue gradient */
+      background: linear-gradient(45deg, #0056b3, #007bff);
       border: none;
       border-radius: 10px;
       color: #fff;
@@ -118,8 +118,59 @@
     }
 
     .btn:hover {
-      background: linear-gradient(45deg, #003f7d, #0056b3); /* Darker blue on hover */
+      background: linear-gradient(45deg, #003f7d, #0056b3);
       transform: translateY(-3px);
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-flag {
+      width: 30px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-group {
+      display: flex;
+      position: relative;
+      background: #3a3a3a;
+      border-radius: 8px;
+      height: 40px;
+      overflow: hidden;
+    }
+
+    .toggle-group button {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #ccc;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 500;
+      z-index: 2;
+    }
+
+    .toggle-group button.active {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: #007bff;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
     }
   </style>
 </head>
@@ -235,8 +286,7 @@
       const currencySelect = document.getElementById('accountCurrency');
       const selectedOption = currencySelect.options[currencySelect.selectedIndex];
       const flagUrl = selectedOption.getAttribute('data-flag');
-      const currencyFlag = document.getElementById('currencyFlag');
-      currencyFlag.src = flagUrl;
+      document.getElementById('currencyFlag').src = flagUrl;
     }
 
     function calculatePosition() {
