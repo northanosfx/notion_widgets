@@ -7,12 +7,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ภายนอกกรอบใหญ่สุด (โปร่งใส) */
+    /* Default Styles */
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
       color: #e0e0e0; /* Slightly off-white for text */
-      background: transparent; /* Transparent background */
+      background: transparent; /* Set to transparent */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,12 +21,11 @@
       padding: 0;
     }
 
-    /* ภายในกรอบใหญ่สุด (Gradient ที่ดูทันสมัย) */
     .container {
-      background: linear-gradient(135deg, #232526, #414345, #6b6b6b); /* Improved modern gradient */
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7); /* Stronger shadow */
+      background: linear-gradient(135deg, #2e2e2e, #3c3c3c); /* Darker neutral gradient */
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
@@ -104,116 +103,13 @@
       outline: none;
       transition: box-shadow 0.3s ease, background 0.3s ease;
     }
-
-    .form-group input:focus, .form-group select:focus {
-      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Subtle blue glow */
-      background: #4a4a4a; /* Slightly lighter background on focus */
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(45deg, #0056b3, #007bff); /* Stronger blue gradient */
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn:hover {
-      background: linear-gradient(45deg, #003f7d, #0056b3); /* Darker blue on hover */
-      transform: translateY(-3px);
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <i class="fas fa-cog icon-toggle" id="toggleIcon" title="Settings" onclick="toggleView()"></i>
-
-    <!-- Calculator Section -->
-    <div class="section calculator-container active" id="calculatorContainer">
-      <h1>Position Calculator</h1>
-      <div class="form-group">
-        <label for="balance">Account Balance</label>
-        <input type="number" id="balance" placeholder="Enter your balance" />
-      </div>
-      <div class="form-group">
-        <label for="pair">Instrument</label>
-        <select id="pair">
-          <option value="XAUUSD" selected>XAU/USD</option>
-          <option value="EURUSD">EUR/USD</option>
-          <option value="GBPUSD">GBP/USD</option>
-          <option value="USDJPY">USD/JPY</option>
-          <option value="AUDUSD">AUD/USD</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label id="riskLabel">Risk (%)</label>
-        <input type="number" id="riskInput" placeholder="Enter risk percentage" />
-      </div>
-      <div class="form-group">
-        <label for="stopLoss">Stop Loss (pips)</label>
-        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
-      </div>
-      <button class="btn" onclick="calculatePosition()">Calculate</button>
-    </div>
-
-    <!-- Settings Section -->
-    <div class="section settings-container hidden-right" id="settingsContainer">
-      <h1>Settings</h1>
-      <div class="form-group">
-        <label for="accountCurrency">Account Currency</label>
-        <select id="accountCurrency">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="THB">THB</option>
-          <option value="JPY">JPY</option>
-        </select>
-      </div>
+    <div class="section active">
+      <h1>Modern Position Calculator</h1>
     </div>
   </div>
-
-  <script>
-    function toggleView() {
-      const calculator = document.getElementById('calculatorContainer');
-      const settings = document.getElementById('settingsContainer');
-      const toggleIcon = document.getElementById('toggleIcon');
-
-      if (settings.classList.contains('hidden-right')) {
-        settings.classList.remove('hidden-right');
-        settings.classList.add('active');
-        calculator.classList.remove('active');
-        calculator.classList.add('hidden-left');
-        toggleIcon.classList.remove('fa-cog');
-        toggleIcon.classList.add('fa-arrow-left');
-      } else {
-        calculator.classList.remove('hidden-left');
-        calculator.classList.add('active');
-        settings.classList.remove('active');
-        settings.classList.add('hidden-right');
-        toggleIcon.classList.remove('fa-arrow-left');
-        toggleIcon.classList.add('fa-cog');
-      }
-    }
-
-    function calculatePosition() {
-      const balance = parseFloat(document.getElementById('balance').value);
-      const risk = parseFloat(document.getElementById('riskInput').value);
-      const stopLoss = parseFloat(document.getElementById('stopLoss').value);
-
-      if (isNaN(balance) || isNaN(risk) || isNaN(stopLoss)) {
-        alert('Please enter valid numbers.');
-        return;
-      }
-
-      const riskAmount = (balance * risk) / 100;
-      const positionSize = riskAmount / stopLoss;
-      alert(`Position Size: ${positionSize.toFixed(2)} lots`);
-    }
-  </script>
 </body>
 </html>
