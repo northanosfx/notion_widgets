@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Position Calculator</title>
+  <title>Position Calculator</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* Default Styles */
+    /* ภายนอกกรอบใหญ่สุด (โปร่งใส) */
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      color: #e0e0e0; /* Slightly off-white for text */
-      background: #232323; /* Dark neutral background */
+      background: transparent;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,11 +21,12 @@
       padding: 0;
     }
 
+    /* ภายในกรอบใหญ่สุด (Gradient ทันสมัย) */
     .container {
-      background: linear-gradient(135deg, #2e2e2e, #3c3c3c); /* Darker neutral gradient */
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(135deg, #1e1e1e, #3a3a3a); /* Modern Gradient */
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
@@ -40,7 +41,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition */
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       padding: 20px;
       box-sizing: border-box;
     }
@@ -61,7 +62,6 @@
       font-size: 22px;
       text-align: center;
       margin-bottom: 20px;
-      color: #ffffff; /* Bright white for headers */
     }
 
     .icon-toggle {
@@ -69,14 +69,14 @@
       top: 15px;
       left: 15px;
       font-size: 22px;
-      color: #b3b3b3; /* Neutral icon color */
+      color: #aaa;
       cursor: pointer;
       transition: color 0.3s ease, transform 0.3s ease;
       z-index: 10;
     }
 
     .icon-toggle:hover {
-      color: #007bff; /* Highlighted blue on hover */
+      color: #00d1ff;
       transform: scale(1.2);
     }
 
@@ -88,16 +88,15 @@
       display: block;
       margin-bottom: 5px;
       font-size: 13px;
-      color: #cccccc; /* Neutral label color */
     }
 
     .form-group input, .form-group select {
       width: 100%;
       padding: 12px;
-      border: 1px solid #444; /* Slightly darker border */
+      border: none;
       border-radius: 8px;
-      background: #383838; /* Darker input background */
-      color: #e0e0e0; /* Neutral text color */
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
@@ -105,15 +104,15 @@
     }
 
     .form-group input:focus, .form-group select:focus {
-      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Subtle blue glow */
-      background: #4a4a4a; /* Slightly lighter background on focus */
+      box-shadow: 0 0 10px rgba(0, 209, 255, 0.3);
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .btn {
       display: block;
       width: 100%;
       padding: 12px;
-      background: linear-gradient(45deg, #0056b3, #007bff); /* Stronger blue gradient */
+      background: linear-gradient(45deg, #007bff, #00aaff);
       border: none;
       border-radius: 10px;
       color: #fff;
@@ -123,15 +122,15 @@
     }
 
     .btn:hover {
-      background: linear-gradient(45deg, #003f7d, #0056b3); /* Darker blue on hover */
+      background: linear-gradient(45deg, #0056b3, #0088cc);
       transform: translateY(-3px);
     }
 
-    /* Toggle สำหรับ Risk */
+    /* Toggle Group */
     .toggle-group {
       position: relative;
       display: flex;
-      background: #3a3a3a; /* Neutral toggle background */
+      background: #444;
       border-radius: 8px;
       overflow: hidden;
       height: 40px;
@@ -145,7 +144,7 @@
       padding: 10px 0;
       border: none;
       background: transparent;
-      color: #cccccc; /* Neutral button text color */
+      color: #fff;
       font-size: 14px;
       cursor: pointer;
       text-align: center;
@@ -156,7 +155,7 @@
     }
 
     .toggle-group button.active {
-      color: #fff; /* White text for active button */
+      color: #fff;
       font-weight: bold;
     }
 
@@ -166,7 +165,7 @@
       left: 0;
       width: 50%;
       height: 100%;
-      background: #007bff; /* Bright blue slider */
+      background: #00aaff;
       border-radius: 8px;
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1;
@@ -218,32 +217,6 @@
       </div>
       <button class="btn" onclick="calculatePosition()">Calculate</button>
     </div>
-
-    <!-- Settings Section -->
-    <div class="section settings-container hidden-right" id="settingsContainer">
-      <h1>Settings</h1>
-      <div class="form-group">
-        <label for="accountCurrency">Account Currency</label>
-        <div class="currency-container">
-          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="Flag" class="currency-flag">
-          <select id="accountCurrency" onchange="updateCurrencyFlag()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD - United States Dollar</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR - Euro</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP - British Pound</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB - Thai Baht</option>
-            <option value="JPY" data-flag="https://flagcdn.com/w320/jp.png">JPY - Japanese Yen</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Risk</label>
-        <div class="toggle-group">
-          <div class="slider"></div>
-          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
-          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -269,36 +242,6 @@
       }
     }
 
-    function toggleRiskType(type) {
-      const slider = document.querySelector('.slider');
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
-      const riskLabel = document.getElementById('riskLabel');
-      const riskInput = document.getElementById('riskInput');
-
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
-        slider.style.transform = 'translateX(0%)';
-        riskLabel.textContent = 'Risk (%)';
-        riskInput.placeholder = 'Enter risk percentage';
-      } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
-        slider.style.transform = 'translateX(100%)';
-        riskLabel.textContent = 'Risk (Amount)';
-        riskInput.placeholder = 'Enter risk amount';
-      }
-    }
-
-    function updateCurrencyFlag() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      const currencyFlag = document.getElementById('currencyFlag');
-      currencyFlag.src = flagUrl;
-    }
-
     function calculatePosition() {
       const balance = parseFloat(document.getElementById('balance').value);
       const risk = parseFloat(document.getElementById('riskInput').value);
@@ -309,13 +252,7 @@
         return;
       }
 
-      let riskAmount;
-      if (currentRiskType === 'percentage') {
-        riskAmount = (balance * risk) / 100;
-      } else {
-        riskAmount = risk;
-      }
-
+      const riskAmount = (balance * risk) / 100;
       const positionSize = riskAmount / stopLoss;
       alert(`Position Size: ${positionSize.toFixed(2)} lots`);
     }
