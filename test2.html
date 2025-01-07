@@ -11,8 +11,8 @@
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      color: #333; /* Neutral text color */
-      background: #f7f7f7; /* Light background for compatibility */
+      color: #e0e0e0; /* Slightly off-white for text */
+      background: #232323; /* Dark neutral background */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -22,10 +22,10 @@
     }
 
     .container {
-      background: linear-gradient(135deg, #eeeeee, #d1d1d1); /* Neutral gradient */
+      background: linear-gradient(135deg, #2e2e2e, #3c3c3c); /* Darker neutral gradient */
       backdrop-filter: blur(10px);
       border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
@@ -61,7 +61,7 @@
       font-size: 22px;
       text-align: center;
       margin-bottom: 20px;
-      color: #444; /* Darker text for headers */
+      color: #ffffff; /* Bright white for headers */
     }
 
     .icon-toggle {
@@ -69,14 +69,14 @@
       top: 15px;
       left: 15px;
       font-size: 22px;
-      color: #666; /* Neutral icon color */
+      color: #b3b3b3; /* Neutral icon color */
       cursor: pointer;
       transition: color 0.3s ease, transform 0.3s ease;
       z-index: 10;
     }
 
     .icon-toggle:hover {
-      color: #007bff; /* Slight blue highlight */
+      color: #007bff; /* Highlighted blue on hover */
       transform: scale(1.2);
     }
 
@@ -88,16 +88,16 @@
       display: block;
       margin-bottom: 5px;
       font-size: 13px;
-      color: #555; /* Neutral label color */
+      color: #cccccc; /* Neutral label color */
     }
 
     .form-group input, .form-group select {
       width: 100%;
       padding: 12px;
-      border: 1px solid #ccc; /* Neutral border */
+      border: 1px solid #444; /* Slightly darker border */
       border-radius: 8px;
-      background: #f9f9f9; /* Neutral input background */
-      color: #333; /* Dark text */
+      background: #383838; /* Darker input background */
+      color: #e0e0e0; /* Neutral text color */
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
@@ -105,15 +105,15 @@
     }
 
     .form-group input:focus, .form-group select:focus {
-      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Subtle blue highlight */
-      background: #ffffff; /* Lighter background on focus */
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Subtle blue glow */
+      background: #4a4a4a; /* Slightly lighter background on focus */
     }
 
     .btn {
       display: block;
       width: 100%;
       padding: 12px;
-      background: linear-gradient(45deg, #007bff, #00aaff); /* Subtle blue gradient */
+      background: linear-gradient(45deg, #0056b3, #007bff); /* Stronger blue gradient */
       border: none;
       border-radius: 10px;
       color: #fff;
@@ -123,7 +123,7 @@
     }
 
     .btn:hover {
-      background: linear-gradient(45deg, #0056b3, #0088cc); /* Darker blue hover effect */
+      background: linear-gradient(45deg, #003f7d, #0056b3); /* Darker blue on hover */
       transform: translateY(-3px);
     }
 
@@ -131,7 +131,7 @@
     .toggle-group {
       position: relative;
       display: flex;
-      background: #e0e0e0; /* Neutral toggle background */
+      background: #3a3a3a; /* Neutral toggle background */
       border-radius: 8px;
       overflow: hidden;
       height: 40px;
@@ -145,7 +145,7 @@
       padding: 10px 0;
       border: none;
       background: transparent;
-      color: #666; /* Neutral button text color */
+      color: #cccccc; /* Neutral button text color */
       font-size: 14px;
       cursor: pointer;
       text-align: center;
@@ -166,7 +166,7 @@
       left: 0;
       width: 50%;
       height: 100%;
-      background: #007bff; /* Blue slider for active state */
+      background: #007bff; /* Bright blue slider */
       border-radius: 8px;
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1;
@@ -247,8 +247,6 @@
   </div>
 
   <script>
-    let currentRiskType = 'percentage';
-
     function toggleView() {
       const settings = document.getElementById('settingsContainer');
       const calculator = document.getElementById('calculatorContainer');
@@ -284,14 +282,12 @@
         slider.style.transform = 'translateX(0%)';
         riskLabel.textContent = 'Risk (%)';
         riskInput.placeholder = 'Enter risk percentage';
-        currentRiskType = 'percentage';
       } else {
         percentageButton.classList.remove('active');
         amountButton.classList.add('active');
         slider.style.transform = 'translateX(100%)';
         riskLabel.textContent = 'Risk (Amount)';
         riskInput.placeholder = 'Enter risk amount';
-        currentRiskType = 'amount';
       }
     }
 
