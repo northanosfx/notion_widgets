@@ -7,10 +7,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* ภายนอกกรอบใหญ่สุด (โปร่งใส) */
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      background: transparent; /* พื้นหลังภายนอกโปร่งใส */
+      background: transparent;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -19,8 +21,10 @@
       padding: 0;
     }
 
+    /* ภายในกรอบใหญ่สุด (Gradient) */
     .container {
-      background: linear-gradient(135deg, #1a1a1a, #333); /* Gradient ภายในกรอบ */
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      backdrop-filter: blur(10px);
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       width: 95%;
@@ -85,7 +89,8 @@
       font-size: 13px;
     }
 
-    .form-group input, .form-group select {
+    .form-group input,
+    .form-group select {
       width: 100%;
       padding: 10px;
       border: none;
@@ -98,7 +103,8 @@
       transition: box-shadow 0.3s ease;
     }
 
-    .form-group input:focus, .form-group select:focus {
+    .form-group input:focus,
+    .form-group select:focus {
       box-shadow: 0 0 8px rgba(0, 170, 255, 0.8);
     }
 
@@ -253,93 +259,5 @@
       </div>
     </div>
   </div>
-
-  <script>
-    let currentRiskType = 'percentage';
-
-    function toggleView() {
-      const settings = document.getElementById('settingsContainer');
-      const calculator = document.getElementById('calculatorContainer');
-      const toggleIcon = document.getElementById('toggleIcon');
-
-      if (settings.classList.contains('active')) {
-        settings.classList.add('hidden-right');
-        settings.classList.remove('active');
-        calculator.classList.add('active');
-        calculator.classList.remove('hidden-left');
-        toggleIcon.classList.remove('fa-arrow-left');
-        toggleIcon.classList.add('fa-cog');
-        updateRiskInput();
-      } else {
-        calculator.classList.add('hidden-left');
-        calculator.classList.remove('active');
-        settings.classList.add('active');
-        settings.classList.remove('hidden-right');
-        toggleIcon.classList.remove('fa-cog');
-        toggleIcon.classList.add('fa-arrow-left');
-      }
-    }
-
-    function toggleRiskType(type) {
-      const slider = document.querySelector('.slider');
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
-
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
-        slider.style.transform = 'translateX(0%)';
-        currentRiskType = 'percentage';
-      } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
-        slider.style.transform = 'translateX(100%)';
-        currentRiskType = 'amount';
-      }
-    }
-
-    function updateCurrencyFlag() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      const currencyFlag = document.getElementById('currencyFlag');
-
-      currencyFlag.src = flagUrl;
-    }
-
-    function updateRiskInput() {
-      const riskLabel = document.getElementById('riskLabel');
-      const riskInput = document.getElementById('riskInput');
-
-      if (currentRiskType === 'percentage') {
-        riskLabel.textContent = 'Risk (%)';
-        riskInput.placeholder = 'Enter risk percentage';
-      } else {
-        riskLabel.textContent = 'Risk (Amount)';
-        riskInput.placeholder = 'Enter risk amount';
-      }
-    }
-
-    function calculatePosition() {
-      const balance = parseFloat(document.getElementById('balance').value);
-      const risk = parseFloat(document.getElementById('riskInput').value);
-      const stopLoss = parseFloat(document.getElementById('stopLoss').value);
-
-      if (isNaN(balance) || isNaN(risk) || isNaN(stopLoss)) {
-        alert('Please fill in all fields with valid numbers.');
-        return;
-      }
-
-      let riskAmount;
-      if (currentRiskType === 'percentage') {
-        riskAmount = (balance * risk) / 100;
-      } else {
-        riskAmount = risk;
-      }
-
-      const positionSize = riskAmount / stopLoss;
-      alert(`Position Size: ${positionSize.toFixed(2)} lots`);
-    }
-  </script>
 </body>
 </html>
