@@ -10,17 +10,17 @@
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      background: transparent; /* ทำให้พื้นหลังของ body เป็นโปร่งใส */
-      margin: 0;
-      padding: 0;
-      height: 100vh;
+      background: transparent; /* พื้นหลังภายนอกโปร่งใส */
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
     }
 
     .container {
-      background: linear-gradient(135deg, #1a1a1a, #333); /* Gradient สำหรับเนื้องาน */
+      background: linear-gradient(135deg, #1a1a1a, #333); /* Gradient ภายในกรอบ */
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       width: 95%;
@@ -255,7 +255,91 @@
   </div>
 
   <script>
-    // JavaScript functions remain the same.
+    let currentRiskType = 'percentage';
+
+    function toggleView() {
+      const settings = document.getElementById('settingsContainer');
+      const calculator = document.getElementById('calculatorContainer');
+      const toggleIcon = document.getElementById('toggleIcon');
+
+      if (settings.classList.contains('active')) {
+        settings.classList.add('hidden-right');
+        settings.classList.remove('active');
+        calculator.classList.add('active');
+        calculator.classList.remove('hidden-left');
+        toggleIcon.classList.remove('fa-arrow-left');
+        toggleIcon.classList.add('fa-cog');
+        updateRiskInput();
+      } else {
+        calculator.classList.add('hidden-left');
+        calculator.classList.remove('active');
+        settings.classList.add('active');
+        settings.classList.remove('hidden-right');
+        toggleIcon.classList.remove('fa-cog');
+        toggleIcon.classList.add('fa-arrow-left');
+      }
+    }
+
+    function toggleRiskType(type) {
+      const slider = document.querySelector('.slider');
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+        slider.style.transform = 'translateX(0%)';
+        currentRiskType = 'percentage';
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+        slider.style.transform = 'translateX(100%)';
+        currentRiskType = 'amount';
+      }
+    }
+
+    function updateCurrencyFlag() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      const currencyFlag = document.getElementById('currencyFlag');
+
+      currencyFlag.src = flagUrl;
+    }
+
+    function updateRiskInput() {
+      const riskLabel = document.getElementById('riskLabel');
+      const riskInput = document.getElementById('riskInput');
+
+      if (currentRiskType === 'percentage') {
+        riskLabel.textContent = 'Risk (%)';
+        riskInput.placeholder = 'Enter risk percentage';
+      } else {
+        riskLabel.textContent = 'Risk (Amount)';
+        riskInput.placeholder = 'Enter risk amount';
+      }
+    }
+
+    function calculatePosition() {
+      const balance = parseFloat(document.getElementById('balance').value);
+      const risk = parseFloat(document.getElementById('riskInput').value);
+      const stopLoss = parseFloat(document.getElementById('stopLoss').value);
+
+      if (isNaN(balance) || isNaN(risk) || isNaN(stopLoss)) {
+        alert('Please fill in all fields with valid numbers.');
+        return;
+      }
+
+      let riskAmount;
+      if (currentRiskType === 'percentage') {
+        riskAmount = (balance * risk) / 100;
+      } else {
+        riskAmount = risk;
+      }
+
+      const positionSize = riskAmount / stopLoss;
+      alert(`Position Size: ${positionSize.toFixed(2)} lots`);
+    }
   </script>
 </body>
 </html>
