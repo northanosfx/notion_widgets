@@ -10,58 +10,31 @@
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      background: transparent;
+      background: transparent; /* พื้นหลังภายนอกโปร่งใส */
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
       padding: 0;
-      transition: background 0.3s ease;
-    }
-
-    body.light-mode {
-      background: #f5f5f5;
+      transition: background-color 0.3s ease;
     }
 
     .container {
-      background: linear-gradient(135deg, #1a1a1a, #333);
+      background: linear-gradient(135deg, #1a1a1a, #333); /* Gradient ภายในกรอบ */
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
       position: relative;
-      height: 750px;
+      height: 700px;
       box-sizing: border-box;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
-    .container.light-mode {
-      background: linear-gradient(135deg, #ffffff, #eaeaea);
-    }
-
-    .section {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .section.hidden-left {
-      transform: translateX(-100%);
-    }
-
-    .section.hidden-right {
-      transform: translateX(100%);
-    }
-
-    .section.active {
-      transform: translateX(0);
+    body.light-mode .container {
+      background: linear-gradient(135deg, #ffffff, #e6e6e6);
     }
 
     h1 {
@@ -72,7 +45,7 @@
       transition: color 0.3s ease;
     }
 
-    h1.light-mode {
+    body.light-mode h1 {
       color: #333;
     }
 
@@ -88,7 +61,7 @@
       transition: color 0.3s ease;
     }
 
-    .form-group label.light-mode {
+    body.light-mode .form-group label {
       color: #333;
     }
 
@@ -102,10 +75,10 @@
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
-      transition: background 0.3s ease, color 0.3s ease;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .form-group input.light-mode, .form-group select.light-mode {
+    body.light-mode .form-group input, body.light-mode .form-group select {
       background: #fff;
       color: #333;
     }
@@ -120,101 +93,21 @@
       color: #fff;
       font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
     .btn:hover {
       background: linear-gradient(45deg, #0056b3, #0088cc);
     }
-
-    .currency-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .currency-flag {
-      width: 30px;
-      height: 20px;
-      border-radius: 3px;
-      object-fit: cover;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    #accountCurrency {
-      width: calc(100% - 40px);
-      padding: 10px;
-      border-radius: 8px;
-      background: #444;
-      color: #fff;
-      border: none;
-      font-size: 14px;
-      outline: none;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    #accountCurrency.light-mode {
-      background: #fff;
-      color: #333;
-    }
-
-    .toggle-group {
-      position: relative;
-      display: flex;
-      background: #444;
-      border-radius: 8px;
-      overflow: hidden;
-      height: 40px;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 10px;
-      transition: background 0.3s ease;
-    }
-
-    .toggle-group.light-mode {
-      background: #fff;
-    }
-
-    .toggle-group button {
-      flex: 1;
-      padding: 10px 0;
-      border: none;
-      background: transparent;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      text-align: center;
-      z-index: 2;
-      position: relative;
-      font-weight: 500;
-      transition: color 0.3s ease-in-out;
-    }
-
-    .toggle-group button.active {
-      color: #fff;
-      font-weight: bold;
-    }
-
-    .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background: #00aaff;
-      border-radius: 8px;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1;
-    }
   </style>
 </head>
 <body>
-  <div class="container" id="container">
+  <div class="container">
     <i class="fas fa-cog icon-toggle" id="toggleIcon" title="Settings" onclick="toggleView()"></i>
 
     <!-- Calculator Section -->
     <div class="section calculator-container active" id="calculatorContainer">
-      <h1 id="title">Position Calculator</h1>
+      <h1>Position Calculator</h1>
       <div class="form-group">
         <label for="balance">Account Balance</label>
         <input type="number" id="balance" placeholder="Enter your balance" />
@@ -229,6 +122,15 @@
           <option value="AUDUSD">AUD/USD</option>
         </select>
       </div>
+      <div class="form-group">
+        <label id="riskLabel">Risk (%)</label>
+        <input type="number" id="riskInput" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
+      <button class="btn" onclick="calculatePosition()">Calculate</button>
     </div>
 
     <!-- Settings Section -->
@@ -236,16 +138,12 @@
       <h1>Settings</h1>
       <div class="form-group">
         <label for="accountCurrency">Account Currency</label>
-        <div class="currency-container">
-          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="Flag" class="currency-flag">
-          <select id="accountCurrency" onchange="updateCurrencyFlag()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD - United States Dollar</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR - Euro</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP - British Pound</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB - Thai Baht</option>
-            <option value="JPY" data-flag="https://flagcdn.com/w320/jp.png">JPY - Japanese Yen</option>
-          </select>
-        </div>
+        <select id="accountCurrency" onchange="updateCurrencyFlag()">
+          <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD</option>
+          <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR</option>
+          <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP</option>
+          <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB</option>
+        </select>
       </div>
       <div class="form-group">
         <label>Risk</label>
@@ -266,27 +164,52 @@
   </div>
 
   <script>
-    function toggleTheme() {
-      const themeSelect = document.getElementById('themeSelect').value;
-      const body = document.body;
-      const container = document.getElementById('container');
-      const inputs = document.querySelectorAll('.form-group input, .form-group select');
-      const labels = document.querySelectorAll('.form-group label');
-      const titles = document.querySelectorAll('h1');
+    let currentRiskType = 'percentage';
 
-      if (themeSelect === 'light') {
-        body.classList.add('light-mode');
-        container.classList.add('light-mode');
-        inputs.forEach(input => input.classList.add('light-mode'));
-        labels.forEach(label => label.classList.add('light-mode'));
-        titles.forEach(title => title.classList.add('light-mode'));
+    function toggleView() {
+      const settings = document.getElementById('settingsContainer');
+      const calculator = document.getElementById('calculatorContainer');
+      const toggleIcon = document.getElementById('toggleIcon');
+
+      if (settings.classList.contains('active')) {
+        settings.classList.add('hidden-right');
+        settings.classList.remove('active');
+        calculator.classList.add('active');
+        calculator.classList.remove('hidden-left');
+        toggleIcon.classList.remove('fa-arrow-left');
+        toggleIcon.classList.add('fa-cog');
+        updateRiskInput();
       } else {
-        body.classList.remove('light-mode');
-        container.classList.remove('light-mode');
-        inputs.forEach(input => input.classList.remove('light-mode'));
-        labels.forEach(label => label.classList.remove('light-mode'));
-        titles.forEach(title => title.classList.remove('light-mode'));
+        calculator.classList.add('hidden-left');
+        calculator.classList.remove('active');
+        settings.classList.add('active');
+        settings.classList.remove('hidden-right');
+        toggleIcon.classList.remove('fa-cog');
+        toggleIcon.classList.add('fa-arrow-left');
       }
+    }
+
+    function toggleRiskType(type) {
+      const slider = document.querySelector('.slider');
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      if (type === 'percentage') {
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+        slider.style.transform = 'translateX(0%)';
+        currentRiskType = 'percentage';
+      } else {
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
+        slider.style.transform = 'translateX(100%)';
+        currentRiskType = 'amount';
+      }
+    }
+
+    function toggleTheme() {
+      const theme = document.getElementById('themeSelect').value;
+      document.body.classList.toggle('light-mode', theme === 'light');
     }
   </script>
 </body>
