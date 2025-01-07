@@ -17,18 +17,28 @@
       height: 100vh;
       margin: 0;
       padding: 0;
+      transition: background 0.3s ease; /* เพิ่ม Transition */
+    }
+
+    body.light-mode {
+      background: #f0f0f0; /* พื้นหลังภายนอกใน Light Mode */
     }
 
     .container {
-      background: linear-gradient(135deg, #1a1a1a, #333); /* Gradient ภายในกรอบ */
+      background: linear-gradient(135deg, #1a1a1a, #333); /* Gradient สำหรับ Dark Mode */
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
       position: relative;
-      height: 700px;
+      height: 750px;
       box-sizing: border-box;
+      transition: background 0.3s ease; /* เพิ่ม Transition */
+    }
+
+    .container.light-mode {
+      background: linear-gradient(135deg, #ffffff, #eaeaea); /* Gradient สำหรับ Light Mode */
     }
 
     .section {
@@ -58,21 +68,12 @@
       font-size: 20px;
       text-align: center;
       margin-bottom: 20px;
+      color: #fff;
+      transition: color 0.3s ease; /* เพิ่ม Transition */
     }
 
-    .icon-toggle {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-size: 20px;
-      color: #757575;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      z-index: 10;
-    }
-
-    .icon-toggle:hover {
-      color: #00aaff;
+    h1.light-mode {
+      color: #333; /* ตัวอักษรใน Light Mode */
     }
 
     .form-group {
@@ -83,6 +84,12 @@
       display: block;
       margin-bottom: 5px;
       font-size: 13px;
+      color: #fff;
+      transition: color 0.3s ease; /* เพิ่ม Transition */
+    }
+
+    .form-group label.light-mode {
+      color: #333; /* ตัวอักษรใน Light Mode */
     }
 
     .form-group input, .form-group select {
@@ -90,16 +97,18 @@
       padding: 10px;
       border: none;
       border-radius: 8px;
-      background: #444;
-      color: #fff;
+      background: #444; /* พื้นหลัง Dark Mode */
+      color: #fff; /* ตัวอักษรใน Dark Mode */
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
-      transition: box-shadow 0.3s ease;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* เพิ่ม Transition */
     }
 
-    .form-group input:focus, .form-group select:focus {
-      box-shadow: 0 0 8px rgba(0, 170, 255, 0.8);
+    .form-group input.light-mode, .form-group select.light-mode {
+      background: #fff; /* พื้นหลัง Light Mode */
+      color: #333; /* ตัวอักษรใน Light Mode */
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
     .btn {
@@ -112,7 +121,7 @@
       color: #fff;
       font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, color 0.3s ease;
     }
 
     .btn:hover {
@@ -142,12 +151,12 @@
       border: none;
       font-size: 14px;
       outline: none;
-      transition: box-shadow 0.3s ease;
-      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    #accountCurrency:focus {
-      box-shadow: 0 0 8px rgba(0, 170, 255, 0.8);
+    #accountCurrency.light-mode {
+      background: #fff;
+      color: #333;
     }
 
     .toggle-group {
@@ -160,6 +169,11 @@
       width: 100%;
       box-sizing: border-box;
       margin-top: 10px;
+    }
+
+    .toggle-group.light-mode {
+      background: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
     .toggle-group button {
@@ -196,18 +210,18 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="container">
     <i class="fas fa-cog icon-toggle" id="toggleIcon" title="Settings" onclick="toggleView()"></i>
 
     <!-- Calculator Section -->
     <div class="section calculator-container active" id="calculatorContainer">
-      <h1>Position Calculator</h1>
+      <h1 id="title">Position Calculator</h1>
       <div class="form-group">
-        <label for="balance">Account Balance</label>
+        <label for="balance" id="balanceLabel">Account Balance</label>
         <input type="number" id="balance" placeholder="Enter your balance" />
       </div>
       <div class="form-group">
-        <label for="pair">Instrument</label>
+        <label for="pair" id="pairLabel">Instrument</label>
         <select id="pair">
           <option value="XAUUSD" selected>XAU/USD</option>
           <option value="EURUSD">EUR/USD</option>
@@ -216,129 +230,43 @@
           <option value="AUDUSD">AUD/USD</option>
         </select>
       </div>
-      <div class="form-group">
-        <label id="riskLabel">Risk (%)</label>
-        <input type="number" id="riskInput" placeholder="Enter risk percentage" />
-      </div>
-      <div class="form-group">
-        <label for="stopLoss">Stop Loss (pips)</label>
-        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
-      </div>
-      <button class="btn" onclick="calculatePosition()">Calculate</button>
     </div>
 
     <!-- Settings Section -->
     <div class="section settings-container hidden-right" id="settingsContainer">
-      <h1>Settings</h1>
+      <h1 id="settingsTitle">Settings</h1>
       <div class="form-group">
-        <label for="accountCurrency">Account Currency</label>
-        <div class="currency-container">
-          <img id="currencyFlag" src="https://flagcdn.com/w320/us.png" alt="Flag" class="currency-flag">
-          <select id="accountCurrency" onchange="updateCurrencyFlag()">
-            <option value="USD" data-flag="https://flagcdn.com/w320/us.png">USD - United States Dollar</option>
-            <option value="EUR" data-flag="https://flagcdn.com/w320/eu.png">EUR - Euro</option>
-            <option value="GBP" data-flag="https://flagcdn.com/w320/gb.png">GBP - British Pound</option>
-            <option value="THB" data-flag="https://flagcdn.com/w320/th.png">THB - Thai Baht</option>
-            <option value="JPY" data-flag="https://flagcdn.com/w320/jp.png">JPY - Japanese Yen</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Risk</label>
-        <div class="toggle-group">
-          <div class="slider"></div>
-          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
-          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
-        </div>
+        <label for="themeSelect">Theme</label>
+        <select id="themeSelect" onchange="toggleTheme()">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
       </div>
     </div>
   </div>
 
   <script>
-    let currentRiskType = 'percentage';
+    function toggleTheme() {
+      const themeSelect = document.getElementById('themeSelect').value;
+      const body = document.body;
+      const container = document.getElementById('container');
+      const inputs = document.querySelectorAll('.form-group input, .form-group select');
+      const labels = document.querySelectorAll('.form-group label');
+      const titles = document.querySelectorAll('h1');
 
-    function toggleView() {
-      const settings = document.getElementById('settingsContainer');
-      const calculator = document.getElementById('calculatorContainer');
-      const toggleIcon = document.getElementById('toggleIcon');
-
-      if (settings.classList.contains('active')) {
-        settings.classList.add('hidden-right');
-        settings.classList.remove('active');
-        calculator.classList.add('active');
-        calculator.classList.remove('hidden-left');
-        toggleIcon.classList.remove('fa-arrow-left');
-        toggleIcon.classList.add('fa-cog');
-        updateRiskInput();
+      if (themeSelect === 'light') {
+        body.classList.add('light-mode');
+        container.classList.add('light-mode');
+        inputs.forEach(input => input.classList.add('light-mode'));
+        labels.forEach(label => label.classList.add('light-mode'));
+        titles.forEach(title => title.classList.add('light-mode'));
       } else {
-        calculator.classList.add('hidden-left');
-        calculator.classList.remove('active');
-        settings.classList.add('active');
-        settings.classList.remove('hidden-right');
-        toggleIcon.classList.remove('fa-cog');
-        toggleIcon.classList.add('fa-arrow-left');
+        body.classList.remove('light-mode');
+        container.classList.remove('light-mode');
+        inputs.forEach(input => input.classList.remove('light-mode'));
+        labels.forEach(label => label.classList.remove('light-mode'));
+        titles.forEach(title => title.classList.remove('light-mode'));
       }
-    }
-
-    function toggleRiskType(type) {
-      const slider = document.querySelector('.slider');
-      const percentageButton = document.getElementById('riskPercentage');
-      const amountButton = document.getElementById('riskAmount');
-
-      if (type === 'percentage') {
-        percentageButton.classList.add('active');
-        amountButton.classList.remove('active');
-        slider.style.transform = 'translateX(0%)';
-        currentRiskType = 'percentage';
-      } else {
-        percentageButton.classList.remove('active');
-        amountButton.classList.add('active');
-        slider.style.transform = 'translateX(100%)';
-        currentRiskType = 'amount';
-      }
-    }
-
-    function updateCurrencyFlag() {
-      const currencySelect = document.getElementById('accountCurrency');
-      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
-      const flagUrl = selectedOption.getAttribute('data-flag');
-      const currencyFlag = document.getElementById('currencyFlag');
-
-      currencyFlag.src = flagUrl;
-    }
-
-    function updateRiskInput() {
-      const riskLabel = document.getElementById('riskLabel');
-      const riskInput = document.getElementById('riskInput');
-
-      if (currentRiskType === 'percentage') {
-        riskLabel.textContent = 'Risk (%)';
-        riskInput.placeholder = 'Enter risk percentage';
-      } else {
-        riskLabel.textContent = 'Risk (Amount)';
-        riskInput.placeholder = 'Enter risk amount';
-      }
-    }
-
-    function calculatePosition() {
-      const balance = parseFloat(document.getElementById('balance').value);
-      const risk = parseFloat(document.getElementById('riskInput').value);
-      const stopLoss = parseFloat(document.getElementById('stopLoss').value);
-
-      if (isNaN(balance) || isNaN(risk) || isNaN(stopLoss)) {
-        alert('Please fill in all fields with valid numbers.');
-        return;
-      }
-
-      let riskAmount;
-      if (currentRiskType === 'percentage') {
-        riskAmount = (balance * risk) / 100;
-      } else {
-        riskAmount = risk;
-      }
-
-      const positionSize = riskAmount / stopLoss;
-      alert(`Position Size: ${positionSize.toFixed(2)} lots`);
     }
   </script>
 </body>
