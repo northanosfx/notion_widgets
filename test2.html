@@ -7,12 +7,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* Default Styles */
+    /* ภายนอกกรอบใหญ่สุด (โปร่งใส) */
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
+      background: transparent;
       color: #fff;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,11 +21,12 @@
       padding: 0;
     }
 
+    /* ภายในกรอบใหญ่สุด (Gradient ทันสมัย) */
     .container {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Modern Gradient */
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
       width: 95%;
       max-width: 400px;
       overflow: hidden;
@@ -40,7 +41,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition */
       padding: 20px;
       box-sizing: border-box;
     }
@@ -104,6 +105,7 @@
 
     .form-group input:focus, .form-group select:focus {
       box-shadow: 0 0 10px rgba(0, 209, 255, 0.8);
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .btn {
@@ -124,47 +126,63 @@
       transform: translateY(-3px);
     }
 
-    /* Risk Toggle */
-    .risk-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      overflow: hidden;
+    /* Toggle สำหรับ Risk */
+    .toggle-group {
       position: relative;
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
       height: 40px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 10px;
     }
 
-    .risk-toggle .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background: #00aaff;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 20px;
-      z-index: 1;
-    }
-
-    .risk-toggle button {
+    .toggle-group button {
       flex: 1;
       padding: 10px 0;
       border: none;
       background: transparent;
       color: #fff;
       font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-      position: relative;
-      z-index: 2;
       cursor: pointer;
+      text-align: center;
+      z-index: 2;
+      position: relative;
+      font-weight: 500;
+      transition: color 0.3s ease-in-out;
     }
 
-    .risk-toggle button.active {
+    .toggle-group button.active {
       color: #fff;
       font-weight: bold;
+    }
+
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: #00aaff;
+      border-radius: 8px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-flag {
+      width: 30px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
@@ -218,7 +236,7 @@
       </div>
       <div class="form-group">
         <label>Risk</label>
-        <div class="risk-toggle">
+        <div class="toggle-group">
           <div class="slider"></div>
           <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
           <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
@@ -228,6 +246,8 @@
   </div>
 
   <script>
+    let currentRiskType = 'percentage';
+
     function toggleView() {
       const settings = document.getElementById('settingsContainer');
       const calculator = document.getElementById('calculatorContainer');
@@ -254,15 +274,23 @@
       const slider = document.querySelector('.slider');
       const percentageButton = document.getElementById('riskPercentage');
       const amountButton = document.getElementById('riskAmount');
+      const riskLabel = document.getElementById('riskLabel');
+      const riskInput = document.getElementById('riskInput');
 
       if (type === 'percentage') {
-        slider.style.transform = 'translateX(0%)';
         percentageButton.classList.add('active');
         amountButton.classList.remove('active');
+        slider.style.transform = 'translateX(0%)';
+        riskLabel.textContent = 'Risk (%)';
+        riskInput.placeholder = 'Enter risk percentage';
+        currentRiskType = 'percentage';
       } else {
-        slider.style.transform = 'translateX(100%)';
         percentageButton.classList.remove('active');
         amountButton.classList.add('active');
+        slider.style.transform = 'translateX(100%)';
+        riskLabel.textContent = 'Risk (Amount)';
+        riskInput.placeholder = 'Enter risk amount';
+        currentRiskType = 'amount';
       }
     }
 
@@ -284,7 +312,13 @@
         return;
       }
 
-      const riskAmount = (balance * risk) / 100;
+      let riskAmount;
+      if (currentRiskType === 'percentage') {
+        riskAmount = (balance * risk) / 100;
+      } else {
+        riskAmount = risk;
+      }
+
       const positionSize = riskAmount / stopLoss;
       alert(`Position Size: ${positionSize.toFixed(2)} lots`);
     }
