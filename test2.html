@@ -21,12 +21,12 @@
       padding: 0;
     }
 
-    /* ภายในกรอบใหญ่สุด (Gradient เด่นชัดขึ้น) */
+    /* ภายในกรอบใหญ่สุด (Gradient ที่ดูทันสมัย) */
     .container {
-      background: linear-gradient(135deg, #1f1f1f, #3c3c3c, #5c5c5c); /* More vivid gradient */
-      backdrop-filter: blur(20px); /* Slight blur for modern look */
+      background: linear-gradient(135deg, #232526, #414345, #6b6b6b); /* Improved modern gradient */
+      backdrop-filter: blur(15px);
       border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7); /* Stronger shadow for depth */
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7); /* Stronger shadow */
       width: 95%;
       max-width: 400px;
       overflow: hidden;
@@ -159,6 +159,21 @@
         <input type="number" id="stopLoss" placeholder="Enter stop loss" />
       </div>
       <button class="btn" onclick="calculatePosition()">Calculate</button>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="section settings-container hidden-right" id="settingsContainer">
+      <h1>Settings</h1>
+      <div class="form-group">
+        <label for="accountCurrency">Account Currency</label>
+        <select id="accountCurrency">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="THB">THB</option>
+          <option value="JPY">JPY</option>
+        </select>
+      </div>
     </div>
   </div>
 
