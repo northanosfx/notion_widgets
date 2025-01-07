@@ -103,13 +103,91 @@
       outline: none;
       transition: box-shadow 0.3s ease, background 0.3s ease;
     }
+
+    .form-group input:focus, .form-group select:focus {
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Subtle blue glow */
+      background: #4a4a4a; /* Slightly lighter background on focus */
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, #0056b3, #007bff); /* Stronger blue gradient */
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(45deg, #003f7d, #0056b3); /* Darker blue on hover */
+      transform: translateY(-3px);
+    }
+
+    /* Toggle สำหรับ Risk */
+    .toggle-group {
+      position: relative;
+      display: flex;
+      background: #3a3a3a; /* Neutral toggle background */
+      border-radius: 8px;
+      overflow: hidden;
+      height: 40px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+
+    .toggle-group button {
+      flex: 1;
+      padding: 10px 0;
+      border: none;
+      background: transparent;
+      color: #cccccc; /* Neutral button text color */
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      z-index: 2;
+      position: relative;
+      font-weight: 500;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .toggle-group button.active {
+      color: #fff; /* White text for active button */
+      font-weight: bold;
+    }
+
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: #007bff; /* Bright blue slider */
+      border-radius: 8px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-flag {
+      width: 30px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="section active">
-      <h1>Modern Position Calculator</h1>
-    </div>
-  </div>
+  <!-- Body content -->
 </body>
 </html>
