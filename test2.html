@@ -12,7 +12,7 @@
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
       color: #e0e0e0; /* Slightly off-white for text */
-      background: transparent; /* Set to transparent */
+      background: transparent; /* Transparent outside the container */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -126,68 +126,77 @@
       background: linear-gradient(45deg, #003f7d, #0056b3); /* Darker blue on hover */
       transform: translateY(-3px);
     }
-
-    /* Toggle สำหรับ Risk */
-    .toggle-group {
-      position: relative;
-      display: flex;
-      background: #3a3a3a; /* Neutral toggle background */
-      border-radius: 8px;
-      overflow: hidden;
-      height: 40px;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 10px;
-    }
-
-    .toggle-group button {
-      flex: 1;
-      padding: 10px 0;
-      border: none;
-      background: transparent;
-      color: #cccccc; /* Neutral button text color */
-      font-size: 14px;
-      cursor: pointer;
-      text-align: center;
-      z-index: 2;
-      position: relative;
-      font-weight: 500;
-      transition: color 0.3s ease-in-out;
-    }
-
-    .toggle-group button.active {
-      color: #fff; /* White text for active button */
-      font-weight: bold;
-    }
-
-    .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background: #007bff; /* Bright blue slider */
-      border-radius: 8px;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1;
-    }
-
-    .currency-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .currency-flag {
-      width: 30px;
-      height: 20px;
-      border-radius: 3px;
-      object-fit: cover;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
   </style>
 </head>
 <body>
-  <!-- Body content -->
+  <div class="container">
+    <i class="fas fa-cog icon-toggle" id="toggleIcon" title="Settings" onclick="toggleView()"></i>
+
+    <!-- Calculator Section -->
+    <div class="section calculator-container active" id="calculatorContainer">
+      <h1>Position Calculator</h1>
+      <div class="form-group">
+        <label for="balance">Account Balance</label>
+        <input type="number" id="balance" placeholder="Enter your balance" />
+      </div>
+      <div class="form-group">
+        <label for="pair">Instrument</label>
+        <select id="pair">
+          <option value="XAUUSD" selected>XAU/USD</option>
+          <option value="EURUSD">EUR/USD</option>
+          <option value="GBPUSD">GBP/USD</option>
+          <option value="USDJPY">USD/JPY</option>
+          <option value="AUDUSD">AUD/USD</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label id="riskLabel">Risk (%)</label>
+        <input type="number" id="riskInput" placeholder="Enter risk percentage" />
+      </div>
+      <div class="form-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input type="number" id="stopLoss" placeholder="Enter stop loss" />
+      </div>
+      <button class="btn" onclick="calculatePosition()">Calculate</button>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="section settings-container hidden-right" id="settingsContainer">
+      <h1>Settings</h1>
+      <div class="form-group">
+        <label for="accountCurrency">Account Currency</label>
+        <select id="accountCurrency">
+          <option value="USD">USD - United States Dollar</option>
+          <option value="EUR">EUR - Euro</option>
+          <option value="GBP">GBP - British Pound</option>
+          <option value="THB">THB - Thai Baht</option>
+          <option value="JPY">JPY - Japanese Yen</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleView() {
+      const settings = document.getElementById('settingsContainer');
+      const calculator = document.getElementById('calculatorContainer');
+      const toggleIcon = document.getElementById('toggleIcon');
+
+      if (settings.classList.contains('active')) {
+        settings.classList.add('hidden-right');
+        settings.classList.remove('active');
+        calculator.classList.add('active');
+        calculator.classList.remove('hidden-left');
+        toggleIcon.classList.remove('fa-arrow-left');
+        toggleIcon.classList.add('fa-cog');
+      } else {
+        calculator.classList.add('hidden-left');
+        calculator.classList.remove('active');
+        settings.classList.add('active');
+        settings.classList.remove('hidden-right');
+        toggleIcon.classList.remove('fa-cog');
+        toggleIcon.classList.add('fa-arrow-left');
+      }
+    }
+  </script>
 </body>
 </html>
