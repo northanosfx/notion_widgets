@@ -10,22 +10,22 @@
     body {
       font-family: 'Poppins', Arial, sans-serif;
       font-size: 14px;
-      background: transparent; /* พื้นหลังภายนอกโปร่งใส */
+      background: transparent;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
       padding: 0;
-      transition: background 0.3s ease; /* เพิ่ม Transition */
+      transition: background 0.3s ease;
     }
 
     body.light-mode {
-      background: #f0f0f0; /* พื้นหลังภายนอกใน Light Mode */
+      background: #f5f5f5;
     }
 
     .container {
-      background: linear-gradient(135deg, #1a1a1a, #333); /* Gradient สำหรับ Dark Mode */
+      background: linear-gradient(135deg, #1a1a1a, #333);
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       width: 95%;
@@ -34,11 +34,11 @@
       position: relative;
       height: 750px;
       box-sizing: border-box;
-      transition: background 0.3s ease; /* เพิ่ม Transition */
+      transition: background 0.3s ease;
     }
 
     .container.light-mode {
-      background: linear-gradient(135deg, #ffffff, #eaeaea); /* Gradient สำหรับ Light Mode */
+      background: linear-gradient(135deg, #ffffff, #eaeaea);
     }
 
     .section {
@@ -69,11 +69,11 @@
       text-align: center;
       margin-bottom: 20px;
       color: #fff;
-      transition: color 0.3s ease; /* เพิ่ม Transition */
+      transition: color 0.3s ease;
     }
 
     h1.light-mode {
-      color: #333; /* ตัวอักษรใน Light Mode */
+      color: #333;
     }
 
     .form-group {
@@ -85,11 +85,11 @@
       margin-bottom: 5px;
       font-size: 13px;
       color: #fff;
-      transition: color 0.3s ease; /* เพิ่ม Transition */
+      transition: color 0.3s ease;
     }
 
     .form-group label.light-mode {
-      color: #333; /* ตัวอักษรใน Light Mode */
+      color: #333;
     }
 
     .form-group input, .form-group select {
@@ -97,18 +97,17 @@
       padding: 10px;
       border: none;
       border-radius: 8px;
-      background: #444; /* พื้นหลัง Dark Mode */
-      color: #fff; /* ตัวอักษรใน Dark Mode */
+      background: #444;
+      color: #fff;
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
-      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* เพิ่ม Transition */
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .form-group input.light-mode, .form-group select.light-mode {
-      background: #fff; /* พื้นหลัง Light Mode */
-      color: #333; /* ตัวอักษรใน Light Mode */
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      color: #333;
     }
 
     .btn {
@@ -121,7 +120,7 @@
       color: #fff;
       font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s, color 0.3s ease;
+      transition: background 0.3s ease;
     }
 
     .btn:hover {
@@ -169,11 +168,11 @@
       width: 100%;
       box-sizing: border-box;
       margin-top: 10px;
+      transition: background 0.3s ease;
     }
 
     .toggle-group.light-mode {
       background: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
     .toggle-group button {
@@ -234,7 +233,7 @@
 
     <!-- Settings Section -->
     <div class="section settings-container hidden-right" id="settingsContainer">
-      <h1 id="settingsTitle">Settings</h1>
+      <h1>Settings</h1>
       <div class="form-group">
         <label for="themeSelect">Theme</label>
         <select id="themeSelect" onchange="toggleTheme()">
