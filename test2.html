@@ -101,7 +101,19 @@
       box-sizing: border-box;
       font-size: 14px;
       outline: none;
-      transition: box-shadow 0.3s ease, background 0.3s ease;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus, 
+    .form-group select:focus {
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+      background: #4a4a4a;
+      border-color: #007bff;
+    }
+
+    .form-group input:hover, 
+    .form-group select:hover {
+      border-color: #007bff;
     }
 
     .btn {
