@@ -133,6 +133,57 @@
       background: linear-gradient(45deg, #003f7d, #0056b3);
       transform: translateY(-3px);
     }
+
+    .currency-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-flag {
+      width: 30px;
+      height: 20px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-group {
+      display: flex;
+      position: relative;
+      background: #3a3a3a;
+      border-radius: 8px;
+      height: 40px;
+      overflow: hidden;
+    }
+
+    .toggle-group button {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #ccc;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 500;
+      z-index: 2;
+    }
+
+    .toggle-group button.active {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: #007bff;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
   </style>
 </head>
 <body>
@@ -217,6 +268,14 @@
           </select>
         </div>
       </div>
+      <div class="form-group">
+        <label>Risk</label>
+        <div class="toggle-group">
+          <div class="slider"></div>
+          <button id="riskPercentage" class="active" onclick="toggleRiskType('percentage')">%</button>
+          <button id="riskAmount" onclick="toggleRiskType('amount')">Amount</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -242,6 +301,31 @@
         settings.classList.remove('hidden-right');
         toggleIcon.classList.remove('fa-cog');
         toggleIcon.classList.add('fa-arrow-left');
+      }
+    }
+
+    function updateCurrencyFlag() {
+      const currencySelect = document.getElementById('accountCurrency');
+      const selectedOption = currencySelect.options[currencySelect.selectedIndex];
+      const flagUrl = selectedOption.getAttribute('data-flag');
+      document.getElementById('currencyFlag').src = flagUrl;
+    }
+
+    function toggleRiskType(type) {
+      const slider = document.querySelector('.slider');
+      const percentageButton = document.getElementById('riskPercentage');
+      const amountButton = document.getElementById('riskAmount');
+
+      currentRiskType = type;
+
+      if (type === 'percentage') {
+        slider.style.transform = 'translateX(0%)';
+        percentageButton.classList.add('active');
+        amountButton.classList.remove('active');
+      } else {
+        slider.style.transform = 'translateX(100%)';
+        percentageButton.classList.remove('active');
+        amountButton.classList.add('active');
       }
     }
 
